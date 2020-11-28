@@ -1,3 +1,5 @@
+--CREATE DATABASE Restaurantes
+
 USE [Restaurantes]
 GO
 

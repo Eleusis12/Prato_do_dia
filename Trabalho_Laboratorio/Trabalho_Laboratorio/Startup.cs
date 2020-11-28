@@ -5,9 +5,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Trabalho_Laboratorio.Data;
 
 namespace Trabalho_Laboratorio
 {
@@ -23,7 +25,12 @@ namespace Trabalho_Laboratorio
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
+			services.AddRazorPages()
+		.AddRazorRuntimeCompilation();
+
 			services.AddControllersWithViews();
+
+			services.AddDbContext<RestaurantesContext>(options => options.UseSqlServer(Configuration.GetConnectionString("RestaurantesContext")));
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
