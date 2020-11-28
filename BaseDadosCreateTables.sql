@@ -118,6 +118,7 @@ CREATE TABLE Horario(
 CREATE TABLE Prato(
 
 	ID_Prato							INTEGER					NOT NULL	IDENTITY(1,1),
+	Nome								NVARCHAR(40)				NOT NULL,
 	Tipo_Prato							NVARCHAR(40)				NOT NULL,
 	Descricao_Default					NVARCHAR(300)            NOT NULL,
 	Foto_Default						NVARCHAR(500)			NOT NULL,

@@ -23,6 +23,7 @@ namespace Trabalho_Laboratorio.Models
 
 		[Required]
 		[StringLength(100)]
+		[RegularExpression("^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$", ErrorMessage = "Must be a valid email")]
 		public string Email { get; set; }
 
 		public bool EmailConfirmado { get; set; }
@@ -33,8 +34,15 @@ namespace Trabalho_Laboratorio.Models
 
 		[Required]
 		[Column("_Password")]
+		[DataType(DataType.Password)]
 		[StringLength(100)]
 		public string Password { get; set; }
+
+		[Display(Name = "Confirmação do Password")]
+		[StringLength(100)]
+		[Compare(nameof(Password), ErrorMessage = "Password don't match")]
+		[NotMapped]
+		public string ConfirmPassword { get; set; }
 
 		[Required]
 		[Column("Endereco_Morada")]
@@ -46,6 +54,7 @@ namespace Trabalho_Laboratorio.Models
 		[Column("Endereco_CodigoPostal")]
 		[StringLength(8)]
 		[Display(Name = "Código Postal")]
+		[RegularExpression(@"^\d{4}(-\d{3})$", ErrorMessage = "Must be a valid Postal Code")]
 		public string EnderecoCodigoPostal { get; set; }
 
 		[Required]

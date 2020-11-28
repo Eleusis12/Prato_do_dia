@@ -52,7 +52,7 @@ namespace Trabalho_Laboratorio.Controllers
 
 		public IActionResult Logout()
 		{
-			HttpContext.Response.Cookies.Delete(".Class08b.Session");
+			HttpContext.Response.Cookies.Delete(".Restaurantes.Session");
 
 			return RedirectToAction("Index", "Home");
 		}
@@ -92,7 +92,7 @@ namespace Trabalho_Laboratorio.Controllers
 		// more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Registar([Bind("IdUtilizador,Email,EmailConfirmado,Username,Password,EnderecoMorada,EnderecoCodigoPostal,EnderecoLocalidade")] Utilizador utilizador, int Tipo)
+		public async Task<IActionResult> Registar([Bind("IdUtilizador,Email,EmailConfirmado,Username,Password,ConfirmPassword,EnderecoMorada,EnderecoCodigoPostal,EnderecoLocalidade")] Utilizador utilizador, int Tipo)
 		{
 			// Assegurar que o email confirmado é falso
 			utilizador.EmailConfirmado = false;
@@ -111,13 +111,30 @@ namespace Trabalho_Laboratorio.Controllers
 			if (ModelState.IsValid)
 			{
 				utilizador.Password = Sha256Hash.ComputeSha256Hash(utilizador.Password);
-				_context.Add(utilizador);
-				await _context.SaveChangesAsync();
 
-				HttpContext.Session.SetInt32("id", utilizador.IdUtilizador);
+				// Procurar saber se o email já existe na base de dados
+				Utilizador u1 = _context.Utilizadors.SingleOrDefault(u => (u.Username == utilizador.Username && u.Password == utilizador.Password));
 
-				// Tenta Registar a parte do Cliente ou do Restaurante
-				return Tipo == 1 ? RedirectToAction("Registar", "Clientes") : RedirectToAction("Registar", "Restaurantes");
+				// Procurar saber se o Username já existe na base de dados
+				Utilizador u2 = _context.Utilizadors.SingleOrDefault(u => u.Username == utilizador.Username);
+				if (u1 != null)
+				{
+					ModelState.AddModelError("Email", "Este email já está registado no site");
+				}
+				else if (u2 != null)
+				{
+					ModelState.AddModelError("Username", "Username utilizado");
+				}
+				else
+				{
+					_context.Add(utilizador);
+					await _context.SaveChangesAsync();
+
+					HttpContext.Session.SetInt32("id", utilizador.IdUtilizador);
+
+					// Tenta Registar a parte do Cliente ou do Restaurante
+					return Tipo == 1 ? RedirectToAction("Registar", "Clientes") : RedirectToAction("Registar", "Restaurantes");
+				}
 			}
 			return View(utilizador);
 		}
