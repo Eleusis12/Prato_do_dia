@@ -31,6 +31,12 @@ namespace Trabalho_Laboratorio
 			services.AddControllersWithViews();
 
 			services.AddDbContext<RestaurantesContext>(options => options.UseSqlServer(Configuration.GetConnectionString("RestaurantesContext")));
+
+			services.AddSession(option =>
+			{
+				option.IdleTimeout = TimeSpan.FromMinutes(10); // Session can only be idle for 10 minutes
+				option.Cookie.Name = ".Restaurantes.Session"; // this is the default name but it can be change
+			});
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,6 +58,8 @@ namespace Trabalho_Laboratorio
 			app.UseRouting();
 
 			app.UseAuthorization();
+
+			app.UseSession();
 
 			app.UseEndpoints(endpoints =>
 			{

@@ -82,7 +82,6 @@ CREATE TABLE Administrador(
 CREATE TABLE Restaurante(
 		
 	ID_Restaurante						INTEGER			NOT NULL,
-	Owner_ID							NVARCHAR(450)	NOT NULL,
 	Nome_Restaurante					NVARCHAR(100)	NOT NULL,
 	Telefone							NVARCHAR(20)		NOT NULL,
 	Foto								NVARCHAR(500)	NOT NULL,

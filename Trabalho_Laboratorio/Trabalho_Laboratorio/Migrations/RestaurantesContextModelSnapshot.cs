@@ -308,12 +308,6 @@ namespace Trabalho_Laboratorio.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasColumnName("Nome_Restaurante");
 
-                    b.Property<string>("OwnerId")
-                        .IsRequired()
-                        .HasMaxLength(450)
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("Owner_ID");
-
                     b.Property<bool>("StatusRestaurante")
                         .HasColumnType("bit")
                         .HasColumnName("Status_Restaurante");
