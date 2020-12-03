@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
-
-#nullable disable
 
 namespace Trabalho_Laboratorio.Models
 {
@@ -22,10 +19,10 @@ namespace Trabalho_Laboratorio.Models
         public int IdRestaurante { get; set; }
 
         [ForeignKey(nameof(IdCliente))]
-        [InverseProperty(nameof(Cliente.GuardarClienteRestauranteFavoritos))]
-        public virtual Cliente IdClienteNavigation { get; set; }
+        [InverseProperty(nameof(Clientes.GuardarClienteRestauranteFavorito))]
+        public virtual Clientes IdClienteNavigation { get; set; }
         [ForeignKey(nameof(IdRestaurante))]
-        [InverseProperty(nameof(Restaurante.GuardarClienteRestauranteFavoritos))]
+        [InverseProperty(nameof(Restaurante.GuardarClienteRestauranteFavorito))]
         public virtual Restaurante IdRestauranteNavigation { get; set; }
     }
 }

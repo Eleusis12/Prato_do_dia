@@ -2,13 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
-
-#nullable disable
 
 namespace Trabalho_Laboratorio.Models
 {
-    [Table("Horario")]
     public partial class Horario
     {
         [Key]
@@ -25,7 +21,7 @@ namespace Trabalho_Laboratorio.Models
         public TimeSpan HoraDeSaida { get; set; }
 
         [ForeignKey(nameof(IdRestaurante))]
-        [InverseProperty(nameof(Restaurante.Horarios))]
+        [InverseProperty(nameof(Restaurante.Horario))]
         public virtual Restaurante IdRestauranteNavigation { get; set; }
     }
 }

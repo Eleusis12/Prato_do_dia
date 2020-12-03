@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
-
-#nullable disable
 
 namespace Trabalho_Laboratorio.Models
 {
@@ -22,7 +19,7 @@ namespace Trabalho_Laboratorio.Models
         public string Palavra { get; set; }
 
         [ForeignKey(nameof(IdUtilizador))]
-        [InverseProperty(nameof(Utilizador.PalavrasChaves))]
+        [InverseProperty(nameof(Utilizador.PalavrasChave))]
         public virtual Utilizador IdUtilizadorNavigation { get; set; }
     }
 }

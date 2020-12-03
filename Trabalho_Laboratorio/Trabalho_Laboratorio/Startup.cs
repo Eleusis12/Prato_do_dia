@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
+using Trabalho_Laboratorio.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Trabalho_Laboratorio.Data;
 
 namespace Trabalho_Laboratorio
 {
@@ -25,26 +27,58 @@ namespace Trabalho_Laboratorio
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddRazorPages()
-		.AddRazorRuntimeCompilation();
-
+			services.AddDbContext<ApplicationDbContext>(options =>
+				options.UseSqlServer(
+					Configuration.GetConnectionString("DefaultConnection")));
+			services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+				.AddRoles<IdentityRole>()
+				.AddEntityFrameworkStores<ApplicationDbContext>();
 			services.AddControllersWithViews();
+			services.AddRazorPages();
 
-			services.AddDbContext<RestaurantesContext>(options => options.UseSqlServer(Configuration.GetConnectionString("RestaurantesContext")));
-
-			services.AddSession(option =>
+			services.Configure<IdentityOptions>(options =>
 			{
-				option.IdleTimeout = TimeSpan.FromMinutes(10); // Session can only be idle for 10 minutes
-				option.Cookie.Name = ".Restaurantes.Session"; // this is the default name but it can be change
+				// Password settings.
+				options.Password.RequireDigit = true;
+				options.Password.RequireLowercase = false;
+				options.Password.RequireNonAlphanumeric = false;
+				options.Password.RequireUppercase = false;
+				options.Password.RequiredLength = 6;
+				options.Password.RequiredUniqueChars = 1;
+
+				// Lockout settings.
+				options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+				options.Lockout.MaxFailedAccessAttempts = 5;
+				options.Lockout.AllowedForNewUsers = true;
+
+				// User settings.
+				options.User.AllowedUserNameCharacters =
+				"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+				options.User.RequireUniqueEmail = false;
+
+				// Sign In setttings
+				options.SignIn.RequireConfirmedEmail = false;
+			});
+
+			services.ConfigureApplicationCookie(options =>
+			{
+				// Cookie settings
+				options.Cookie.HttpOnly = true;
+				options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+
+				options.LoginPath = "/Identity/Account/Login";
+				options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+				options.SlidingExpiration = true;
 			});
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+		public void Configure(IApplicationBuilder app, IWebHostEnvironment env, RoleManager<IdentityRole> roleManager)
 		{
 			if (env.IsDevelopment())
 			{
 				app.UseDeveloperExceptionPage();
+				app.UseDatabaseErrorPage();
 			}
 			else
 			{
@@ -57,15 +91,17 @@ namespace Trabalho_Laboratorio
 
 			app.UseRouting();
 
+			app.UseAuthentication();
 			app.UseAuthorization();
 
-			app.UseSession();
+			SeedRoles.Seed(roleManager);
 
 			app.UseEndpoints(endpoints =>
 			{
 				endpoints.MapControllerRoute(
 					name: "default",
 					pattern: "{controller=Home}/{action=Index}/{id?}");
+				endpoints.MapRazorPages();
 			});
 		}
 	}

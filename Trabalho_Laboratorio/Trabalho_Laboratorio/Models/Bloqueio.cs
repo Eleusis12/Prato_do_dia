@@ -2,13 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
-
-#nullable disable
 
 namespace Trabalho_Laboratorio.Models
 {
-    [Table("Bloqueio")]
     public partial class Bloqueio
     {
         [Key]
@@ -22,7 +18,7 @@ namespace Trabalho_Laboratorio.Models
         public string Motivo { get; set; }
 
         [ForeignKey(nameof(IdUtilizador))]
-        [InverseProperty(nameof(Utilizador.Bloqueios))]
+        [InverseProperty(nameof(Utilizador.Bloqueio))]
         public virtual Utilizador IdUtilizadorNavigation { get; set; }
     }
 }
