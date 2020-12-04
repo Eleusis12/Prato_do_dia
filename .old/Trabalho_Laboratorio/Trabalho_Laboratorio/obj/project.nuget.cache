@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Mg1T5UhfPAP/boWAQttZ5yan+8TSOy31E6DrUNWAIMlb8huqNEWB+r8UVPKKluFVYJhpKVW9eg5/KE1uLqkZiQ==",
+  "dgSpecHash": "re89XEYhqfmCnwCPlocuoqPfqUJGuAlJwT6GcRAht9rVvWKIYPsR2VNljVXcYSoNFJuB/t9KkC1+a9I21VWIyw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Francisco\\OneDrive\\Utad\\3ºano\\1ºsemestre\\Laboratório de Aplicações Web e Bases de Dados\\Prato_do_Dia\\Trabalho_Laboratorio\\Trabalho_Laboratorio\\Trabalho_Laboratorio.csproj",
+  "projectFilePath": "C:\\Users\\Francisco\\OneDrive\\Utad\\3ºano\\1ºsemestre\\Laboratório de Aplicações Web e Bases de Dados\\Prato_do_Dia\\.old\\Trabalho_Laboratorio\\Trabalho_Laboratorio\\Trabalho_Laboratorio.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Francisco\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Francisco\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",

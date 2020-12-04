@@ -9003,11 +9003,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Francisco\\OneDrive\\Utad\\3ºano\\1ºsemestre\\Laboratório de Aplicações Web e Bases de Dados\\Prato_do_Dia\\Trabalho_Laboratorio\\Trabalho_Laboratorio\\Trabalho_Laboratorio.csproj",
+      "projectUniqueName": "C:\\Users\\Francisco\\OneDrive\\Utad\\3ºano\\1ºsemestre\\Laboratório de Aplicações Web e Bases de Dados\\Prato_do_Dia\\.old\\Trabalho_Laboratorio\\Trabalho_Laboratorio\\Trabalho_Laboratorio.csproj",
       "projectName": "Trabalho_Laboratorio",
-      "projectPath": "C:\\Users\\Francisco\\OneDrive\\Utad\\3ºano\\1ºsemestre\\Laboratório de Aplicações Web e Bases de Dados\\Prato_do_Dia\\Trabalho_Laboratorio\\Trabalho_Laboratorio\\Trabalho_Laboratorio.csproj",
+      "projectPath": "C:\\Users\\Francisco\\OneDrive\\Utad\\3ºano\\1ºsemestre\\Laboratório de Aplicações Web e Bases de Dados\\Prato_do_Dia\\.old\\Trabalho_Laboratorio\\Trabalho_Laboratorio\\Trabalho_Laboratorio.csproj",
       "packagesPath": "C:\\Users\\Francisco\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Francisco\\OneDrive\\Utad\\3ºano\\1ºsemestre\\Laboratório de Aplicações Web e Bases de Dados\\Prato_do_Dia\\Trabalho_Laboratorio\\Trabalho_Laboratorio\\obj\\",
+      "outputPath": "C:\\Users\\Francisco\\OneDrive\\Utad\\3ºano\\1ºsemestre\\Laboratório de Aplicações Web e Bases de Dados\\Prato_do_Dia\\.old\\Trabalho_Laboratorio\\Trabalho_Laboratorio\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\",
