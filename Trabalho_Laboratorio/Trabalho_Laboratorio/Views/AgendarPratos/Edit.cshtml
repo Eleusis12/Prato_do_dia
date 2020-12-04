@@ -1,0 +1,53 @@
+﻿@model Trabalho_Laboratorio.Models.AgendarPrato
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>AgendarPrato</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="IdAgendamento" />
+            <input type="hidden" asp-for="DataMarcacao" />
+            <input type="hidden" asp-for="DataDoAgendamento" />
+            <input type="hidden" asp-for="IdRestaurante" />
+            <input type="hidden" asp-for="IdPrato" />
+            <div class="form-group">
+                <label asp-for="DescricaoExtra" class="control-label"></label>
+                <input asp-for="DescricaoExtra" class="form-control" />
+                <span asp-validation-for="DescricaoExtra" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FotoExtra" class="control-label"></label>
+                <input asp-for="FotoExtra" class="form-control" />
+                <span asp-validation-for="FotoExtra" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Preco" class="control-label"></label>
+                <input asp-for="Preco" class="form-control" />
+                <span asp-validation-for="Preco" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Destaque" /> @Html.DisplayNameFor(model => model.Destaque)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

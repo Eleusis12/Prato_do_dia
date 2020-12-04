@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Trabalho_Laboratorio.Data;
 
-namespace Trabalho_Laboratorio.Data.Migrations
+namespace Trabalho_Laboratorio.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -15,7 +15,7 @@ namespace Trabalho_Laboratorio.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.9")
+                .HasAnnotation("ProductVersion", "3.1.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -284,8 +284,8 @@ namespace Trabalho_Laboratorio.Data.Migrations
                         .HasColumnType("nvarchar(500)")
                         .HasMaxLength(500);
 
-                    b.Property<int>("Preco")
-                        .HasColumnType("int");
+                    b.Property<float>("Preco")
+                        .HasColumnType("real");
 
                     b.HasKey("IdAgendamento", "DataMarcacao", "DataDoAgendamento", "IdRestaurante", "IdPrato")
                         .HasName("PK__Agendar___28954093A2E8B8AC");
@@ -475,8 +475,8 @@ namespace Trabalho_Laboratorio.Data.Migrations
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(40)")
-                        .HasMaxLength(40);
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.Property<string>("TipoPrato")
                         .IsRequired()

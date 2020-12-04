@@ -31,10 +31,10 @@ namespace Trabalho_Laboratorio.Data
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-			if (!optionsBuilder.IsConfigured)
-			{
-				optionsBuilder.UseSqlServer("name=DefaultConnection");
-			}
+			//if (!optionsBuilder.IsConfigured)
+			//{
+			//	optionsBuilder.UseSqlServer("name=DefaultConnection");
+			//}
 		}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
