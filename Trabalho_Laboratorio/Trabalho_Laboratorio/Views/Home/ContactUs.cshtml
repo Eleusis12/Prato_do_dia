@@ -10,14 +10,20 @@
 		<label class="control-label" asp-for="LastName"></label>
 		<input class="form-control" type="text" asp-for="LastName" placeholder="O teu último nome..">
 
+		<label class="control-label" asp-for="Email"></label>
+		<input class="form-control" type="text" asp-for="Email" placeholder="Email..">
+
+		<label class="control-label" asp-for="Subject"></label>
+		<input class="form-control" type="text" asp-for="Subject" placeholder="Assunto...">
+
 		<label class="control-label" asp-for="Country">País</label>
 		<select class="form-control" asp-for="Country">
 			<option value="portugal">Portugal</option>
 			<option value="espanha">Espanha</option>
 		</select>
 
-		<label class="control-label" asp-for="Subject"></label>
-		<textarea class="form-control" asp-for="Subject" placeholder="Escreve a mensagem aqui.." style="height:200px"></textarea>
+		<label class="control-label" asp-for="Message"></label>
+		<textarea class="form-control" asp-for="Message" placeholder="Escreve a mensagem aqui.." style="height:200px"></textarea>
 
 		<input class="form-control btn btn-success" type="submit" value="Submeter">
 	</div>

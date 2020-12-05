@@ -68,6 +68,7 @@ namespace Trabalho_Laboratorio.Controllers
 		{
 			string Name = C.FirstName;
 			string Email = C.Email;
+			string subject = C.Subject;
 			string Message = C.Message;
 			string Country = C.Country;
 
@@ -76,8 +77,8 @@ namespace Trabalho_Laboratorio.Controllers
 				var body = "<p>Olá {0} ({1})</p><p>Enviou a seguinte mensagem:</p><p>{2}</p>";
 				var message = new MailMessage();
 				message.To.Add(new MailAddress(Email));  // replace with valid value
-				message.From = new MailAddress("WebScrapperKK@hotmail.com");  // replace with valid value
-				message.Subject = "Mensagem Recebida com sucesso";
+				message.From = new MailAddress("RestauranteDeluxe@hotmail.com");  // replace with valid value
+				message.Subject = subject;
 				message.Body = string.Format(body, Name, Email, Message);
 				message.IsBodyHtml = true;
 				using (var smtp = new SmtpClient())
