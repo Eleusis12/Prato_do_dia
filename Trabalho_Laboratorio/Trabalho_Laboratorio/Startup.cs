@@ -12,6 +12,7 @@ using Trabalho_Laboratorio.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Http;
 
 namespace Trabalho_Laboratorio
 {
@@ -70,6 +71,15 @@ namespace Trabalho_Laboratorio
 				options.AccessDeniedPath = "/Identity/Account/AccessDenied";
 				options.SlidingExpiration = true;
 			});
+
+			services.Configure<CookiePolicyOptions>(options =>
+			{
+				// This lambda determines whether user consent for non-essential
+				// cookies is needed for a given request.
+				options.CheckConsentNeeded = context => true;
+				// requires using Microsoft.AspNetCore.Http;
+				options.MinimumSameSitePolicy = SameSiteMode.None;
+			});
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -88,6 +98,7 @@ namespace Trabalho_Laboratorio
 			}
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
+			app.UseCookiePolicy();
 
 			app.UseRouting();
 

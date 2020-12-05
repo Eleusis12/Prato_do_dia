@@ -31,6 +31,7 @@ namespace Trabalho_Laboratorio.Controllers
 		}
 
 		// GET: AgendarPratos
+		[Authorize(Roles = "Restaurant")]
 		public async Task<IActionResult> Index()
 		{
 			var applicationDbContext = _context.AgendarPrato.Include(a => a.IdPratoNavigation).Include(a => a.IdRestauranteNavigation);
@@ -38,7 +39,7 @@ namespace Trabalho_Laboratorio.Controllers
 		}
 
 		// GET: AgendarPratos/Details/5
-		public async Task<IActionResult> Details(int? id)
+		public async Task<IActionResult> Detalhes(int? id)
 		{
 			if (id == null)
 			{
@@ -57,7 +58,7 @@ namespace Trabalho_Laboratorio.Controllers
 			return View(agendarPrato);
 		}
 
-		[Authorize(Roles = "Restaurant")]
+		[Authorize(Roles = "Restaurant,Admin")]
 		public IActionResult Adicionar()
 		{
 			ViewData["IdPrato"] = new SelectList(_context.Prato, "IdPrato", "Nome");
@@ -127,6 +128,7 @@ namespace Trabalho_Laboratorio.Controllers
 		}
 
 		// GET: AgendarPratos/Edit/5
+		[Authorize(Roles = "Restaurant,Admin")]
 		public async Task<IActionResult> Edit(int? id)
 		{
 			if (id == null)
@@ -182,6 +184,7 @@ namespace Trabalho_Laboratorio.Controllers
 		}
 
 		// GET: AgendarPratos/Delete/5
+		[Authorize(Roles = "Restaurant,Admin")]
 		public async Task<IActionResult> Delete(int? id)
 		{
 			if (id == null)

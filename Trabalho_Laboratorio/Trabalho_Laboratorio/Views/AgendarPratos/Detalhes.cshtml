@@ -1,0 +1,48 @@
+﻿@model Trabalho_Laboratorio.Models.AgendarPrato
+
+@{
+	ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div class="container">
+	<h4>Prato</h4>
+	<hr />
+	<dl class="row">
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.DescricaoExtra)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.DescricaoExtra)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.FotoExtra)
+		</dt>
+		<dd class="col-sm-10">
+			<img src="@Html.DisplayFor(model => model.FotoExtra)" alt="Image not Loaded" />
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Preco)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Preco)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.IdPratoNavigation.TipoPrato)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.IdPratoNavigation.TipoPrato)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.IdRestauranteNavigation)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.IdRestauranteNavigation.NomeRestaurante)
+		</dd>
+	</dl>
+</div>
+<div>
+	@Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+	<a asp-action="Index">Back to List</a>
+</div>

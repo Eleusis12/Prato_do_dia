@@ -3,15 +3,20 @@
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>@ViewData["Title"] - Trabalho_Laboratorio</title>
-	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-United.min.css" />
+	<title>@ViewData["Title"] - Restaurantes Deluxe</title>
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-SandStone.min.css" />
+	<link rel="stylesheet" href="~/lib/Font-Awesome/css/fontawesome.min.css">
+	<link rel="stylesheet" href="~/lib/Font-Awesome/css/regular.min.css">
+	<link rel="stylesheet" href="~/lib/Font-Awesome/css/solid.min.css">
+
 	<link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
 	<header>
 		<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary border-bottom box-shadow">
 			<div class="container">
-				<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Trabalho_Laboratorio</a>
+
+				<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="/Icons/talheres.png" />  Restaurantes Deluxe</a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
 						aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
@@ -19,30 +24,115 @@
 				<div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
 					<partial name="_LoginPartial" />
 					<ul class="navbar-nav flex-grow-1">
-						<li class="nav-item">
-							<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-						</li>
 					</ul>
 				</div>
 			</div>
 		</nav>
 	</header>
 	<div class="container-fluid">
+		<partial name="_CookieConsentPartial" />
 		<main role="main" class="pb-3">
 			@RenderBody()
 		</main>
 	</div>
 
-	<footer class="border-top footer text-muted">
-		<div class="container">
-			&copy; 2020 - Trabalho_Laboratorio - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+	<footer class="page-footer font-small stylish-color-dark pt-4 bg-secondary">
+		<!-- Footer Links -->
+		<div class="container text-center text-md-left">
+			<!-- Grid row -->
+			<div class="row">
+				<!-- Grid column -->
+				<div class="col-md-4 mx-auto">
+					<!-- Content -->
+					<h5 class="font-weight-bold text-uppercase mt-3 mb-4">Restaurantes Deluxe</h5>
+					<p>Restaurantes Deluxe tem como objetivo agregar todos os pratos do dia num único sítio, de forma a que o consumidor possa escolher atempadamente o restaurante onde pretende comer.    </p>
+				</div>
+				<!-- Grid column -->
+				<hr class="clearfix w-100 d-md-none">
+				<!-- Grid column -->
+				<div class="col-md-2 mx-auto">
+					<!-- Links -->
+					<h5 class="font-weight-bold text-uppercase mt-3 mb-4">Empresa</h5>
+					<ul class="list-unstyled">
+
+						<li>
+							<a asp-controller="Home" asp-action="AboutUs">Sobre nós</a>
+						</li>
+						<li>
+							<a asp-controller="Home" asp-action="TermsOfService">Termos e Condições</a>
+						</li>
+						<li>
+							<a asp-controller="Home" asp-action="ContactUs">Contacte-nos</a>
+						</li>
+					</ul>
+				</div>
+				<!-- Grid column -->
+				<hr class="clearfix w-100 d-md-none">
+				<!-- Grid column -->
+				<div class="col-md-2 mx-auto">
+					<!-- Links -->
+					<h5 class="font-weight-bold text-uppercase mt-3 mb-4">Comunidade</h5>
+					<ul class="list-unstyled">
+						<li>
+							<a asp-controller="Restaurantes" asp-action="Index">Restaurantes participantes</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<!-- Grid row -->
 		</div>
+		<!-- Footer Links -->
+		<hr>
+		<!-- Call to action -->
+		<ul class="list-unstyled list-inline text-center py-2">
+			<li class="list-inline-item">
+				<h5 class="mb-1">Registe de forma gratuita</h5>
+			</li>
+			<li class="list-inline-item">
+				<a asp-area="Identity" asp-page="/Account/Register" class="btn btn-danger btn-rounded">Registar</a>
+			</li>
+		</ul>
+		<!-- Call to action -->
+		<hr>
+		<!-- Social buttons -->
+		<ul class="list-unstyled list-inline text-center">
+			<li class="list-inline-item">
+				<a class="btn-floating btn-fb mx-1">
+					<i class="fab fa-facebook-f"> </i>
+				</a>
+			</li>
+			<li class="list-inline-item">
+				<a class="btn-floating btn-tw mx-1">
+					<i class="fab fa-twitter"> </i>
+				</a>
+			</li>
+			<li class="list-inline-item">
+				<a class="btn-floating btn-gplus mx-1">
+					<i class="fab fa-google-plus-g"> </i>
+				</a>
+			</li>
+			<li class="list-inline-item">
+				<a class="btn-floating btn-li mx-1">
+					<i class="fab fa-linkedin-in"> </i>
+				</a>
+			</li>
+			<li class="list-inline-item">
+				<a class="btn-floating btn-dribbble mx-1">
+					<i class="fab fa-dribbble"> </i>
+				</a>
+			</li>
+		</ul>
+		<!-- Social buttons -->
+		<!-- Copyright -->
+		<div class="footer-copyright text-center py-3">
+			© 2020 Copyright
+		</div>
+		<!-- Copyright -->
 	</footer>
+	<!-- Footer -->
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>
 	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 	<script src="~/js/site.js" asp-append-version="true"></script>
 	@RenderSection("Scripts", required: false)
 </body>

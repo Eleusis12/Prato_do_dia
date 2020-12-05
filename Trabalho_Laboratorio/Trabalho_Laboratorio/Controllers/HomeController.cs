@@ -2,17 +2,21 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Trabalho_Laboratorio.Data;
+using Trabalho_Laboratorio.Helpers.Enums;
 using Trabalho_Laboratorio.Models;
 using Trabalho_Laboratorio.Pagination;
+using Trabalho_Laboratorio.ViewModel;
 
 namespace Trabalho_Laboratorio.Controllers
 {
-	public class HomeController : Controller
+	public class HomeController : Trabalho_Laboratorio.BaseController.BaseController
 	{
 		private readonly ILogger<HomeController> _logger;
 		private readonly ApplicationDbContext _context;
@@ -40,6 +44,79 @@ namespace Trabalho_Laboratorio.Controllers
 
 		public IActionResult Privacy()
 		{
+			return View();
+		}
+
+		public IActionResult AboutUs()
+		{
+			return View();
+		}
+
+		public IActionResult TermsOfService()
+		{
+			return View();
+		}
+
+		public IActionResult ContactUs()
+		{
+			return View();
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<ActionResult> ContactUs(ContactViewModel C)
+		{
+			string Name = C.FirstName;
+			string Email = C.Email;
+			string Message = C.Message;
+			string Country = C.Country;
+
+			if (ModelState.IsValid)
+			{
+				var body = "<p>Olá {0} ({1})</p><p>Enviou a seguinte mensagem:</p><p>{2}</p>";
+				var message = new MailMessage();
+				message.To.Add(new MailAddress(Email));  // replace with valid value
+				message.From = new MailAddress("WebScrapperKK@hotmail.com");  // replace with valid value
+				message.Subject = "Mensagem Recebida com sucesso";
+				message.Body = string.Format(body, Name, Email, Message);
+				message.IsBodyHtml = true;
+				using (var smtp = new SmtpClient())
+				{
+					var credential = new NetworkCredential
+					{
+						UserName = "RestauranteDeluxe@hotmail.com",  // replace with valid value
+						Password = "bpLFiA3UcQcGZvr"  // replace with valid value
+					};
+					smtp.UseDefaultCredentials = false;
+					smtp.Credentials = credential;
+					smtp.Host = "smtp.office365.com";//address webmail
+					smtp.Port = 587;
+					smtp.EnableSsl = true;
+
+					try
+					{
+						await smtp.SendMailAsync(message);
+						Notification("Mensagem enviada com sucesso", NotificationType.success);
+					}
+					catch (SmtpFailedRecipientsException recipientsException)
+					{
+						_logger.LogError($"Failed recipients: {string.Join(", ", recipientsException.InnerExceptions.Select(fr => fr.FailedRecipient))}");
+						Notification("Não foi possível enviar a mensagem", NotificationType.error);
+					}
+					catch (SmtpFailedRecipientException recipientException)
+					{
+						_logger.LogError($"Failed recipient: {recipientException.FailedRecipient}");
+						Notification("Não foi possível enviar a mensagem", NotificationType.error);
+					}
+					catch (SmtpException smtpException)
+					{
+						_logger.LogError(smtpException.Message);
+						Notification("Não foi possível enviar a mensagem", NotificationType.error);
+					}
+
+					return RedirectToAction(nameof(Index));
+				}
+			}
 			return View();
 		}
 

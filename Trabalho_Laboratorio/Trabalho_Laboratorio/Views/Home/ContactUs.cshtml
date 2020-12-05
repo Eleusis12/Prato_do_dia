@@ -1,0 +1,24 @@
+﻿@model Trabalho_Laboratorio.ViewModel.ContactViewModel
+
+<div class="container form-group rounded bg-dark"></div>
+<form asp-action="ContactUs">
+	<div class="container container-contact-form form-contact mt-3">
+
+		<label class="control-label" asp-for="FirstName"></label>
+		<input class="form-control" type="text" asp-for="FirstName" placeholder="O teu primeiro Nome...">
+
+		<label class="control-label" asp-for="LastName"></label>
+		<input class="form-control" type="text" asp-for="LastName" placeholder="O teu último nome..">
+
+		<label class="control-label" asp-for="Country">País</label>
+		<select class="form-control" asp-for="Country">
+			<option value="portugal">Portugal</option>
+			<option value="espanha">Espanha</option>
+		</select>
+
+		<label class="control-label" asp-for="Subject"></label>
+		<textarea class="form-control" asp-for="Subject" placeholder="Escreve a mensagem aqui.." style="height:200px"></textarea>
+
+		<input class="form-control btn btn-success" type="submit" value="Submeter">
+	</div>
+</form>

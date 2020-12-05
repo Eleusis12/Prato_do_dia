@@ -34,6 +34,10 @@ html {
 	font-size: 14px;
 }
 
+body {
+	background: #e9eaed;
+}
+
 @media (min-width: 768px) {
 	html {
 		font-size: 16px;
@@ -64,14 +68,12 @@ html {
 	min-height: 100%;
 }
 
-body {
-	/* Margin bottom by footer height */
-	margin-bottom: 60px;
-}
-
 .footer {
 	position: absolute;
-	bottom: 0;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	margin-bottom: 0px;
 	width: 100%;
 	white-space: nowrap;
 	line-height: 60px; /* Vertically center the text there */
@@ -138,8 +140,8 @@ Extra (xl) large devices (large desktops, 1200px and up)
 	z-index: auto;
 	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 	grid-auto-rows: 1fr;
-	grid-column-gap: 10px;
-	grid-row-gap: 15px;
+	grid-column-gap: 15px;
+	grid-row-gap: 20px;
 	margin: auto;
 	max-width: 1200px;
 }
