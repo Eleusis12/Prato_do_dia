@@ -36,6 +36,7 @@ html {
 
 body {
 	background: #e9eaed;
+	margin-bottom: 600px;
 }
 
 @media (min-width: 768px) {
@@ -68,15 +69,13 @@ html {
 	min-height: 100%;
 }
 
-.footer {
-	position: absolute;
+.page-footer {
+	position: absolute !important;
 	bottom: 0px;
 	left: 0px;
 	right: 0px;
 	margin-bottom: 0px;
 	width: 100%;
-	white-space: nowrap;
-	line-height: 60px; /* Vertically center the text there */
 }
 
 /*---Media Queries --*/
@@ -132,9 +131,8 @@ Extra (xl) large devices (large desktops, 1200px and up)
 */
 
 .card-wrapper {
-	box-sizing border-box;
+	box-sizing: border-box;
 	display: grid;
-	float: none;
 	line-height: normal;
 	position: static;
 	z-index: auto;
@@ -182,3 +180,15 @@ Extra (xl) large devices (large desktops, 1200px and up)
 		padding: 15px;
 		border-top: 1px solid #eee;
 	}
+
+		.card-meal .info-wrap .meal-content {
+			font-size: 14px;
+			font-weight: normal;
+			max-height: 80%;
+		}
+
+		.card-meal .info-wrap .price-content {
+			font-size: 20px;
+			font-weight: bold;
+			float: right;
+		}

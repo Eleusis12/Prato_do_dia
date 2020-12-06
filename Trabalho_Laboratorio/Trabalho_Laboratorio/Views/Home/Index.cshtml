@@ -48,19 +48,17 @@
 		@foreach (var item in Model)
 		{
 
-			<article class=" card card-meal">
+			<article class="card card-meal">
 				<div class="img-wrap">
 					<a asp-controller="AgendarPratos" asp-action="Detalhes" asp-route-id="@item.IdAgendamento">
 						<img class="meal-image" src="@Html.DisplayFor(modelItem => item.FotoExtra)">
 					</a>
 					<div class="ml-2"><span class="h6">@Html.DisplayFor(modelItem => item.IdPratoNavigation.Nome) (@Html.DisplayFor(modelItem => item.IdPratoNavigation.TipoPrato))</span></div>
-					<div class="ml-2"><a class="h6" asp-controller="Restaurantes" asp-action="Detalhes" asp-route-id="@item.IdRestaurante">@Html.DisplayFor(modelItem => item.IdRestauranteNavigation.NomeRestaurante)</a> |</div>
+					<div class="ml-2"><a class="h6" asp-controller="Restaurantes" asp-action="Detalhes" asp-route-id="@item.IdRestaurante">@Html.DisplayFor(modelItem => item.IdRestauranteNavigation.NomeRestaurante)</a></div>
 				</div>
 				<figcaption class="info-wrap">
-					<div class="action-wrap">
-						<div>@item.DescricaoExtra</div>
-						<span class="text-dark">@Html.DisplayFor(modelItem => item.Preco)€</span>
-					</div>
+					<div class="meal-content"><p>@item.DescricaoExtra</p></div>
+					<span class="price-content">@Html.DisplayFor(modelItem => item.Preco)€</span>
 				</figcaption>
 			</article>
 
@@ -87,3 +85,31 @@
 		</ul>
 	</div>
 </div>
+
+<script>
+
+	function hideOverflow(element) {
+
+		//Calculate lineHeight and maxLineCount for parent's height
+		element.style.whiteSpace = 'nowrap';
+		var parent = element.parentNode;
+		var maxLineCount = Math.floor(parent.clientHeight / element.clientHeight);
+		var maxLineHeight = element.clientHeight * maxLineCount;
+		element.style.whiteSpace = 'normal';
+
+		//Find and set maxLineHeight by replacing the overflow with an ellipses
+		if (element.clientHeight > maxLineHeight) {
+			var max = maxLineCount * element.style.lineHeight;
+			for (var i = 0; element.clientHeight > maxLineHeight; i++) {
+				element.innerHTML = element.textContent.slice(0, -2) + '&hellip;';
+				i++;
+				if (i === max) break;
+			}
+		}
+	}
+
+	for (var i = 0; i < document.getElementsByClassName("meal-content").length; i++) {
+		hideOverflow(document.getElementsByClassName("meal-content")[i].childNodes[0]);
+
+	}
+</script>

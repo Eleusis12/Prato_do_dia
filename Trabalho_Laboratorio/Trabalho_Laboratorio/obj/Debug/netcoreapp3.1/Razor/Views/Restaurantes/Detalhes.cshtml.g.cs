@@ -26,8 +26,22 @@ using Trabalho_Laboratorio.Models;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 3 "C:\Users\Francisco\OneDrive\Utad\3ºano\1ºsemestre\Laboratório de Aplicações Web e Bases de Dados\Prato_do_Dia\Trabalho_Laboratorio\Trabalho_Laboratorio\Views\_ViewImports.cshtml"
+using Microsoft.AspNetCore.Identity;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 4 "C:\Users\Francisco\OneDrive\Utad\3ºano\1ºsemestre\Laboratório de Aplicações Web e Bases de Dados\Prato_do_Dia\Trabalho_Laboratorio\Trabalho_Laboratorio\Views\_ViewImports.cshtml"
+using Microsoft.AspNetCore.Http;
+
+#line default
+#line hidden
+#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"04fae19361cfa9eff42f60accbd0086c961c857f", @"/Views/Restaurantes/Detalhes.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"db7ec9112b9bf1517a7dafba735f6cf6a8a6fd5a", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"0a9f5449fe23e2242fb51575cb1bfe96f5b5be27", @"/Views/_ViewImports.cshtml")]
     public class Views_Restaurantes_Detalhes : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<Trabalho_Laboratorio.Models.Restaurante>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("asp-action", "Edit", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -164,7 +178,7 @@ WriteAttributeValue("", 668, Html.DisplayFor(model => model.Foto), 668, 37, fals
 #line hidden
 #nullable disable
             WriteLiteral("\r\n\t\t</dd>\r\n\t</dl>\r\n</div>\r\n<div>\r\n\t");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "04fae19361cfa9eff42f60accbd0086c961c857f9747", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "04fae19361cfa9eff42f60accbd0086c961c857f10335", async() => {
                 WriteLiteral("Edit");
             }
             );
@@ -195,7 +209,7 @@ WriteAttributeValue("", 668, Html.DisplayFor(model => model.Foto), 668, 37, fals
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral(" |\r\n\t");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "04fae19361cfa9eff42f60accbd0086c961c857f12005", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "04fae19361cfa9eff42f60accbd0086c961c857f12594", async() => {
                 WriteLiteral("Back to List");
             }
             );

@@ -26,8 +26,22 @@ using Trabalho_Laboratorio.Models;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 3 "C:\Users\Francisco\OneDrive\Utad\3ºano\1ºsemestre\Laboratório de Aplicações Web e Bases de Dados\Prato_do_Dia\Trabalho_Laboratorio\Trabalho_Laboratorio\Views\_ViewImports.cshtml"
+using Microsoft.AspNetCore.Identity;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 4 "C:\Users\Francisco\OneDrive\Utad\3ºano\1ºsemestre\Laboratório de Aplicações Web e Bases de Dados\Prato_do_Dia\Trabalho_Laboratorio\Trabalho_Laboratorio\Views\_ViewImports.cshtml"
+using Microsoft.AspNetCore.Http;
+
+#line default
+#line hidden
+#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"d82e0d685f67e2257cc4493a7d8318c7cea361be", @"/Views/Home/AboutUs.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"db7ec9112b9bf1517a7dafba735f6cf6a8a6fd5a", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"0a9f5449fe23e2242fb51575cb1bfe96f5b5be27", @"/Views/_ViewImports.cshtml")]
     public class Views_Home_AboutUs : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("class", new global::Microsoft.AspNetCore.Html.HtmlString("btn btn-primary btn-lg"), global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -76,7 +90,7 @@ using Trabalho_Laboratorio.Models;
 		Vestibulum in euismod ligula. Cras id ornare tellus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Curabitur dictum augue a convallis auctor.
 		Nam fringilla turpis in suscipit facilisis. Pellentesque quis felis libero. Maecenas viverra semper urna id porta. In placerat, libero sit amet ullamcorper ullamcorper, odio tellus consectetur nibh, aliquet ultrices justo magna vel ante. Nulla tincidunt augue non nunc vestibulum accumsan. Nullam bibendum pulvinar tellus, ut tincidunt diam tincidunt feugiat. Maecenas vulputate volutpat dolor, at pretium quam luctus sit amet. Mauris semper eros eget nisl accumsan tempor. In ac l");
             WriteLiteral("acus finibus, vestibulum purus vel, lacinia purus. Aliquam pulvinar ex a tristique vestibulum.\r\n\t</p>\r\n\t<p class=\"lead\">\r\n\t\t");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d82e0d685f67e2257cc4493a7d8318c7cea361be6197", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d82e0d685f67e2257cc4493a7d8318c7cea361be6785", async() => {
                 WriteLiteral("Conheça os nossos Termos de Serviço");
             }
             );

@@ -39,6 +39,7 @@ namespace Trabalho_Laboratorio.Data
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
+			// Se não funcionar utilize este comando para o primneiro update databse
 			base.OnModelCreating(modelBuilder);
 
 			modelBuilder.Entity<Administrador>(entity =>

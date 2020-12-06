@@ -41,7 +41,11 @@ namespace Trabalho_Laboratorio.Models
 		[StringLength(500)]
 		public string FotoExtra { get; set; }
 
+		[RegularExpression(@"^\d+\.\d{0,2}$")]
+		[Range(0, 9999.99)]
+		[Column("Preco", TypeName = "decimal(4,2)")]
 		public decimal Preco { get; set; }
+
 		public bool Destaque { get; set; }
 
 		[ForeignKey(nameof(IdPrato))]
