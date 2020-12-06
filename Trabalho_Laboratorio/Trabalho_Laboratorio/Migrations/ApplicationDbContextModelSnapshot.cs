@@ -508,6 +508,11 @@ namespace Trabalho_Laboratorio.Migrations
                         .HasColumnType("nvarchar(500)")
                         .HasMaxLength(500);
 
+                    b.Property<string>("GPS")
+                        .HasColumnName("GPS")
+                        .HasColumnType("nvarchar(400)")
+                        .HasMaxLength(400);
+
                     b.Property<string>("NomeRestaurante")
                         .IsRequired()
                         .HasColumnName("Nome_Restaurante")

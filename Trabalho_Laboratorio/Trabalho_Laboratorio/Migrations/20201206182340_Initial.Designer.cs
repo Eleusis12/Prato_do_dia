@@ -10,7 +10,7 @@ using Trabalho_Laboratorio.Data;
 namespace Trabalho_Laboratorio.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201204192900_Initial")]
+    [Migration("20201206182340_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -286,8 +286,9 @@ namespace Trabalho_Laboratorio.Migrations
                         .HasColumnType("nvarchar(500)")
                         .HasMaxLength(500);
 
-                    b.Property<float>("Preco")
-                        .HasColumnType("real");
+                    b.Property<decimal>("Preco")
+                        .HasColumnName("Preco")
+                        .HasColumnType("decimal(4,2)");
 
                     b.HasKey("IdAgendamento", "DataMarcacao", "DataDoAgendamento", "IdRestaurante", "IdPrato")
                         .HasName("PK__Agendar___28954093A2E8B8AC");

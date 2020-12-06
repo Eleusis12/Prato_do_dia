@@ -10,8 +10,8 @@ using Trabalho_Laboratorio.Data;
 namespace Trabalho_Laboratorio.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201206181532_teste")]
-    partial class teste
+    [Migration("20201206182926_GPS")]
+    partial class GPS
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -509,6 +509,11 @@ namespace Trabalho_Laboratorio.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(500)")
                         .HasMaxLength(500);
+
+                    b.Property<string>("GPS")
+                        .HasColumnName("GPS")
+                        .HasColumnType("nvarchar(400)")
+                        .HasMaxLength(400);
 
                     b.Property<string>("NomeRestaurante")
                         .IsRequired()

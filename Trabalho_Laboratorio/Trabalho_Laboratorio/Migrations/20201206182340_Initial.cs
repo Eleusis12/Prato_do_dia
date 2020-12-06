@@ -326,7 +326,7 @@ namespace Trabalho_Laboratorio.Migrations
                     ID_Prato = table.Column<int>(nullable: false),
                     Descricao_Extra = table.Column<string>(maxLength: 300, nullable: false),
                     Foto_Extra = table.Column<string>(maxLength: 500, nullable: false),
-                    Preco = table.Column<float>(nullable: false),
+                    Preco = table.Column<decimal>(type: "decimal(4,2)", nullable: false),
                     Destaque = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
