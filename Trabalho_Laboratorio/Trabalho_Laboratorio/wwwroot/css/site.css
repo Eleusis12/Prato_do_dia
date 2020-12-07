@@ -89,6 +89,16 @@ html {
 }*/
 
 /*---Firefox Bug Fix --*/
+/*
+.carousel-inner {
+	width: 100%;
+	max-height: 450px !important;
+}*/
+
+.carousel-inner {
+	margin-left: -15px;
+	margin-right: 100px;
+}
 
 .carousel-item {
 	transition: -webkit-transform 0.5s ease;
@@ -96,23 +106,23 @@ html {
 	transition: transform 0.5s ease, -webkit-transform 0.5s ease;
 	-webkit-backface-visibility: visible;
 	backface-visibility: visible;
-	width: 100%;
+	text-align: center !important;
 }
 
-	.carousel-item img {
-		width: 100vw;
-		height: inherit;
+	.carousel-item .img-fluid {
+		width: 100%;
+		height: 450px;
 		object-fit: cover;
 		object-position: 50% 50%;
 	}
 
-.carousel-inner {
-	position: relative;
-	width: 100%;
-	overflow: hidden;
-	max-height: 450px !important;
-}
-
+	/*
+anchors are inline so you need ot make them block to go full width
+*/
+	.carousel-item a {
+		display: block;
+		width: 100%;
+	}
 /*
 Extra small (xs) devices (portrait phones, less than 576px)
 No media query since this is the default in Bootstrap

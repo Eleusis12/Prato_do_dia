@@ -28,6 +28,7 @@ namespace Trabalho_Laboratorio.Data
 		public virtual DbSet<Prato> Prato { get; set; }
 		public virtual DbSet<Restaurante> Restaurante { get; set; }
 		public virtual DbSet<Utilizador> Utilizador { get; set; }
+		public virtual DbSet<Hero> Hero { get; set; }
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{

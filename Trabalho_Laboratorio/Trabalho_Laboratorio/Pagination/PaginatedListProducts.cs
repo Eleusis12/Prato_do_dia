@@ -13,11 +13,10 @@ namespace Trabalho_Laboratorio.Pagination
 		public int PageIndex { get; private set; }
 		public int TotalPages { get; private set; }
 
-		public PaginatedListProducts(List<T> items, int count, int pageIndex, int pageSize, List<AgendarPrato> Pratos_Destaque)
+		public PaginatedListProducts(List<T> items, int count, int pageIndex, int pageSize)
 		{
 			PageIndex = pageIndex;
 			TotalPages = (int)Math.Ceiling(count / (double)pageSize);
-			this.Pratos_Destaque = Pratos_Destaque;
 			this.AddRange(items);
 		}
 
@@ -37,13 +36,11 @@ namespace Trabalho_Laboratorio.Pagination
 			}
 		}
 
-		public List<AgendarPrato> Pratos_Destaque { get; set; }
-
-		public static async Task<PaginatedListProducts<T>> CreateAsync(IQueryable<T> source, int pageIndex, int pageSize, List<AgendarPrato> Pratos_Destaque)
+		public static async Task<PaginatedListProducts<T>> CreateAsync(IQueryable<T> source, int pageIndex, int pageSize)
 		{
 			var count = await source.CountAsync();
 			var items = await source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
-			return new PaginatedListProducts<T>(items, count, pageIndex, pageSize, Pratos_Destaque);
+			return new PaginatedListProducts<T>(items, count, pageIndex, pageSize);
 		}
 	}
 }

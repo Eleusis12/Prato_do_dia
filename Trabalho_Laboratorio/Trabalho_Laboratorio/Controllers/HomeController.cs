@@ -35,11 +35,17 @@ namespace Trabalho_Laboratorio.Controllers
 			// Obtém todos os produtos disponíveis na base de dados
 			var pratos = _context.AgendarPrato.Include(x => x.IdPratoNavigation).Include(x => x.IdRestauranteNavigation).Select(x => x);
 
-			List<AgendarPrato> pratos_destaque = pratos.Where(x => x.Destaque == true).ToList();
+			// Obter informação de destaque para apresentar na página principal
+			var informação_destaque = _context.Hero.Select(x => x);
 
-			// Retorna para o utilizador
-			return View(await PaginatedListProducts<AgendarPrato>.CreateAsync(
-				pratos.AsNoTracking(), page ?? 1, pageSize, pratos_destaque));
+			HomePageViewModel viewModel = new HomePageViewModel();
+			viewModel.ListaPratos = await PaginatedListProducts<AgendarPrato>.CreateAsync(
+				pratos.AsNoTracking(), page ?? 1, pageSize);
+
+			viewModel.Heroes = informação_destaque;
+
+			// Retorna para a view
+			return View(viewModel);
 		}
 
 		public IActionResult Privacy()
