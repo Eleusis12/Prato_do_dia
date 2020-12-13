@@ -13,6 +13,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Trabalho_Laboratorio.Services;
 
 namespace Trabalho_Laboratorio
 {
@@ -34,6 +36,13 @@ namespace Trabalho_Laboratorio
 			services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
 				.AddRoles<IdentityRole>()
 				.AddEntityFrameworkStores<ApplicationDbContext>();
+
+			// requires
+			// using Microsoft.AspNetCore.Identity.UI.Services;
+			// using WebPWrecover.Services;
+			services.AddTransient<IEmailSender, EmailSender>();
+			services.Configure<AuthMessageSenderOptions>(Configuration);
+
 			services.AddControllersWithViews();
 			services.AddRazorPages();
 
@@ -58,7 +67,7 @@ namespace Trabalho_Laboratorio
 				options.User.RequireUniqueEmail = false;
 
 				// Sign In setttings
-				options.SignIn.RequireConfirmedEmail = false;
+				options.SignIn.RequireConfirmedEmail = true;
 			});
 
 			services.ConfigureApplicationCookie(options =>

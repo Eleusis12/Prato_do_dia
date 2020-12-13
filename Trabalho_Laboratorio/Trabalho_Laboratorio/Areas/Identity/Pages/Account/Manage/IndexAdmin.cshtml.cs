@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using Trabalho_Laboratorio.Data;
+using Trabalho_Laboratorio.Helpers;
 using Trabalho_Laboratorio.Models;
 
 namespace Trabalho_Laboratorio.Areas.Identity.Pages.Account.Manage
@@ -45,6 +48,26 @@ namespace Trabalho_Laboratorio.Areas.Identity.Pages.Account.Manage
 
 		public class InputModel : Administrador
 		{
+			[Required]
+			[StringLength(50)]
+			[Display(Name = "Morada")]
+			public string EnderecoMorada { get; set; }
+
+			[Required]
+			[StringLength(8)]
+			[Display(Name = "Código Postal")]
+			[RegularExpression(@"^\d{4}(-\d{3})$", ErrorMessage = "Must be a valid Postal Code")]
+			public string EnderecoCodigoPostal { get; set; }
+
+			[Required]
+			[StringLength(30)]
+			[Display(Name = "Localidade")]
+			public string EnderecoLocalidade { get; set; }
+
+			[Display(Name = "Imagem")]
+			[Required(ErrorMessage = "Faz Upload a uma imagem do teu restaurante")]
+			[AllowedExtensions(new string[] { ".jpg", ".jpeg", ".png" })]
+			public IFormFile AdminFoto { get; set; }
 		}
 
 		private async Task LoadAsync(IdentityUser user)
@@ -61,6 +84,10 @@ namespace Trabalho_Laboratorio.Areas.Identity.Pages.Account.Manage
 				//PhoneNumber = phoneNumber
 				Nome = AdminBD.Nome,
 				Apelido = AdminBD.Apelido,
+				Foto = AdminBD.Foto,
+				EnderecoCodigoPostal = AdminBD.IdAdminNavigation.EnderecoCodigoPostal,
+				EnderecoMorada = AdminBD.IdAdminNavigation.EnderecoMorada,
+				EnderecoLocalidade = AdminBD.IdAdminNavigation.EnderecoLocalidade,
 			};
 		}
 
@@ -73,6 +100,8 @@ namespace Trabalho_Laboratorio.Areas.Identity.Pages.Account.Manage
 			}
 
 			await LoadAsync(user);
+			ViewData["Foto"] = AdminBD.Foto;
+
 			return Page();
 		}
 
@@ -105,6 +134,28 @@ namespace Trabalho_Laboratorio.Areas.Identity.Pages.Account.Manage
 
 			AdminBD.Nome = admin.Nome;
 			AdminBD.Apelido = admin.Apelido;
+
+			string destination = Path.Combine(_he.ContentRootPath, "wwwroot/Fotos/", Path.GetFileName(Input.AdminFoto.FileName));
+
+			// Creates a filestream to store the file listing
+			FileStream fs = new FileStream(destination, FileMode.Create);
+
+			try
+			{
+				Input.AdminFoto.CopyTo(fs);
+				fs.Close();
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+
+			// path para depois guardar na base de dados
+			Input.Foto = "/Fotos/" + Input.AdminFoto.FileName.ToString();
+			AdminBD.Foto = Input.Foto;
+			AdminBD.IdAdminNavigation.EnderecoLocalidade = Input.EnderecoLocalidade;
+			AdminBD.IdAdminNavigation.EnderecoCodigoPostal = Input.EnderecoCodigoPostal;
+			AdminBD.IdAdminNavigation.EnderecoMorada = Input.EnderecoMorada;
 
 			ModelState.Clear();
 

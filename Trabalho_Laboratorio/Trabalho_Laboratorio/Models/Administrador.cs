@@ -5,20 +5,30 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Trabalho_Laboratorio.Models
 {
-    public partial class Administrador
-    {
-        [Key]
-        [Column("ID_Admin")]
-        public int IdAdmin { get; set; }
-        [Required]
-        [StringLength(100)]
-        public string Nome { get; set; }
-        [Required]
-        [StringLength(20)]
-        public string Apelido { get; set; }
+	public partial class Administrador
+	{
+		[Key]
+		[Column("ID_Admin")]
+		public int IdAdmin { get; set; }
 
-        [ForeignKey(nameof(IdAdmin))]
-        [InverseProperty(nameof(Utilizador.Administrador))]
-        public virtual Utilizador IdAdminNavigation { get; set; }
-    }
+		[Required]
+		[StringLength(100)]
+		public string Nome { get; set; }
+
+		[Required]
+		[StringLength(20)]
+		public string Apelido { get; set; }
+
+		[Required]
+		[StringLength(500)]
+		public string Foto { get; set; }
+
+		[Required]
+		[StringLength(20)]
+		public string Telefone { get; set; }
+
+		[ForeignKey(nameof(IdAdmin))]
+		[InverseProperty(nameof(Utilizador.Administrador))]
+		public virtual Utilizador IdAdminNavigation { get; set; }
+	}
 }

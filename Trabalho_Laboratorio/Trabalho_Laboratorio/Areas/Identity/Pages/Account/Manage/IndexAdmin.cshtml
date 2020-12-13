@@ -25,6 +25,31 @@
 				<input asp-for="Input.Apelido" class="form-control" />
 				<span asp-validation-for="Input.Apelido" class="text-danger"></span>
 			</div>
+			<div class="form-group">
+				@if ((string)ViewData["Foto"] != "Null")
+				{
+					<img class="rounded mx-auto d-block" src="@ViewData["Foto"]" alt="" />
+
+				}
+				<input asp-for="Input.AdminFoto" type="file" class="form-control" />
+				<span asp-validation-for="Input.AdminFoto" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Input.EnderecoMorada" class="control-label"></label>
+				<input asp-for="Input.EnderecoMorada" class="form-control" />
+				<span asp-validation-for="Input.EnderecoMorada" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Input.EnderecoCodigoPostal" class="control-label"></label>
+				<input asp-for="Input.EnderecoCodigoPostal" id="cep" class="form-control" />
+				<span asp-validation-for="Input.EnderecoCodigoPostal" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Input.EnderecoLocalidade" class="control-label"></label>
+				<input asp-for="Input.EnderecoLocalidade" class="form-control" />
+				<span asp-validation-for="Input.EnderecoLocalidade" class="text-danger"></span>
+			</div>
+
 			<button id="update-profile-button" type="submit" class="btn btn-primary">Save</button>
 		</form>
 	</div>
