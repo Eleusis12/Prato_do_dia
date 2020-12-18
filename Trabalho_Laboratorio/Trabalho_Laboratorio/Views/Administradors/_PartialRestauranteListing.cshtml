@@ -1,0 +1,67 @@
+﻿@model IQueryable<Trabalho_Laboratorio.Models.Restaurante>
+
+<div class="table-responsive">
+	<table class="table v-middle">
+		<thead>
+			<tr class="bg-light">
+				<th class="border-top-0">Nome do Restaurante</th>
+				<th class="border-top-0">Telefone</th>
+				<th class="border-top-0">Email</th>
+				<th class="border-top-0">Detalhes</th>
+				<th class="border-top-0">Aceitar Pedido</th>
+				<th class="border-top-0">Recusar Pedido</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var restaurante in Model)
+			{
+				<tr>
+					<td>
+						<div class="d-flex align-items-center">
+							<div class="m-r-10">
+								<a class="btn btn-circle d-flex btn-info text-white">EA</a>
+							</div>
+							<div class="">
+								<h4 class="m-b-0 font-16">@restaurante.NomeRestaurante</h4>
+							</div>
+						</div>
+					</td>
+					<td>@restaurante.Telefone</td>
+					<td>@restaurante.IdRestauranteNavigation.Email</td>
+					<td>
+						<a asp-controller="Restaurantes" asp-action="Detalhes" class="btn btn-success">Detalhes</a>
+					</td>
+					<td>
+						<form asp-action="AceitarRestaurante" asp-route-id="@restaurante.IdRestaurante" data-ajax="true" data-ajax-method="post"
+							  data-ajax-mode="replace" data-ajax-update="#Tabela">
+							<img id="AcceptImage" src="/assets/images/yes.png" alt="Aceitar"
+								 class="rounded-circle btn" style="width:64px;" />
+							<button type="submit" id="accept" hidden />
+						</form>
+					</td>
+
+					<td>
+						<form asp-action="RecusarRestaurante" asp-route-id="@restaurante.IdRestaurante" data-ajax="true" data-ajax-method="post"
+							  data-ajax-mode="replace" data-ajax-update="#Tabela" data-ajax-confirm="Tem a certeza?">
+							<img id="RejectImage" src="/assets/images/rejected.png" alt="Recusar"
+								 class="rounded-circle btn" style="width: 64px;" />
+							<button type="submit" id="reject" hidden />
+						</form>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
+
+<script>
+	const acceptBtn = document.querySelector('#AcceptImage');
+	const rejectBtn = document.querySelector('#RejectImage');
+
+	acceptBtn.addEventListener('click', function () {
+		document.getElementById("accept").click();
+	});
+	rejectBtn.addEventListener('click', function () {
+		document.getElementById("reject").click();
+	});
+</script>

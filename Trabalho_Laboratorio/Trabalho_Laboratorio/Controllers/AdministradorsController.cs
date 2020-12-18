@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -58,6 +61,74 @@ namespace Trabalho_Laboratorio.Controllers
 			var administrador = _context.Administrador.Include(m => m.IdAdminNavigation).FirstOrDefault(m => m.IdAdminNavigation.Username == UserName);
 
 			return View(administrador);
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> AceitarRestaurante(int? id)
+		{
+			if (id == null)
+			{
+				return NotFound();
+			}
+
+			var restaurante = await _context.Restaurante
+				.Include(a => a.IdRestauranteNavigation)
+				.FirstOrDefaultAsync(m => m.IdRestaurante == id);
+
+			if (restaurante == null)
+			{
+				return NotFound();
+			}
+
+			restaurante.StatusRestaurante = true;
+			_context.SaveChanges();
+
+			return PartialView("_PartialRestauranteListing", _context.Restaurante.Include(m => m.IdRestauranteNavigation).Where(x => x.StatusRestaurante == false));
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> RecusarRestauranteAsync(int? id)
+		{
+			if (id == null)
+			{
+				return NotFound();
+			}
+
+			var restaurante = await _context.Restaurante
+				.Include(a => a.IdRestauranteNavigation)
+				.FirstOrDefaultAsync(m => m.IdRestaurante == id);
+
+			if (restaurante == null)
+			{
+				return NotFound();
+			}
+
+			// Guardar temporariamente o valor do username para que possamos apagar os respetivos dados tb nas outras tableas não apenas na tabela restaurante
+			string username = restaurante.IdRestauranteNavigation.Username;
+
+			// Apaga na tabela restaurante
+			_context.Restaurante.Remove(restaurante);
+
+			// Apaga na tabela utilizador
+			_context.Utilizador.Remove(_context.Utilizador.First(x => x.Username == username));
+
+			IdentityUser user = await _userManager.GetUserAsync(User);
+			if (user != null)
+			{
+				using (ApplicationDbContext dbcontext = new ApplicationDbContext())
+				{
+					dbcontext.UserLogins.RemoveRange(dbcontext.UserLogins.Where(ul => ul.UserId == user.Id));
+
+					dbcontext.UserRoles.RemoveRange(dbcontext.UserRoles.Where(ur => ur.UserId == user.Id));
+
+					dbcontext.Users.Remove(dbcontext.Users.Where(usr => usr.Id == user.Id).Single());
+
+					dbcontext.SaveChanges();
+				}
+				return PartialView("_PartialRestauranteListing", _context.Restaurante.Include(m => m.IdRestauranteNavigation).Where(x => x.StatusRestaurante == false));
+			}
+
+			return RedirectToAction(nameof(Index));
 		}
 
 		// GET: Administradors/Details/5
