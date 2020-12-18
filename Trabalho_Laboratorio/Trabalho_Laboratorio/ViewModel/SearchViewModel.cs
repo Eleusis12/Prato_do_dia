@@ -7,11 +7,10 @@ using Trabalho_Laboratorio.Pagination;
 
 namespace Trabalho_Laboratorio.ViewModel
 {
-	public class HomePageViewModel
+	public class SearchViewModel
 	{
-		public PaginatedListProducts<AgendarPrato> ListaPratos { get; set; }
-		public PaginatedListProducts<AgendarPrato> Destaque { get; set; }
-
-		public IQueryable<Hero> Heroes { get; set; }
+		public string Query { get; set; }
+		public PaginatedListProducts<AgendarPrato> Pratos { get; set; }
+		public PaginatedListProducts<Restaurante> Restaurantes { get; set; }
 	}
 }

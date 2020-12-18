@@ -67,7 +67,7 @@ namespace Trabalho_Laboratorio
 				options.User.RequireUniqueEmail = false;
 
 				// Sign In setttings
-				options.SignIn.RequireConfirmedEmail = true;
+				options.SignIn.RequireConfirmedEmail = false;
 			});
 
 			services.ConfigureApplicationCookie(options =>

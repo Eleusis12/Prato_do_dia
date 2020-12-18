@@ -1,0 +1,110 @@
+﻿@{
+	ViewData["Title"] = "Search";
+}
+
+@model Trabalho_Laboratorio.ViewModel.SearchViewModel
+
+<div class="toast" style="position: absolute; top: 0; right: 0;">
+	<div class="toast-header">
+		<img src="..." class="rounded mr-2" alt="...">
+		<strong id="toast-title" class="mr-auto">Bootstrap</strong>
+		<small>Agora</small>
+		<button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	<div class="toast-body">
+		Hello, world! This is a toast message.
+	</div>
+</div>
+
+<div class="container-fluid ">
+	<div class="row">
+		<div class="col-12">
+			<p class="text-capitalize">Resultados da pesquisa por @Model.Query</p>
+		</div>
+	</div>
+
+	@if (Model.Restaurantes.Count != 0)
+	{
+
+		<h4>@Model.Restaurantes.Count restaurantes encontrados</h4>
+		<hr />
+
+		<table class="table">
+			<thead>
+				<tr>
+					<th>
+						@Html.DisplayNameFor(model => model.Restaurantes.First().NomeRestaurante)
+					</th>
+
+					<th>
+						@Html.DisplayNameFor(model => model.Restaurantes.First().Foto)
+					</th>
+
+					<th>
+						@Html.DisplayNameFor(model => model.Restaurantes.First().TipoServico)
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var restaurante in Model.Restaurantes)
+				{
+					<tr>
+						<td>
+							@restaurante.NomeRestaurante
+						</td>
+
+						<td>
+							<img src="@restaurante.Foto)" />
+						</td>
+						<td>
+							@restaurante.TipoServico
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	}
+
+	@if (Model.Pratos.Count != 0)
+	{
+		@if (ViewData["Notificacao"] != "true")
+		{
+			<form asp-action="AddQueryToFavorites" data-ajax="true" data-ajax-method="post" data-ajax-success="sucesso" data-ajax-failure="Erro">
+				<input hidden type="text" name="query" value="@Model.Query" />
+				<button type="submit" class="add-favorite-list">Recebe notificações sobre @Model.Query</button>
+			</form>
+		}
+
+		<div class="row">
+
+			<div class="col-md-2 offset-md-1 col-sm-12  mt-5 rounded bg-light">
+				<h4>Filtros</h4>
+			</div>
+
+			<div class="col-md-6 col-sm-12 rounded bg-light mt-5 offset-md-1">
+				<h2 class="mt-1 text-capitalize">Pratos do dia</h2>
+
+				<h4>@Model.Pratos.Count Pratos encontrados</h4>
+				<hr />
+
+				@await Html.PartialAsync("_PartialListing", Model.Pratos)
+			</div>
+		</div>
+	}
+</div>
+<script>
+
+	function sucesso() {
+		$("#toast-title").text = "Sucesso"
+		$('.toast-body').text = "Será notificado da próxima vez que o prato seja adicionado ao site."
+		$('.toast').toast('show');
+
+	}
+	function Erro() {
+		$("#toast-title").text = "Erro"
+		$('.toast-body').text = "Não foi possível efetuar a operação."
+		$('.toast').toast('show');
+	}
+</script>

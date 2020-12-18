@@ -36,36 +36,37 @@
 		<span class="sr-only">Next</span>
 	</a>
 </div>
-<div class="row">
-	<div class="container rounded bg-light mt-5  ">
 
-		@*GRID COM OS PRATOS DO DIA*@
-		<section class="card-wrapper mt-5 p-1">
+<div class="container-fluid ">
+	<div class="row">
+		<div class="col-md-8 col-sm-12 rounded bg-light mt-5 offset-md-1">
+			<h2 class="mt-1 grid-title">RECOMENDADO PARA SI</h2>
 
-			@foreach (var item in Model.ListaPratos)
-			{
-
-				<article class="card card-meal">
-					<div class="img-wrap">
-						<a asp-controller="AgendarPratos" asp-action="Detalhes" asp-route-id="@item.IdAgendamento">
-							<img class="meal-image" src="@Html.DisplayFor(modelItem => item.FotoExtra)">
-						</a>
-						<div class="ml-2"><span class="h6">@Html.DisplayFor(modelItem => item.IdPratoNavigation.Nome) (@Html.DisplayFor(modelItem => item.IdPratoNavigation.TipoPrato))</span></div>
-						<div class="ml-2"><a class="h6" asp-controller="Restaurantes" asp-action="Detalhes" asp-route-id="@item.IdRestaurante">@Html.DisplayFor(modelItem => item.IdRestauranteNavigation.NomeRestaurante)</a></div>
-					</div>
-					<figcaption class="info-wrap">
-						<div class="meal-content"><p>@item.DescricaoExtra</p></div>
-						<span class="price-content">@Html.DisplayFor(modelItem => item.Preco)€</span>
-					</figcaption>
-				</article>
-
-			}
-		</section>
-		@{
-			var prevDisabled = !Model.ListaPratos.HasPreviousPage ? "disabled" : "";
-			var nextDisabled = !Model.ListaPratos.HasNextPage ? "disabled" : "";
-		}
+			@await Html.PartialAsync("_PartialListing", Model.ListaPratos)
+		</div>
+		<div class="col-md-2 col-sm-12 col-md-offset-1 ">
+			<div class="rounded bg-light mt-5">
+				<h2 class="mt-3 spotlight-title">DESTAQUES DO DIA</h2>
+				@foreach (var prato_destaque in Model.Destaque)
+				{
+					<section class="spotlight-card">
+						<div class="spotlight-image-container">
+							<img src="@prato_destaque.FotoExtra" class="spotlight-image" />
+						</div>
+						<div class="spotlight-info">
+							<a asp-action="Detalhes" asp-controller="AgendarPratos" asp-route-id="@prato_destaque.IdAgendamento"><p>@prato_destaque.IdPratoNavigation.Nome</p></a>
+						</div>
+					</section>
+					i++;
+				}
+			</div>
+		</div>
 	</div>
+
+	@{
+		var prevDisabled = !Model.ListaPratos.HasPreviousPage ? "disabled" : "";
+		var nextDisabled = !Model.ListaPratos.HasNextPage ? "disabled" : "";
+	}
 </div>
 
 <div class="row justify-content-center mt-3">

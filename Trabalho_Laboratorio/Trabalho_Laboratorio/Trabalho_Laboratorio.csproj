@@ -27,6 +27,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.jQuery.Unobtrusive.Ajax" Version="3.2.6" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
     <PackageReference Include="System.Collections" Version="4.3.0" />
   </ItemGroup>
@@ -256,6 +257,8 @@
     <None Include="wwwroot\dist\js\pages\dashboards\dashboard1.js" />
     <None Include="wwwroot\dist\js\sidebarmenu.js" />
     <None Include="wwwroot\dist\js\waves.js" />
+    <None Include="wwwroot\lib\jquery-ajax\jquery.unobtrusive-ajax.js" />
+    <None Include="wwwroot\lib\jquery-ajax\jquery.unobtrusive-ajax.min.js" />
   </ItemGroup>
 
 </Project>

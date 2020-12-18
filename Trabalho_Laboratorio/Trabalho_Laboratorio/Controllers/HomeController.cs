@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -20,11 +21,13 @@ namespace Trabalho_Laboratorio.Controllers
 	{
 		private readonly ILogger<HomeController> _logger;
 		private readonly ApplicationDbContext _context;
+		private readonly UserManager<IdentityUser> _userManager;
 
-		public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
+		public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, UserManager<IdentityUser> userManager)
 		{
 			_logger = logger;
 			_context = context;
+			_userManager = userManager;
 		}
 
 		public async Task<ActionResult> Index(int? page)
@@ -41,8 +44,80 @@ namespace Trabalho_Laboratorio.Controllers
 			HomePageViewModel viewModel = new HomePageViewModel();
 			viewModel.ListaPratos = await PaginatedListProducts<AgendarPrato>.CreateAsync(
 				pratos.AsNoTracking(), page ?? 1, pageSize);
+			viewModel.Destaque = await PaginatedListProducts<AgendarPrato>.CreateAsync(pratos.Where(z => z.Destaque == true).AsNoTracking(), 1, 5);
 
 			viewModel.Heroes = informação_destaque;
+
+			// Retorna para a view
+			return View(viewModel);
+		}
+
+		[HttpPost]
+		public async Task<string> AddQueryToFavoritesAsync(string query)
+		{
+			// For ASP.NET Core <= 3.1
+			Utilizador utilizador = await GetUtilizador();
+			PalavrasChave palavra = new PalavrasChave();
+
+			// Se a palavra já foi adicionada anteriormente à base de dados
+			if (_context.PalavrasChave.FirstOrDefault(x => x.IdUtilizador == utilizador.IdUtilizador && x.Palavra == query) != null)
+			{
+				return "";
+			}
+			// Adicionar à base de dados
+			else
+			{
+				palavra.IdUtilizador = utilizador.IdUtilizador;
+				palavra.Palavra = query;
+				_context.PalavrasChave.Add(palavra);
+				_context.SaveChanges();
+			}
+			return "Sucess";
+		}
+
+		private async Task<Utilizador> GetUtilizador()
+		{
+			IdentityUser applicationUser = await _userManager.GetUserAsync(User);
+			string UserName = applicationUser?.UserName; // will give the user's Email
+
+			// ID do Restaurante
+			var utilizador = _context.Utilizador.FirstOrDefault(m => m.Username == UserName);
+			return utilizador;
+		}
+
+		public async Task<ActionResult> Search(int? page, string query)
+		{
+			Utilizador utilizador = await GetUtilizador();
+
+			if (_context.PalavrasChave.FirstOrDefault(x => x.IdUtilizador == utilizador.IdUtilizador && x.Palavra == query) != null)
+			{
+				ViewData["Notificacao"] = "true";
+			}
+
+			// Definimos que queremos apresentar 20 produtos por página (no máximo)
+			int pageSize = 20;
+
+			// Obtém todos os produtos disponíveis na base de dados
+			var pratos = _context.AgendarPrato.Include(x => x.IdPratoNavigation).Include(x => x.IdRestauranteNavigation).Select(x => x);
+			var restaurantes = _context.Restaurante.Include(x => x.IdRestauranteNavigation).Select(x => x);
+
+			if (!String.IsNullOrEmpty(query))
+			{
+				pratos = pratos.Where(s => s.IdPratoNavigation.Nome.Contains(query));
+			}
+
+			if (!String.IsNullOrEmpty(query))
+			{
+				restaurantes = restaurantes.Where(s => s.NomeRestaurante.Contains(query));
+			}
+
+			// Popular o View Model para apresentar ao utilizador
+			SearchViewModel viewModel = new SearchViewModel();
+			viewModel.Query = query;
+			viewModel.Pratos = await PaginatedListProducts<AgendarPrato>.CreateAsync(
+				pratos.AsNoTracking(), page ?? 1, pageSize);
+			viewModel.Restaurantes = await PaginatedListProducts<Restaurante>.CreateAsync(
+				restaurantes.AsNoTracking(), page ?? 1, pageSize);
 
 			// Retorna para a view
 			return View(viewModel);

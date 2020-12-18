@@ -6,7 +6,8 @@
 	<title>@ViewData["Title"] - Restaurantes Deluxe</title>
 	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-SandStone.min.css" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
-
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
@@ -27,6 +28,24 @@
 						{
 
 							<li class="nav-item text-light"><a asp-controller="Administradors" asp-action="Index">DashBoard</a></li>
+						}
+						@if (User.IsInRole("Client"))
+						{
+							<li>
+
+								<form class="" asp-controller="Home" asp-action="Search">
+									<div class="search-container form-group">
+										<input id="search-bar" type="text" placeholder="Search.." name="query">
+										<button id="submit-search" type="submit"><i class="fa fa-search"></i></button>
+									</div>
+								</form>
+							</li>
+
+						}
+						@if (User.IsInRole("Restaurant"))
+						{
+							<li class="nav-item text-light"><a asp-controller="AgendarPratos" asp-action="Adicionar">Adicionar Prato</a></li>
+
 						}
 					</ul>
 				</div>
@@ -135,9 +154,21 @@
 	</footer>
 	<!-- Footer -->
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/jquery-ajax/jquery.unobtrusive-ajax.js"></script>
 	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 	<script src="~/js/site.js" asp-append-version="true"></script>
+	<script>
+		const searchBar = document.querySelector("#search-bar");
+		searchBar.addEventListener("keyup", function () {
+			// Number 13 is the "Enter" key on the keyboard
+			if (event.keyCode === 13) {
+				// Cancel the default action, if needed
+				event.preventDefault();
+				// Trigger the button element with a click
+				document.getElementById("submit-search").click();
+			}
+	</script>
 
 	@RenderSection("Scripts", required: false)
 </body>

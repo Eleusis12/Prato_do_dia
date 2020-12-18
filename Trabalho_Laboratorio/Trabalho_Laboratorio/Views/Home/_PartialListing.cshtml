@@ -1,0 +1,23 @@
+﻿@model Trabalho_Laboratorio.Pagination.PaginatedListProducts<AgendarPrato>
+
+<section class="card-wrapper p-1 rounded bg-light">
+
+	@foreach (var item in Model)
+	{
+
+		<article class="card card-meal">
+			<div class="img-wrap">
+				<a asp-controller="AgendarPratos" asp-action="Detalhes" asp-route-id="@item.IdAgendamento">
+					<img class="meal-image" src="@Html.DisplayFor(modelItem => item.FotoExtra)">
+				</a>
+				<div class="ml-2"><span class="h6">@Html.DisplayFor(modelItem => item.IdPratoNavigation.Nome) (@Html.DisplayFor(modelItem => item.IdPratoNavigation.TipoPrato))</span></div>
+				<div class="ml-2"><a class="h6" asp-controller="Restaurantes" asp-action="Detalhes" asp-route-id="@item.IdRestaurante">@Html.DisplayFor(modelItem => item.IdRestauranteNavigation.NomeRestaurante)</a></div>
+			</div>
+			<figcaption class="info-wrap">
+				<div class="meal-content"><p>@item.DescricaoExtra</p></div>
+				<span class="price-content">@Html.DisplayFor(modelItem => item.Preco)€</span>
+			</figcaption>
+		</article>
+
+	}
+</section>
