@@ -29,25 +29,20 @@
 
 							<li class="nav-item text-light"><a asp-controller="Administradors" asp-action="Index">DashBoard</a></li>
 						}
-						@if (User.IsInRole("Client"))
-						{
-							<li>
 
-								<form class="" asp-controller="Home" asp-action="Search">
-									<div class="search-container form-group">
-										<input id="search-bar" type="text" placeholder="Search.." name="query">
-										<button id="submit-search" type="submit"><i class="fa fa-search"></i></button>
-									</div>
-								</form>
-							</li>
-
-						}
 						@if (User.IsInRole("Restaurant"))
 						{
 							<li class="nav-item text-light"><a asp-controller="AgendarPratos" asp-action="Adicionar">Adicionar Prato</a></li>
 
 						}
 					</ul>
+					@if (User.IsInRole("Client"))
+					{
+						<form class="form-inline my-2 my-lg-0" asp-controller="Home" asp-action="Search">
+							<input id="search-bar" class="form-control mr-sm-2" type="search" placeholder="Pesquise" aria-label="Search" name="query">
+							<button id="submit-search" class="btn btn-outline-success my-2 my-sm-0" type="submit">Pesquisar</button>
+						</form>
+					}
 				</div>
 			</div>
 		</nav>

@@ -7,7 +7,7 @@
 @{
 	ViewData["Title"] = "Index";
 }
-@model Trabalho_Laboratorio.ViewModel.AdminIndexViewModel
+@model Trabalho_Laboratorio.ViewModel.AdminCheckNotificationsViewModel
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -60,7 +60,8 @@
 						<div class="d-flex align-items-center">
 							<nav aria-label="breadcrumb">
 								<ol class="breadcrumb">
-									<li class="breadcrumb-item"><a href="#">Home</a></li>
+									<li class="breadcrumb-item"><a asp-action="Index">Home</a></li>
+									<li class="breadcrumb-item active" aria-current="page">Notificações</li>
 								</ol>
 							</nav>
 						</div>
@@ -113,12 +114,6 @@
 								<h4 class="card-title">Úlimos Agendamentos</h4>
 								<div class="feed-widget">
 									<ul class="list-style-none feed-body m-0 p-b-20">
-										@foreach (var agendamento in Model.ListaAgendamentos)
-										{
-											<li class="feed-item">
-												<div class="feed-icon bg-info"><i class="far fa-bell"></i></div> O restaurante @agendamento.IdRestauranteNavigation.NomeRestaurante agendou o prato @agendamento.IdPratoNavigation.Nome para a data @agendamento.DataMarcacao <span class="ml-auto font-12 text-muted">@agendamento.DataDoAgendamento.Subtract(@DateTime.Now)</span>
-											</li>
-										}
 									</ul>
 								</div>
 							</div>
@@ -144,9 +139,6 @@
 									</div>
 								</div>
 								<!-- title -->
-							</div>
-							<div id="Tabela">
-								@await Html.PartialAsync("_PartialRestauranteListing", Model.ListaRestaurantes)
 							</div>
 						</div>
 					</div>
@@ -337,3 +329,4 @@
 	<script src="../../assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
 	<script src="../../dist/js/pages/dashboards/dashboard1.js"></script>
 </body>
+</html>

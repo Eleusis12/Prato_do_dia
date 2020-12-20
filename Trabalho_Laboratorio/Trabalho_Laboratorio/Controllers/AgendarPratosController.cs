@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -21,13 +22,15 @@ namespace Trabalho_Laboratorio.Controllers
 		private readonly ApplicationDbContext _context;
 		private readonly IHostEnvironment _he;
 		private readonly UserManager<IdentityUser> _userManager;
+		private readonly IEmailSender _emailSender;
 
 		public AgendarPratosController(ApplicationDbContext context, IHostEnvironment host,
-			UserManager<IdentityUser> userManager)
+			UserManager<IdentityUser> userManager, IEmailSender emailSender)
 		{
 			_context = context;
 			_he = host;
 			_userManager = userManager;
+			_emailSender = emailSender;
 		}
 
 		// GET: AgendarPratos
@@ -59,8 +62,20 @@ namespace Trabalho_Laboratorio.Controllers
 		}
 
 		[Authorize(Roles = "Restaurant,Admin")]
-		public IActionResult Adicionar()
+		public async Task<IActionResult> AdicionarAsync()
 		{
+			// For ASP.NET Core <= 3.1
+			IdentityUser applicationUser = await _userManager.GetUserAsync(User);
+			string UserName = applicationUser?.UserName; // will give the user's Email
+
+			// Obter o restaurante (utilizador)
+			var utilizador = _context.Restaurante.Include(x => x.IdRestauranteNavigation).FirstOrDefault(m => m.IdRestauranteNavigation.Username == UserName);
+			if (utilizador.StatusRestaurante == false)
+			{
+				// Se o restaurante ainda não está aprovado, retorna a a seguinte mensagem
+				return View("Acesso Negado: Aguarde que o administrador aprove o seu pedido de registo");
+			}
+
 			ViewData["IdPrato"] = new SelectList(_context.Prato, "IdPrato", "Nome");
 			ViewData["Tipo_Prato"] = new SelectList(new List<string> { "Carne", "Peixe", "Vegan" });
 			return View();
@@ -120,8 +135,35 @@ namespace Trabalho_Laboratorio.Controllers
 			{
 				_context.Add(agendarPrato);
 				await _context.SaveChangesAsync();
+
+				// O prato foi introduzido na base de dados, agora temos que notificar os utilizadores que pretendem ser notificados
+				var utilizadoresANotificar = _context.GuardarClientePratoFavorito.Include(x => x.IdClienteNavigation).Include(x => x.IdClienteNavigation.IdClienteNavigation).Where(x => x.IdPrato == agendarPrato.IdPrato);
+
+				// Há utilizadores para notificar
+				if (utilizadoresANotificar != null)
+				{
+					foreach (var user in utilizadoresANotificar)
+					{
+						await _emailSender.SendEmailAsync(user.IdClienteNavigation.IdClienteNavigation.Email, $"RestaurantesDeluxe:'{agendarPrato.IdPratoNavigation.Nome} adicionado '",
+						$"Venha provar o novo prato, confecionado pelo {agendarPrato.IdRestauranteNavigation.NomeRestaurante}");
+					}
+				}
+
+				var utilizadoresANotificar2 = _context.PalavrasChave.Include(x => x.IdUtilizadorNavigation).Where(x => x.Palavra.Contains(agendarPrato.IdPratoNavigation.Nome));
+
+				// Há utilizadores para notificar
+
+				if (utilizadoresANotificar != null)
+				{
+					foreach (var user in utilizadoresANotificar)
+					{
+						await _emailSender.SendEmailAsync(user.IdClienteNavigation.IdClienteNavigation.Email, $"RestaurantesDeluxe:'{agendarPrato.IdPratoNavigation.Nome} adicionado '",
+						$"Venha provar o novo prato, confecionado pelo {agendarPrato.IdRestauranteNavigation.NomeRestaurante}");
+					}
+				}
 				return RedirectToAction(nameof(Index));
 			}
+
 			ViewData["IdPrato"] = new SelectList(_context.Prato, "IdPrato", "DescricaoDefault", agendarPrato.IdPrato);
 			ViewData["IdRestaurante"] = new SelectList(_context.Restaurante, "IdRestaurante", "DiaDeDescanso", agendarPrato.IdRestaurante);
 			return View(agendarPrato);

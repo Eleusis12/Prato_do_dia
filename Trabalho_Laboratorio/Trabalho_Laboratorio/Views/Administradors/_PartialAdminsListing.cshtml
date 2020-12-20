@@ -1,0 +1,90 @@
+﻿@model IQueryable<Trabalho_Laboratorio.Models.Administrador>
+<div class="row">
+
+	<div class="col-12">
+		<div class="card">
+			<div class="card-body">
+				<h4 class="card-title">Gere aqui os utilizadores</h4>
+				<h6 class="card-subtitle">
+					Bloqueia os utilizadores que pretende
+				</h6>
+			</div>
+			<div class="table-responsive">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th scope="col"></th>
+							<th scope="col">Nome</th>
+							<th scope="col">Bloquear</th>
+						</tr>
+					</thead>
+					<tbody>
+						@{int i = 0; }
+						@foreach (var administrador in Model)
+						{
+							<tr>
+								<th scope="row">@(i + 1)</th>
+								<td>@administrador.Nome nbsp; @administrador.Apelido </td>
+								<td>
+									<form asp-action="BloquearUtilizador" asp-route-id="@administrador.IdAdmin" data-ajax="true" data-ajax-method="post"
+										  data-ajax-mode="replace" data-ajax-update="#Tabela-Admin" data-ajax-confirm="Tem a certeza?">
+										<img src="/assets/images/rejected.png" alt="Recusar"
+											 class="rounded-circle btn RejectImage" style="width: 64px;" />
+										<button type="submit" class="reject" hidden />
+									</form>
+								</td>
+							</tr>
+							i++;
+						}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	const rejectBtn = document.querySelectorAll('.RejectImage').forEach(function (item) {
+		item.addEventListener('click', function () {
+
+			console.log("Botão Clicado -1 ");
+			const formulario = item.parentElement;
+
+			const dv = document.createElement('div');
+			dv.classList.add("form-group");
+			dv.classList.add("reason-ban");
+
+			console.log("Botão Clicado -2 ");
+
+			const lbl = document.createElement('label');
+			lbl.innerText = "Motivo do Bloqueio";
+
+			const txtarea = document.createElement('textarea');
+			txtarea.classList.add("form-control");
+			txtarea.setAttribute("rows", 4);
+			txtarea.setAttribute("name", "motivo");
+
+			const btn = document.createElement('button');
+			btn.classList.add("btn");
+			btn.classList.add("btn-primary");
+			btn.type = 'submit';
+			btn.innerText = "Bloquear Utilizador";
+			console.log("Botão Clicado -3 ");
+
+			// Tentar fazer aparecer no ecrã
+			dv.appendChild(lbl);
+			dv.appendChild(txtarea);
+			dv.appendChild(btn);
+
+			console.log("Botão Clicado");
+
+			formulario.appendChild(dv);
+
+			console.log("Botão Clicado - 4");
+
+			console.log("Botão Clicado- fim");
+		}
+
+		);
+	});
+</script>

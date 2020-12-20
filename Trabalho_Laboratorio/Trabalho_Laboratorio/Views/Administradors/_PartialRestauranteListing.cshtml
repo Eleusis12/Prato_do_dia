@@ -34,18 +34,18 @@
 					<td>
 						<form asp-action="AceitarRestaurante" asp-route-id="@restaurante.IdRestaurante" data-ajax="true" data-ajax-method="post"
 							  data-ajax-mode="replace" data-ajax-update="#Tabela">
-							<img id="AcceptImage" src="/assets/images/yes.png" alt="Aceitar"
-								 class="rounded-circle btn" style="width:64px;" />
-							<button type="submit" id="accept" hidden />
+							<img src="/assets/images/yes.png" alt="Aceitar"
+								 class=" AcceptImage rounded-circle btn" style="width:64px;" />
+							<button type="submit" class="accept" hidden />
 						</form>
 					</td>
 
 					<td>
 						<form asp-action="RecusarRestaurante" asp-route-id="@restaurante.IdRestaurante" data-ajax="true" data-ajax-method="post"
 							  data-ajax-mode="replace" data-ajax-update="#Tabela" data-ajax-confirm="Tem a certeza?">
-							<img id="RejectImage" src="/assets/images/rejected.png" alt="Recusar"
-								 class="rounded-circle btn" style="width: 64px;" />
-							<button type="submit" id="reject" hidden />
+							<img src="/assets/images/rejected.png" alt="Recusar"
+								 class=" RejectImage rounded-circle btn" style="width: 64px;" />
+							<button type="submit" class="reject" hidden />
 						</form>
 					</td>
 				</tr>

@@ -75,6 +75,72 @@ namespace Trabalho_Laboratorio.Controllers
 			return "Sucess";
 		}
 
+		[HttpPost]
+		public async Task<string> AddDishToFavoritesAsync(int? id)
+		{
+			if (id == null)
+			{
+				return "";
+			}
+
+			// For ASP.NET Core <= 3.1
+			Utilizador utilizador = await GetUtilizador();
+			Prato prato = new Prato();
+
+			//obter o prato de acordo com o id enviado
+			prato = _context.Prato.FirstOrDefault(x => x.IdPrato == id);
+
+			// Se o prato já foi adicionada anteriormente à base de dados como prato favorito do cliente em causa
+			if (_context.GuardarClientePratoFavorito.FirstOrDefault(x => x.IdCliente == utilizador.IdUtilizador && x.IdPrato == id) != null)
+			{
+				return "";
+			}
+			// Adicionar à base de dados
+			else
+			{
+				GuardarClientePratoFavorito prato_favorito = new GuardarClientePratoFavorito();
+
+				prato_favorito.IdCliente = utilizador.IdUtilizador;
+				prato_favorito.IdPrato = (int)id;
+				_context.GuardarClientePratoFavorito.Add(prato_favorito);
+				_context.SaveChanges();
+			}
+			return "Sucess";
+		}
+
+		[HttpPost]
+		public async Task<string> AddRestauranteToFavoritesAsync(int? id)
+		{
+			if (id == null)
+			{
+				return "";
+			}
+
+			// For ASP.NET Core <= 3.1
+			Utilizador utilizador = await GetUtilizador();
+			Restaurante restaurante = new Restaurante();
+
+			//obter o prato de acordo com o id enviado
+			restaurante = _context.Restaurante.FirstOrDefault(x => x.IdRestaurante == id);
+
+			// Se o prato já foi adicionada anteriormente à base de dados como prato favorito do cliente em causa
+			if (_context.GuardarClienteRestauranteFavorito.FirstOrDefault(x => x.IdCliente == utilizador.IdUtilizador && x.IdRestaurante == id) != null)
+			{
+				return "";
+			}
+			// Adicionar à base de dados
+			else
+			{
+				GuardarClienteRestauranteFavorito restaurante_favorito = new GuardarClienteRestauranteFavorito();
+
+				restaurante_favorito.IdCliente = utilizador.IdUtilizador;
+				restaurante_favorito.IdRestaurante = (int)id;
+				_context.GuardarClienteRestauranteFavorito.Add(restaurante_favorito);
+				_context.SaveChanges();
+			}
+			return "Sucess";
+		}
+
 		private async Task<Utilizador> GetUtilizador()
 		{
 			IdentityUser applicationUser = await _userManager.GetUserAsync(User);

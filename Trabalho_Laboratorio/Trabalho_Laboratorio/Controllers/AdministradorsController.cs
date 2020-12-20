@@ -53,14 +53,87 @@ namespace Trabalho_Laboratorio.Controllers
 
 		public async Task<IActionResult> Profile()
 		{
-			// For ASP.NET Core <= 3.1
+			Administrador administrador = await GetLoggedAdmin();
+			AdminProfileViewModel viewModel = new AdminProfileViewModel();
+			viewModel.Administrador = administrador;
+
+			return View(viewModel);
+		}
+
+		public async Task<IActionResult> ManageUsers()
+		{
+			Administrador administrador = await GetLoggedAdmin();
+			AdminManageUsersViewModel viewModel = new AdminManageUsersViewModel();
+			viewModel.Utilizadores = _context.Utilizador;
+			viewModel.Administrador = administrador;
+
+			return View(viewModel);
+		}
+
+		public async Task<IActionResult> ManageAdmins()
+		{
+			Administrador administrador = await GetLoggedAdmin();
+			AdminManageAdminsViewModel viewModel = new AdminManageAdminsViewModel();
+			viewModel.Administradores = _context.Administrador.Where(x => x.IdAdmin != administrador.IdAdmin);
+			viewModel.Administrador = administrador;
+
+			return View(viewModel);
+		}
+
+		public async Task<IActionResult> CheckNotifications()
+		{
+			Administrador administrador = await GetLoggedAdmin();
+			AdminCheckNotificationsViewModel viewModel = new AdminCheckNotificationsViewModel();
+			viewModel.Administrador = administrador;
+
+			return View(viewModel);
+		}
+
+		public async Task<IActionResult> CheckLogs()
+		{
+			Administrador administrador = await GetLoggedAdmin();
+			AdminCheckLogsViewModel viewModel = new AdminCheckLogsViewModel();
+			viewModel.Administrador = administrador;
+
+			return View(viewModel);
+		}
+
+		private async Task<Administrador> GetLoggedAdmin()
+		{
 			IdentityUser applicationUser = await _userManager.GetUserAsync(User);
 			string UserName = applicationUser?.UserName; // will give the user's Email
 
 			// ID do Restaurante
 			var administrador = _context.Administrador.Include(m => m.IdAdminNavigation).FirstOrDefault(m => m.IdAdminNavigation.Username == UserName);
+			return administrador;
+		}
 
-			return View(administrador);
+		[HttpPost]
+		public async Task<IActionResult> RegistarAdministrador()
+		{
+			return View();
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> BloquearUtilizador(int? id, string motivo)
+		{
+			var utilizador = _context.Utilizador.FirstOrDefault(x => x.IdUtilizador == id);
+			IdentityUser user = await _userManager.FindByNameAsync(utilizador.Username);
+
+			// Bloquear Indefenidamente Um Utilizador
+			var lockoutEndDate = new DateTime(2999, 01, 01);
+			await _userManager.SetLockoutEnabledAsync(user, true);
+			await _userManager.SetLockoutEndDateAsync(user, lockoutEndDate);
+
+			// Guardar na base de dados o motivo para o bloqueio do utilizador
+			Bloqueio bloqueio = new Bloqueio();
+			bloqueio.IdUtilizador = utilizador.IdUtilizador;
+			bloqueio.Motivo = motivo;
+
+			_context.Bloqueio.Add(bloqueio);
+			_context.SaveChanges();
+
+			return PartialView("_PartialUsersListing", _context.Utilizador.Include(m => m.Bloqueio).Where(x => x.Bloqueio == null));
 		}
 
 		[HttpPost]

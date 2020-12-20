@@ -1,0 +1,111 @@
+﻿@model IQueryable<Trabalho_Laboratorio.Models.Utilizador>
+
+<style>
+	.reason-ban {
+		position: absolute;
+		margin-left: auto;
+		margin-right: auto;
+		left: 0;
+		right: 0;
+		text-align: center;
+	}
+</style>
+<div class="row">
+
+	<div class="col-12">
+		<div class="card">
+			<div class="card-body">
+				<h4 class="card-title">Gere aqui os utilizadores</h4>
+				<h6 class="card-subtitle">
+					Bloqueia os utilizadores que pretende
+				</h6>
+			</div>
+			<div class="table-responsive">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th scope="col"></th>
+							<th scope="col">Username</th>
+							<th scope="col">Bloquear</th>
+						</tr>
+					</thead>
+					<tbody>
+						@{int i = 0; }
+						@foreach (var utilizador in Model)
+						{
+							<tr>
+								<th scope="row">@(i + 1)</th>
+								<td>@utilizador.Username</td>
+								<td>
+									<form asp-action="BloquearUtilizador" asp-route-id="@utilizador.IdUtilizador" data-ajax="true" data-ajax-method="post"
+										  data-ajax-mode="replace" data-ajax-update="#Tabela-Users" data-ajax-confirm="Tem a certeza?">
+										<img src="/assets/images/rejected.png" alt="Recusar"
+											 class="rounded-circle btn RejectImage" style="width: 64px;" />
+									</form>
+								</td>
+							</tr>
+							i++;
+						}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- ============================================================== -->
+<!-- End PAge Content -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Right sidebar -->
+<!-- ============================================================== -->
+<!-- .right-sidebar -->
+<!-- ============================================================== -->
+<!-- End Right sidebar -->
+<!-- ============================================================== -->
+
+<script>
+	const rejectBtn = document.querySelectorAll('.RejectImage').forEach(function (item) {
+		item.addEventListener('click', function () {
+
+			console.log("Botão Clicado -1 ");
+			const formulario = item.parentElement;
+
+			const dv = document.createElement('div');
+			dv.classList.add("form-group");
+			dv.classList.add("reason-ban");
+
+			console.log("Botão Clicado -2 ");
+
+			const lbl = document.createElement('label');
+			lbl.innerText = "Motivo do Bloqueio";
+
+			const txtarea = document.createElement('textarea');
+			txtarea.classList.add("form-control");
+			txtarea.setAttribute("rows", 4);
+			txtarea.setAttribute("name", "motivo");
+
+			const btn = document.createElement('button');
+			btn.classList.add("btn");
+			btn.classList.add("btn-primary");
+			btn.type = 'submit';
+			btn.innerText = "Bloquear Utilizador";
+			console.log("Botão Clicado -3 ");
+
+			// Tentar fazer aparecer no ecrã
+			dv.appendChild(lbl);
+			dv.appendChild(txtarea);
+			dv.appendChild(btn);
+
+			console.log("Botão Clicado");
+
+			formulario.appendChild(dv);
+
+			console.log("Botão Clicado - 4");
+
+			console.log("Botão Clicado- fim");
+		}
+
+		);
+	});
+</script>
