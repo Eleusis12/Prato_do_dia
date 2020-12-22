@@ -44,6 +44,13 @@ namespace Trabalho_Laboratorio.Controllers
 		// GET: AgendarPratos/Details/5
 		public async Task<IActionResult> Detalhes(int? id)
 		{
+			Utilizador utilizador = await GetUtilizador();
+
+			if (_context.GuardarClientePratoFavorito.FirstOrDefault(x => x.IdCliente == utilizador.IdUtilizador && x.IdPrato == id) != null)
+			{
+				ViewData["Notificacao"] = "true";
+			}
+
 			if (id == null)
 			{
 				return NotFound();
@@ -59,6 +66,16 @@ namespace Trabalho_Laboratorio.Controllers
 			}
 
 			return View(agendarPrato);
+		}
+
+		private async Task<Utilizador> GetUtilizador()
+		{
+			IdentityUser applicationUser = await _userManager.GetUserAsync(User);
+			string UserName = applicationUser?.UserName; // will give the user's Email
+
+			// ID do Restaurante
+			var utilizador = _context.Utilizador.FirstOrDefault(m => m.Username == UserName);
+			return utilizador;
 		}
 
 		[Authorize(Roles = "Restaurant,Admin")]

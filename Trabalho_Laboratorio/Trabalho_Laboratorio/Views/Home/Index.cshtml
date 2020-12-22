@@ -2,7 +2,7 @@
 @{
 	ViewData["Title"] = "Home Page";
 }
-<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+<div class="carousel slide" data-ride="carousel">
 
 	@{int i = 0;}
 
@@ -39,14 +39,15 @@
 
 <div class="container-fluid ">
 	<div class="row">
-		<div class="col-md-8 col-sm-12 rounded bg-light mt-5 offset-md-1">
-			<h2 class="mt-1 grid-title">RECOMENDADO PARA SI</h2>
+
+		<div class="col-md-8 col-sm-12 rounded mt-5 offset-md-1">
+			<p class="mt-1 grid-title">RECOMENDADO PARA SI</p>
 
 			@await Html.PartialAsync("_PartialListing", Model.ListaPratos)
 		</div>
-		<div class="col-md-2 col-sm-12 col-md-offset-1 ">
-			<div class="rounded bg-light mt-5">
-				<h2 class="mt-3 spotlight-title">DESTAQUES DO DIA</h2>
+		<div class="col-xl-2 col-lg-8 col-sm-12 col-md-offset-1 ">
+			<p class="mt-3 spotlight-title">DESTAQUES DO DIA</p>
+			<div class="spotlight-wrapper rounded mt-5">
 				@foreach (var prato_destaque in Model.Destaque)
 				{
 					<section class="spotlight-card">
@@ -54,7 +55,8 @@
 							<img src="@prato_destaque.FotoExtra" class="spotlight-image" />
 						</div>
 						<div class="spotlight-info">
-							<a asp-action="Detalhes" asp-controller="AgendarPratos" asp-route-id="@prato_destaque.IdAgendamento"><p>@prato_destaque.IdPratoNavigation.Nome</p></a>
+							<a asp-action="Detalhes" asp-controller="AgendarPratos" asp-route-id="@prato_destaque.IdAgendamento"><p class="spotlight-dish-name">@prato_destaque.IdPratoNavigation.Nome</p></a>
+							<a asp-action="Detalhes" asp-controller="Restaurantes" asp-route-id="@prato_destaque.IdRestaurante"><p class="spotlight-restaurant">@prato_destaque.IdRestauranteNavigation.NomeRestaurante</p></a>
 						</div>
 					</section>
 					i++;

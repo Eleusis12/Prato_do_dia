@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Trabalho_Laboratorio.Areas.Identity.Pages.Account;
 using Trabalho_Laboratorio.Data;
 using Trabalho_Laboratorio.Models;
 using Trabalho_Laboratorio.ViewModel;
@@ -22,7 +23,7 @@ namespace Trabalho_Laboratorio.Controllers
 		private readonly ApplicationDbContext _context;
 		private readonly UserManager<IdentityUser> _userManager;
 
-		public AdministradorsController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
+		public AdministradorsController(ApplicationDbContext context, UserManager<IdentityUser> userManager, RegisterModel registarUsers)
 		{
 			_context = context;
 			_userManager = userManager;

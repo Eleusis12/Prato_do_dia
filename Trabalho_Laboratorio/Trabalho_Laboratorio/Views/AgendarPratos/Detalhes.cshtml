@@ -40,3 +40,16 @@
 		</dd>
 	</dl>
 </div>
+
+<div class="row">
+	<div class="col-md-6 col-sm-12 offset-md-4">
+
+		@if (ViewData["Notificacao"] != "true")
+		{
+			<form asp-controller="Home" asp-action="AddDishToFavorites" data-ajax="true" data-ajax-method="post" data-ajax-success="sucesso" data-ajax-failure="Erro">
+				<input hidden type="text" name="id" value="@Model.IdPrato" />
+				<button type="submit" class="add-favorite-list">Adicione o prato @Model.IdPratoNavigation.Nome ao seus favoritos</button>
+			</form>
+		}
+	</div>
+</div>

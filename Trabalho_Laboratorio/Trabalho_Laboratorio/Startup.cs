@@ -15,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Trabalho_Laboratorio.Services;
+using Trabalho_Laboratorio.Areas.Identity.Pages.Account;
 
 namespace Trabalho_Laboratorio
 {

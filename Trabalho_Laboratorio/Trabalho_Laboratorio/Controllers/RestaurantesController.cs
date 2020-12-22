@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -14,10 +15,12 @@ namespace Trabalho_Laboratorio.Controllers
 	public class RestaurantesController : Controller
 	{
 		private readonly ApplicationDbContext _context;
+		private readonly UserManager<IdentityUser> _userManager;
 
-		public RestaurantesController(ApplicationDbContext context)
+		public RestaurantesController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
 		{
 			_context = context;
+			_userManager = userManager;
 		}
 
 		// GET: Restaurantes
@@ -31,6 +34,13 @@ namespace Trabalho_Laboratorio.Controllers
 		// GET: Restaurantes/Details/5
 		public async Task<IActionResult> Detalhes(int? id)
 		{
+			Utilizador utilizador = await GetUtilizador();
+
+			if (_context.GuardarClienteRestauranteFavorito.FirstOrDefault(x => x.IdCliente == utilizador.IdUtilizador && x.IdRestaurante == id) != null)
+			{
+				ViewData["Notificacao"] = "true";
+			}
+
 			if (id == null)
 			{
 				return NotFound();
@@ -45,6 +55,16 @@ namespace Trabalho_Laboratorio.Controllers
 			}
 
 			return View(restaurante);
+		}
+
+		private async Task<Utilizador> GetUtilizador()
+		{
+			IdentityUser applicationUser = await _userManager.GetUserAsync(User);
+			string UserName = applicationUser?.UserName; // will give the user's Email
+
+			// ID do Restaurante
+			var utilizador = _context.Utilizador.FirstOrDefault(m => m.Username == UserName);
+			return utilizador;
 		}
 
 		// GET: Restaurantes/Create
