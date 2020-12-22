@@ -26,13 +26,17 @@
 
 						@if (User.IsInRole("Admin"))
 						{
+							<li class="nav-item">
+								<a lass="nav-link text-light" asp-controller="Administradors" asp-action="Index">DashBoard</a>
+							</li>
 
-							<li class="nav-item text-light"><a asp-controller="Administradors" asp-action="Index">DashBoard</a></li>
 						}
 
 						@if (User.IsInRole("Restaurant"))
 						{
-							<li class="nav-item text-light"><a asp-controller="AgendarPratos" asp-action="Adicionar">Adicionar Prato</a></li>
+							<li class="nav-item">
+								<a lass="nav-link text-light" asp-controller="AgendarPratos" asp-action="Adicionar">Adicionar Prato</a>
+							</li>
 
 						}
 					</ul>
@@ -163,6 +167,8 @@
 				// Trigger the button element with a click
 				document.getElementById("submit-search").click();
 			}
+		}
+		);
 	</script>
 
 	@RenderSection("Scripts", required: false)

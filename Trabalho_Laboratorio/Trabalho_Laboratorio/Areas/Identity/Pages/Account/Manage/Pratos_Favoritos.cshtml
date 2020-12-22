@@ -1,0 +1,35 @@
+﻿@page
+@model Trabalho_Laboratorio.Areas.Identity.Pages.Account.Manage.Pratos_FavoritosModel
+@{
+	ViewData["Title"] = "Pratos Favoritos";
+	ViewData["ActivePage"] = ManageNavPages.Meals;
+}
+
+<h4>@ViewData["Title"]</h4>
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+<div class="container alert alert-light ">
+	<br>
+	<input id="search" type="text" class="form-control" placeholder="Procurar pelo seu prato favorito">
+	<div class="container table-responsive py-5">
+		@await Html.PartialAsync("_PartialFavoritesDishes", Model.ListaPratosFavoritos)
+	</div>
+</div>
+
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<script>
+	$(document).ready(function () {
+
+		$("#search").on("keyup", function () {
+			var value = $(this).val().toLowerCase();
+			$("#table tr").filter(function () {
+				$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+			});
+		});
+	});
+</script>

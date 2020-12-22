@@ -23,7 +23,7 @@ namespace Trabalho_Laboratorio.Controllers
 		private readonly ApplicationDbContext _context;
 		private readonly UserManager<IdentityUser> _userManager;
 
-		public AdministradorsController(ApplicationDbContext context, UserManager<IdentityUser> userManager, RegisterModel registarUsers)
+		public AdministradorsController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
 		{
 			_context = context;
 			_userManager = userManager;

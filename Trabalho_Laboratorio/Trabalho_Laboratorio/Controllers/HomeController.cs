@@ -141,6 +141,62 @@ namespace Trabalho_Laboratorio.Controllers
 			return "Sucess";
 		}
 
+		[HttpPost]
+		public IActionResult RemoverPratoFavorito(int? id)
+		{
+			if (id == null)
+			{
+				return PartialView("~/Areas/Identity/Pages/Account/Manage/_PartialFavoritesDishes", _context.GuardarClientePratoFavorito.Include(m => m.IdPratoNavigation).Include(m => m.IdClienteNavigation).Select(x => x));
+			}
+
+			var PratoFavorito = _context.GuardarClientePratoFavorito.FirstOrDefault(x => x.IdClientePratoFavorito == id);
+
+			// Vamos verificar se o id introduzido é válido
+			if (PratoFavorito == null)
+			{
+				// Erro
+				return PartialView("~/Areas/Identity/Pages/Account/Manage/_PartialFavoritesDishes", _context.GuardarClientePratoFavorito.Include(m => m.IdPratoNavigation).Include(m => m.IdClienteNavigation).Select(x => x));
+			}
+			// Remover Da Base de dados
+			else
+			{
+				_context.GuardarClientePratoFavorito.Attach(PratoFavorito);
+				_context.GuardarClientePratoFavorito.Remove(PratoFavorito);
+				_context.SaveChanges();
+			}
+
+			// Retorna Sucesso
+			return PartialView("~/Areas/Identity/Pages/Account/Manage/_PartialFavoritesDishes", _context.GuardarClientePratoFavorito.Include(m => m.IdPratoNavigation).Include(m => m.IdClienteNavigation).Select(x => x));
+		}
+
+		[HttpPost]
+		public IActionResult RemoverRestauranteFavorito(int? id)
+		{
+			if (id == null)
+			{
+				return PartialView("~/Areas/Identity/Pages/Account/Manage/_PartialFavoritesRestaurants", _context.GuardarClienteRestauranteFavorito.Include(m => m.IdClienteNavigation).Include(m => m.IdRestauranteNavigation).Select(x => x));
+			}
+
+			var RestauranteFavorito = _context.GuardarClienteRestauranteFavorito.FirstOrDefault(x => x.IdClienteRestauranteFavorito == id);
+
+			// Vamos verificar se o id introduzido é válido
+			if (RestauranteFavorito == null)
+			{
+				// Erro
+				return PartialView("~/Areas/Identity/Pages/Account/Manage/_PartialFavoritesRestaurants", _context.GuardarClienteRestauranteFavorito.Include(m => m.IdClienteNavigation).Include(m => m.IdRestauranteNavigation).Select(x => x));
+			}
+			// Remover Da Base de dados
+			else
+			{
+				_context.GuardarClienteRestauranteFavorito.Attach(RestauranteFavorito);
+				_context.GuardarClienteRestauranteFavorito.Remove(RestauranteFavorito);
+				_context.SaveChanges();
+			}
+
+			// Retorna Sucesso
+			return PartialView("~/Areas/Identity/Pages/Account/Manage/_PartialFavoritesRestaurants", _context.GuardarClienteRestauranteFavorito.Include(m => m.IdClienteNavigation).Include(m => m.IdRestauranteNavigation).Select(x => x));
+		}
+
 		private async Task<Utilizador> GetUtilizador()
 		{
 			IdentityUser applicationUser = await _userManager.GetUserAsync(User);

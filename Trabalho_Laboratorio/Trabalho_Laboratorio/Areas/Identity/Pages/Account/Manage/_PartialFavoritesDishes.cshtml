@@ -1,0 +1,42 @@
+﻿@*
+	For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model IQueryable<Trabalho_Laboratorio.Models.GuardarClientePratoFavorito>
+
+<table class="table table-bordered table-hover">
+	<thead class="thead-dark">
+		<tr>
+			<th scope="col">#</th>
+			<th scope="col">Nome do Prato</th>
+			<th scope="col">Tipo de Prato</th>
+			<th scope="col">Remover</th>
+		</tr>
+	</thead>
+	<tbody id="table">
+		@{int i = 1;}
+
+		@foreach (var prato in Model)
+		{
+			<tr>
+
+				<th scope="row">
+					@i
+				</th>
+				<td>@prato.IdPratoNavigation.Nome</td>
+				<td>@prato.IdPratoNavigation.TipoPrato</td>
+				<td>
+					<form asp-controller="Home" asp-action="RemoverPratoFavorito" asp-route-id="@prato.IdClientePratoFavorito" data-ajax="true" data-ajax-method="post"
+						  data-ajax-mode="replace" data-ajax-update="#table" data-ajax-confirm="Tem a certeza?">
+						<img src="/assets/images/rejected.png" alt="Recusar"
+							 class="rounded-circle btn RejectImage" style="width: 64px;" onclick="document.querySelector('#col_@prato.IdClientePratoFavorito').click()" />
+						<button id="col_@prato.IdClientePratoFavorito" type="submit" class="reject" hidden />
+					</form>
+				</td>
+			</tr>
+			@(i++)
+
+		}
+	</tbody>
+</table>

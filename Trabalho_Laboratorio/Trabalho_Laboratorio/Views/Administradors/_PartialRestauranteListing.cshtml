@@ -44,8 +44,8 @@
 						<form asp-action="RecusarRestaurante" asp-route-id="@restaurante.IdRestaurante" data-ajax="true" data-ajax-method="post"
 							  data-ajax-mode="replace" data-ajax-update="#Tabela" data-ajax-confirm="Tem a certeza?">
 							<img src="/assets/images/rejected.png" alt="Recusar"
-								 class=" RejectImage rounded-circle btn" style="width: 64px;" />
-							<button type="submit" class="reject" hidden />
+								 class=" RejectImage rounded-circle btn" style="width: 64px;" onclick="document.querySelector('#col_@restaurante.IdRestaurante').click()" />
+							<button id="col_@restaurante.IdRestaurante" type="submit" class="reject" hidden />
 						</form>
 					</td>
 				</tr>
@@ -53,15 +53,3 @@
 		</tbody>
 	</table>
 </div>
-
-<script>
-	const acceptBtn = document.querySelector('#AcceptImage');
-	const rejectBtn = document.querySelector('#RejectImage');
-
-	acceptBtn.addEventListener('click', function () {
-		document.getElementById("accept").click();
-	});
-	rejectBtn.addEventListener('click', function () {
-		document.getElementById("reject").click();
-	});
-</script>
