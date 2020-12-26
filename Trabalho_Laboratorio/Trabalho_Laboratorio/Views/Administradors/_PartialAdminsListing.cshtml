@@ -22,18 +22,18 @@
 						@{int i = 0; }
 						@foreach (var administrador in Model)
 						{
-							<tr>
-								<th scope="row">@(i + 1)</th>
-								<td>@administrador.Nome nbsp; @administrador.Apelido </td>
-								<td>
-									<form asp-action="BloquearUtilizador" asp-route-id="@administrador.IdAdmin" data-ajax="true" data-ajax-method="post"
-										  data-ajax-mode="replace" data-ajax-update="#Tabela-Admin" data-ajax-confirm="Tem a certeza?">
-										<img src="/assets/images/rejected.png" alt="Recusar"
-											 class="rounded-circle btn RejectImage" style="width: 64px;" />
-										<button type="submit" class="reject" hidden />
-									</form>
-								</td>
-							</tr>
+						<tr>
+							<th scope="row">@(i + 1)</th>
+							<td>@administrador.Nome nbsp; @administrador.Apelido </td>
+							<td>
+								<form asp-action="BloquearUtilizador" asp-route-id="@administrador.IdAdmin" data-ajax="true" data-ajax-method="post"
+									  data-ajax-mode="replace" data-ajax-update="#Tabela-Admin" data-ajax-confirm="Tem a certeza?" data-ajax-success="AjaxSucess" data-ajax-failure="AjaxError">
+									<img src="/assets/images/rejected.png" alt="Recusar"
+										 class="rounded-circle btn RejectImage" style="width: 64px;" />
+									<button type="submit" class="reject" hidden />
+								</form>
+							</td>
+						</tr>
 							i++;
 						}
 					</tbody>

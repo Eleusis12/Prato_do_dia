@@ -17,6 +17,7 @@ namespace Trabalho_Laboratorio.Areas.Identity.Pages.Account.Manage
 		public static string Email => "Email";
 		public static string Meals => "Pratos_Favoritos";
 		public static string Restaurants => "Restaurantes_Favoritos";
+		public static string Alertas => "Alertas";
 
 		public static string ChangePassword => "ChangePassword";
 
@@ -35,6 +36,8 @@ namespace Trabalho_Laboratorio.Areas.Identity.Pages.Account.Manage
 		public static string IndexClientNavClass(ViewContext viewContext) => PageNavClass(viewContext, IndexClient);
 
 		public static string IndexRestaurantNavClass(ViewContext viewContext) => PageNavClass(viewContext, IndexRestaurant);
+
+		public static string Alerts(ViewContext viewContext) => PageNavClass(viewContext, Alertas);
 
 		public static string EmailNavClass(ViewContext viewContext) => PageNavClass(viewContext, Email);
 

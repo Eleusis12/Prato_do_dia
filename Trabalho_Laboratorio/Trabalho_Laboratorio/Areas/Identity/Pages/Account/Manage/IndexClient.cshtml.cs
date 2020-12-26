@@ -14,7 +14,6 @@ using Trabalho_Laboratorio.Models;
 
 namespace Trabalho_Laboratorio.Areas.Identity.Pages.Account.Manage
 {
-	[Authorize(Roles = "Client")]
 	public partial class IndexClientModel : PageModel
 	{
 		private readonly UserManager<IdentityUser> _userManager;

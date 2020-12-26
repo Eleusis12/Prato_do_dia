@@ -2,7 +2,7 @@
 @model Trabalho_Laboratorio.Areas.Identity.Pages.Account.Manage.Restaurantes_FavoritosModel
 @{
 	ViewData["Title"] = "Restaurantes Favoritos";
-	ViewData["ActivePage"] = ManageNavPages.Meals;
+	ViewData["ActivePage"] = ManageNavPages.Restaurants;
 }
 
 <h4>@ViewData["Title"]</h4>
@@ -10,7 +10,7 @@
 
 <div class="container alert alert-light ">
 	<br>
-	<input id="search" type="text" class="form-control" placeholder="Procurar pelo seu prato favorito">
+	<input id="search" type="text" class="form-control" placeholder="Procurar pelo seu restaurante favorito">
 	<div class="container table-responsive py-5">
 		@await Html.PartialAsync("_PartialFavoritesRestaurants", Model.ListaRestaurantesFavoritos)
 	</div>

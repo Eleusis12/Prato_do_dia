@@ -16,11 +16,13 @@ namespace Trabalho_Laboratorio.Controllers
 	{
 		private readonly ApplicationDbContext _context;
 		private readonly UserManager<IdentityUser> _userManager;
+		private readonly SignInManager<IdentityUser> _signInManager;
 
-		public RestaurantesController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
+		public RestaurantesController(ApplicationDbContext context, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
 		{
 			_context = context;
 			_userManager = userManager;
+			_signInManager = signInManager;
 		}
 
 		// GET: Restaurantes
@@ -34,11 +36,20 @@ namespace Trabalho_Laboratorio.Controllers
 		// GET: Restaurantes/Details/5
 		public async Task<IActionResult> Detalhes(int? id)
 		{
-			Utilizador utilizador = await GetUtilizador();
+			ViewData["Notificacao_Restaurante"] = "false";
 
-			if (_context.GuardarClienteRestauranteFavorito.FirstOrDefault(x => x.IdCliente == utilizador.IdUtilizador && x.IdRestaurante == id) != null)
+			if (_signInManager.IsSignedIn(User))
 			{
-				ViewData["Notificacao"] = "true";
+				Utilizador utilizador = await GetUtilizador();
+
+				if (_context.GuardarClienteRestauranteFavorito.FirstOrDefault(x => x.IdCliente == utilizador.IdUtilizador && x.IdRestaurante == id) != null)
+				{
+					ViewData["Notificacao_Restaurante"] = "true";
+				}
+			}
+			else
+			{
+				ViewData["Notificacao_Restaurante"] = "true";
 			}
 
 			if (id == null)

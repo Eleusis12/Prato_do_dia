@@ -7,7 +7,10 @@
 	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-SandStone.min.css" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
 	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+	<link href="~/css/toastr.css" rel="stylesheet">
+
 	<link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
@@ -27,7 +30,7 @@
 						@if (User.IsInRole("Admin"))
 						{
 							<li class="nav-item">
-								<a lass="nav-link text-light" asp-controller="Administradors" asp-action="Index">DashBoard</a>
+								<a class="nav-link text-light" asp-controller="Administradors" asp-action="Index"></a>
 							</li>
 
 						}
@@ -35,15 +38,20 @@
 						@if (User.IsInRole("Restaurant"))
 						{
 							<li class="nav-item">
-								<a lass="nav-link text-light" asp-controller="AgendarPratos" asp-action="Adicionar">Adicionar Prato</a>
+								<a class="nav-link text-light" asp-controller="AgendarPratos" asp-action="Adicionar">Adicionar Prato</a>
 							</li>
 
 						}
 					</ul>
 					@if (User.IsInRole("Client"))
 					{
+
 						<form class="form-inline my-2 my-lg-0" asp-controller="Home" asp-action="Search" method="get">
-							<input id="search-bar" class="form-control mr-sm-2" type="search" placeholder="Pesquise" aria-label="Search" name="query">
+							<div class="ui-widget">
+
+								<input type="text" id="search-bar" class="form-control mr-sm-2" type="search" placeholder="Pesquise" aria-label="Search" name="query">
+							</div>
+
 							<button id="submit-search" class="btn btn-outline-success my-2 my-sm-0" type="submit">Pesquisar</button>
 						</form>
 					}
@@ -151,11 +159,13 @@
 		</div>
 		<!-- Copyright -->
 	</footer>
+
 	<!-- Footer -->
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>
 	<script src="~/lib/jquery-ajax/jquery.unobtrusive-ajax.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
 	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+	<script src="~/js/toastr.js"></script>
 	<script src="~/js/site.js" asp-append-version="true"></script>
 	<script>
 		const searchBar = document.querySelector("#search-bar");
@@ -169,6 +179,11 @@
 			}
 		}
 		);
+	</script>
+	<script>
+		$("#search-bar").autocomplete({
+			source: '/api/Application/Search'
+		});
 	</script>
 
 	@RenderSection("Scripts", required: false)

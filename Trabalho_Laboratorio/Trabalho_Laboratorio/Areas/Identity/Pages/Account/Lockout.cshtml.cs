@@ -8,25 +8,22 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Trabalho_Laboratorio.Data;
+using Trabalho_Laboratorio.Helpers.Encoding;
 
 namespace Trabalho_Laboratorio.Areas.Identity.Pages.Account
 {
 	[AllowAnonymous]
 	public class LockoutModel : PageModel
 	{
-		private readonly UserManager<IdentityUser> _userManager;
-		private readonly SignInManager<IdentityUser> _signInManager;
 		private readonly ILogger<LoginModel> _logger;
 		private readonly ApplicationDbContext _context;
 
-		public LockoutModel(ApplicationDbContext context, SignInManager<IdentityUser> signInManager,
-			ILogger<LoginModel> logger,
-			UserManager<IdentityUser> userManager)
+		public LockoutModel(ApplicationDbContext context,
+			ILogger<LoginModel> logger)
 		{
-			_userManager = userManager;
-			_signInManager = signInManager;
 			_logger = logger;
 			_context = context;
 		}
@@ -45,13 +42,25 @@ namespace Trabalho_Laboratorio.Areas.Identity.Pages.Account
 			public string MotivoBloqueio { get; set; }
 		}
 
-		public async Task OnGetAsync()
+		public void OnGet(string value)
 		{
-			IdentityUser applicationUser = await _userManager.GetUserAsync(User);
-			string UserName = applicationUser?.UserName; // will give the user's Email
+			string usernameDecoded = System.Text.Encoding.UTF8.DecodeBase64(value);
 
-			Input.Username = UserName;
-			Input.MotivoBloqueio = _context.Bloqueio.FirstOrDefault(x => x.IdUtilizadorNavigation.Username == Input.Username).Motivo;
+			// Obter motivo da Ultima vez que foi bloqueado
+			string motivoBloqueio = _context.Bloqueio
+				.Include(x => x.IdUtilizadorNavigation)
+				.Where(x => x.IdUtilizadorNavigation.Username == usernameDecoded)
+				.OrderByDescending(x => x.IdBloqueio)
+				.Take(1)
+				.Select(x => x.Motivo)
+				.ToList()
+				.FirstOrDefault();
+
+			Input = new InputModel
+			{
+				Username = usernameDecoded,
+				MotivoBloqueio = motivoBloqueio
+			};
 		}
 	}
 }

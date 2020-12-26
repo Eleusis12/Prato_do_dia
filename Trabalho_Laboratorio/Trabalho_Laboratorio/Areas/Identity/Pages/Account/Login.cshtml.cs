@@ -13,6 +13,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Trabalho_Laboratorio.Data;
 using System.Dynamic;
+using Trabalho_Laboratorio.Helpers.Encoding;
+using Microsoft.EntityFrameworkCore;
 
 namespace Trabalho_Laboratorio.Areas.Identity.Pages.Account
 {
@@ -105,7 +107,9 @@ namespace Trabalho_Laboratorio.Areas.Identity.Pages.Account
 				{
 					_logger.LogWarning("User account locked out.");
 
-					return RedirectToPage("./Lockout");
+					string usernameBase64 = System.Text.Encoding.UTF8.EncodeBase64(Input.Username);
+
+					return RedirectToPage("./Lockout", new { value = usernameBase64 });
 				}
 				else
 				{

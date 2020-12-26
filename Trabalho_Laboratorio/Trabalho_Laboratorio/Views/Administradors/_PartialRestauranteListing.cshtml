@@ -33,7 +33,7 @@
 					</td>
 					<td>
 						<form asp-action="AceitarRestaurante" asp-route-id="@restaurante.IdRestaurante" data-ajax="true" data-ajax-method="post"
-							  data-ajax-mode="replace" data-ajax-update="#Tabela">
+							  data-ajax-mode="replace" data-ajax-update="#Tabela" data-ajax-success="AjaxSucess" data-ajax-failure="AjaxError">
 							<img src="/assets/images/yes.png" alt="Aceitar"
 								 class=" AcceptImage rounded-circle btn" style="width:64px;" />
 							<button type="submit" class="accept" hidden />
@@ -42,7 +42,7 @@
 
 					<td>
 						<form asp-action="RecusarRestaurante" asp-route-id="@restaurante.IdRestaurante" data-ajax="true" data-ajax-method="post"
-							  data-ajax-mode="replace" data-ajax-update="#Tabela" data-ajax-confirm="Tem a certeza?">
+							  data-ajax-mode="replace" data-ajax-update="#Tabela" data-ajax-confirm="Tem a certeza?" data-ajax-success="AjaxSucess" data-ajax-failure="AjaxError">
 							<img src="/assets/images/rejected.png" alt="Recusar"
 								 class=" RejectImage rounded-circle btn" style="width: 64px;" onclick="document.querySelector('#col_@restaurante.IdRestaurante').click()" />
 							<button id="col_@restaurante.IdRestaurante" type="submit" class="reject" hidden />

@@ -27,8 +27,8 @@
 				<td>@restaurante.IdRestauranteNavigation.NomeRestaurante</td>
 				<td>@restaurante.IdRestauranteNavigation.TipoServico</td>
 				<td>
-					<form asp-controller="Home" asp-action="RemoverRestauranteFavorito" asp-route-id="@restaurante.IdClienteRestauranteFavorito" data-ajax="true" data-ajax-method="post"
-						  data-ajax-mode="replace" data-ajax-update="#table" data-ajax-confirm="Tem a certeza?">
+					<form asp-controller="ClientSettings" asp-action="RemoverRestauranteFavorito" asp-route-id="@restaurante.IdClienteRestauranteFavorito" data-ajax="true" data-ajax-method="post"
+						  data-ajax-mode="replace" data-ajax-update="#table" data-ajax-confirm="Tem a certeza?" data-ajax-success="AjaxSucess" data-ajax-failure="AjaxError">
 						<img src="/assets/images/rejected.png" alt="Recusar"
 							 class="rounded-circle btn RejectImage" style="width: 64px;" onclick="document.querySelector('#col_@restaurante.IdClienteRestauranteFavorito').click()" />
 						<button id="col_@restaurante.IdClienteRestauranteFavorito" type="submit" class="reject" hidden />

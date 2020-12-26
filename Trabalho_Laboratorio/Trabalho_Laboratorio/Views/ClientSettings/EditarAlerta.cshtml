@@ -1,0 +1,16 @@
+﻿@model Trabalho_Laboratorio.Models.PalavrasChave
+
+<form asp-controller="ClientSettings" asp-action="EditarAlerta" data-ajax="true" data-ajax-method="post" data-ajax-mode="replace" data-ajax-update="#col_name_@Model.IdPalavrasChave" data-ajax-success="AjaxSucess" data-ajax-failure="AjaxError">
+	<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+	<input type="hidden" asp-for="IdPalavrasChave" />
+	<input type="hidden" asp-for="IdUtilizador" />
+	<div>
+		<input asp-for="Palavra" class="form-control" />
+		<span asp-validation-for="Palavra" class="text-danger"></span>
+		<input type="submit" value="Save" class="btn btn-primary" />
+	</div>
+</form>
+
+@section Scripts {
+	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

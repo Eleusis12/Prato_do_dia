@@ -98,8 +98,7 @@ html {
 }*/
 
 .carousel-inner {
-	margin-left: -15px;
-	margin-right: 100px;
+	margin: auto;
 }
 
 .carousel-item {

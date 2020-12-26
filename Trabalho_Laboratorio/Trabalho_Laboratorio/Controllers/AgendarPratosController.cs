@@ -23,14 +23,16 @@ namespace Trabalho_Laboratorio.Controllers
 		private readonly IHostEnvironment _he;
 		private readonly UserManager<IdentityUser> _userManager;
 		private readonly IEmailSender _emailSender;
+		private readonly SignInManager<IdentityUser> _signInManager;
 
 		public AgendarPratosController(ApplicationDbContext context, IHostEnvironment host,
-			UserManager<IdentityUser> userManager, IEmailSender emailSender)
+			UserManager<IdentityUser> userManager, IEmailSender emailSender, SignInManager<IdentityUser> signInManager)
 		{
 			_context = context;
 			_he = host;
 			_userManager = userManager;
 			_emailSender = emailSender;
+			_signInManager = signInManager;
 		}
 
 		// GET: AgendarPratos
@@ -44,11 +46,20 @@ namespace Trabalho_Laboratorio.Controllers
 		// GET: AgendarPratos/Details/5
 		public async Task<IActionResult> Detalhes(int? id)
 		{
-			Utilizador utilizador = await GetUtilizador();
+			ViewData["Notificacao_Prato"] = "false";
 
-			if (_context.GuardarClientePratoFavorito.FirstOrDefault(x => x.IdCliente == utilizador.IdUtilizador && x.IdPrato == id) != null)
+			if (_signInManager.IsSignedIn(User))
 			{
-				ViewData["Notificacao"] = "true";
+				Utilizador utilizador = await GetUtilizador();
+				var prato_favorito = _context.GuardarClientePratoFavorito.FirstOrDefault(x => x.IdCliente == utilizador.IdUtilizador && x.IdPrato == id);
+				if (prato_favorito != null)
+				{
+					ViewData["Notificacao_Prato"] = "true";
+				}
+			}
+			else
+			{
+				ViewData["Notificacao_Prato"] = "true";
 			}
 
 			if (id == null)

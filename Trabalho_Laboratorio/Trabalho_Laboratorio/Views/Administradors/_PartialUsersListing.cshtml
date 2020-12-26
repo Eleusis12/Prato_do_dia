@@ -33,17 +33,17 @@
 						@{int i = 0; }
 						@foreach (var utilizador in Model)
 						{
-							<tr>
-								<th scope="row">@(i + 1)</th>
-								<td>@utilizador.Username</td>
-								<td>
-									<form asp-action="BloquearUtilizador" asp-route-id="@utilizador.IdUtilizador" data-ajax="true" data-ajax-method="post"
-										  data-ajax-mode="replace" data-ajax-update="#Tabela-Users" data-ajax-confirm="Tem a certeza?">
-										<img src="/assets/images/rejected.png" alt="Recusar"
-											 class="rounded-circle btn RejectImage" style="width: 64px;" />
-									</form>
-								</td>
-							</tr>
+						<tr>
+							<th scope="row">@(i + 1)</th>
+							<td>@utilizador.Username</td>
+							<td>
+								<form asp-action="BloquearUtilizador" asp-route-id="@utilizador.IdUtilizador" data-ajax="true" data-ajax-method="post"
+									  data-ajax-mode="replace" data-ajax-update="#Tabela-Users" data-ajax-confirm="Tem a certeza?" data-ajax-success="AjaxSucess" data-ajax-failure="AjaxError">
+									<img src="/assets/images/rejected.png" alt="Recusar"
+										 class="rounded-circle btn RejectImage" style="width: 64px;" />
+								</form>
+							</td>
+						</tr>
 							i++;
 						}
 					</tbody>

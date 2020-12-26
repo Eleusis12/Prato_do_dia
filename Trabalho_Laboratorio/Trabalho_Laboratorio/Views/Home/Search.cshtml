@@ -69,12 +69,12 @@
 
 	@if (Model.Pratos.Count != 0)
 	{
-		@if (ViewData["Notificacao"] != "true")
+		@if ((string)ViewData["Notificacao_Query"] != "true")
 		{
 			<div class="row">
 				<div class="col-md-6 col-sm-12 offset-md-4">
 
-					<form asp-action="AddQueryToFavorites" data-ajax="true" data-ajax-method="post" data-ajax-success="sucesso" data-ajax-failure="Erro">
+					<form asp-controller="ClientSettings" asp-action="AddQueryToFavorites" data-ajax="true" data-ajax-method="post" data-ajax-success="AjaxSucess" data-ajax-failure="AjaxError">
 						<input hidden type="text" name="query" value="@Model.Query" />
 						<button type="submit" class="add-favorite-list">Recebe notificações sobre @Model.Query</button>
 					</form>
@@ -99,17 +99,3 @@
 		</div>
 	}
 </div>
-<script>
-
-	function sucesso() {
-		$("#toast-title").text = "Sucesso"
-		$('.toast-body').text = "Será notificado da próxima vez que o prato seja adicionado ao site."
-		$('.toast').toast('show');
-
-	}
-	function Erro() {
-		$("#toast-title").text = "Erro"
-		$('.toast-body').text = "Não foi possível efetuar a operação."
-		$('.toast').toast('show');
-	}
-</script>
