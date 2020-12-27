@@ -38,7 +38,7 @@ body {
 	background: #ECE9E6; /* fallback for old browsers */
 	background: -webkit-linear-gradient(to right, #FFFFFF, #ECE9E6); /* Chrome 10-25, Safari 5.1-6 */
 	background: linear-gradient(to right, #FFFFFF, #ECE9E6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-	margin-bottom: 600px;
+	margin-bottom: 700px;
 }
 
 @media (min-width: 768px) {
@@ -142,7 +142,7 @@ Extra (xl) large devices (large desktops, 1200px and up)
 @media (min-width: 1200px) { ... }
 */
 
-.card-wrapper {
+/*.card-wrapper {
 	box-sizing: border-box;
 	display: grid;
 	line-height: normal;
@@ -201,7 +201,7 @@ Extra (xl) large devices (large desktops, 1200px and up)
 			font-weight: bold;
 			float: right;
 		}
-
+*/
 .spotlight-wrapper, .card-wrapper {
 	background: #fffafa; /* fallback for old browsers */
 	-webkit-box-shadow: 3px 3px 5px 6px #ccc; /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */

@@ -4,41 +4,46 @@
 	ViewData["Title"] = "Details";
 }
 
-<div class="container mt-4">
-	<h4>Prato</h4>
-	<hr />
-	<dl class="row">
-		<dt class="col-sm-2">
-			@Html.DisplayNameFor(model => model.DescricaoExtra)
-		</dt>
-		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.DescricaoExtra)
-		</dd>
-		<dt class="col-sm-2">
-			@Html.DisplayNameFor(model => model.FotoExtra)
-		</dt>
-		<dd class="col-sm-10">
-			<img src="@Html.DisplayFor(model => model.FotoExtra)" alt="Image not Loaded" />
-		</dd>
-		<dt class="col-sm-2">
-			@Html.DisplayNameFor(model => model.Preco)
-		</dt>
-		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.Preco)€
-		</dd>
-		<dt class="col-sm-2">
-			@Html.DisplayNameFor(model => model.IdPratoNavigation.TipoPrato)
-		</dt>
-		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.IdPratoNavigation.TipoPrato)
-		</dd>
-		<dt class="col-sm-2">
-			Restaurante
-		</dt>
-		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.IdRestauranteNavigation.NomeRestaurante)
-		</dd>
-	</dl>
+<div class="container container-product-detail mt-4">
+
+	<div class="row">
+		<!-- Left Column / Headphones Image -->
+		<div class="col-md-6 offset-2">
+			<img class="img-fluid" src="@Html.DisplayFor(model => model.FotoExtra)" alt="Image not Loaded" />
+		</div>
+
+		<!-- Right Column -->
+		<div class="col-md-4 ">
+
+			<!-- Product Description -->
+			<div class="product-description">
+				<span>Prato</span>
+				<h1>@Html.DisplayFor(model => model.IdPratoNavigation.Nome)</h1>
+				<p>@Html.DisplayFor(model => model.DescricaoExtra)</p>
+			</div>
+
+			<!-- Product Configuration -->
+			<div class="product-configuration">
+
+				<!-- Cable Configuration -->
+				<div class="cable-config">
+					<span>Restaurante</span>
+
+					<div class="cable-choose">
+						<button>@Html.DisplayFor(model => model.IdRestauranteNavigation.NomeRestaurante)</button>
+					</div>
+
+					<a href="#">Quer contactar restaurante?</a>
+				</div>
+			</div>
+
+			<!-- Product Pricing -->
+			<div class="product-price">
+				<span>@Html.DisplayFor(model => model.Preco)€</span>
+				<a href="#" class="cart-btn">Fazer Reserva</a>
+			</div>
+		</div>
+	</div>
 </div>
 
 <div class="row">

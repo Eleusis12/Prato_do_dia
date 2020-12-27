@@ -4,49 +4,40 @@
 	ViewData["Title"] = "Detalhes";
 }
 
-<h1>Detalhes do Restaurante</h1>
+<div class="container container-product-detail mt-4">
 
-<div class="container">
-	<h4>Restaurante</h4>
-	<hr />
-	<dl class="row">
-		<dt class="col-sm-2">
-			@Html.DisplayNameFor(model => model.NomeRestaurante)
-		</dt>
-		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.NomeRestaurante)
-		</dd>
-		<dt class="col-sm-2">
-			@Html.DisplayNameFor(model => model.Telefone)
-		</dt>
-		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.Telefone)
-		</dd>
-		<dt class="col-sm-2">
-			@Html.DisplayNameFor(model => model.Foto)
-		</dt>
-		<dd class="col-sm-10">
-			<img src="@Html.DisplayFor(model => model.Foto)" alt="Image Not Loaded" />
-		</dd>
-		<dt class="col-sm-2">
-			@Html.DisplayNameFor(model => model.TipoServico)
-		</dt>
-		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.TipoServico)
-		</dd>
-		<dt class="col-sm-2">
-			@Html.DisplayNameFor(model => model.DiaDeDescanso)
-		</dt>
-		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.DiaDeDescanso)
-		</dd>
-		<dt class="col-sm-2">
-			@Html.DisplayNameFor(model => model.IdRestauranteNavigation.Email)
-		</dt>
-		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.IdRestauranteNavigation.Email)
-		</dd>
-	</dl>
+	<div class="row">
+		<!-- Left Column / Headphones Image -->
+		<div class="col-md-6 offset-2">
+			<img class="img-fluid" src="@Html.DisplayFor(model => model.Foto)" alt="Image not Loaded" />
+		</div>
+
+		<!-- Right Column -->
+		<div class="col-md-4 ">
+
+			<!-- Product Description -->
+			<div class="product-description">
+				<span>Restaurante</span>
+				<h1>@Html.DisplayFor(model => model.NomeRestaurante)</h1>
+				<p>@Html.DisplayFor(model => model.TipoServico)</p>
+			</div>
+
+			<!-- Product Configuration -->
+			<div class="product-configuration">
+
+				<!-- Cable Configuration -->
+				<div class="cable-config">
+					<span>Telefone</span>
+
+					<div class="cable-choose">
+						<button>@Html.DisplayFor(model => model.Telefone)</button>
+					</div>
+
+					<a href="#">Quer contactar restaurante?</a>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 <div class="row">
@@ -54,10 +45,10 @@
 
 		@if (ViewData["Notificacao_Restaurante"] != "true")
 		{
-		<form asp-controller="ClientSettings" asp-action="AddRestauranteToFavorites" data-ajax="true" data-ajax-method="post" data-ajax-success="AjaxSucess" data-ajax-failure="AjaxError">
-			<input hidden type="text" name="id" value="@Model.IdRestaurante" />
-			<button type="submit" class="add-favorite-list">Adicione o restaurante @Model.NomeRestaurante ao seus favoritos.</button>
-		</form>
+			<form asp-controller="ClientSettings" asp-action="AddRestauranteToFavorites" data-ajax="true" data-ajax-method="post" data-ajax-success="AjaxSucess" data-ajax-failure="AjaxError">
+				<input hidden type="text" name="id" value="@Model.IdRestaurante" />
+				<button type="submit" class="add-favorite-list">Adicione o restaurante @Model.NomeRestaurante ao seus favoritos.</button>
+			</form>
 		}
 	</div>
 </div>
