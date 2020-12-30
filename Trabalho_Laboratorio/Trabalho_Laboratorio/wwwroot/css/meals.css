@@ -20,6 +20,7 @@
 	box-shadow: 0 3rem 6rem rgba(0, 0, 0, 0.1);
 	cursor: pointer;
 	transition: 0.2s;
+	max-width: 400px;
 }
 
 	.grid__item:hover {

@@ -2,7 +2,7 @@
 @{
 	ViewData["Title"] = "Home Page";
 }
-<div class="carousel slide" data-ride="carousel">
+<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
 
 	@{int i = 0;}
 
@@ -10,7 +10,7 @@
 		@foreach (var informacao in Model.Heroes)
 		{
 
-			<div class="carousel-item @(i == 0? "active": "")">
+			<div class="carousel-item @(i == 0 ? "active" : "")">
 				<img class="d-block img-fluid" src="@informacao.HeroPhoto" alt="First slide">
 				<div class="carousel-caption d-none d-md-block">
 					<h5>@informacao.Titulo</h5>
@@ -24,7 +24,7 @@
 	<ol class="carousel-indicators">
 		@for (i = i - 1; i >= 0; i--)
 		{
-			<li data-target="#carouselExampleIndicators" data-slide-to="i" class="@(i == 0? "active": "")"></li>
+			<li data-target="#carouselExampleIndicators" data-slide-to="@i" class="@(i == 0 ? "active" : "")"></li>
 		}
 	</ol>
 	<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -43,6 +43,24 @@
 		<div class="col-md-8 col-sm-12 rounded mt-5 offset-md-1">
 			<p class="mt-1 grid-title">RECOMENDADO PARA SI</p>
 
+			<div class="dropdown show">
+				<a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					@((int)TempData["dayFilter"] == 1 ? "Amanhã" : "Hoje")
+				</a>
+
+				<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+					@if ((int)TempData["dayFilter"] == 1)
+					{
+						<a class="dropdown-item" asp-action="Index" asp-route-dia="0">Hoje</a>
+
+					}
+					else
+					{
+						<a class="dropdown-item" asp-action="Index" asp-route-dia="1">Amanhã</a>
+
+					}
+				</div>
+			</div>
 			@await Html.PartialAsync("_PartialListing", Model.ListaPratos)
 		</div>
 		<div class="col-xl-2 col-lg-8 col-sm-12 col-md-offset-1 ">

@@ -42,8 +42,16 @@ namespace Trabalho_Laboratorio.Controllers
 			return utilizador;
 		}
 
-		public async Task<ActionResult> Index(int? page)
+		public async Task<ActionResult> Index(int? page, int? dia)
 		{
+			// Para efeitos eduacionais definimos o dia de hoje como sendo dia 30/12/2020 (uma vez que não estamos sempre a atualizar a base de dados com novos pratos)
+			DateTime hoje = new DateTime(2020, 12, 30, 0, 0, 0);
+			DateTime amanha = new DateTime(2020, 12, 31, 0, 0, 0);
+
+			// Filtering 0- Hoje, 1- Amanhã
+			dia = (dia == null ? 0 : dia);
+			TempData["dayFilter"] = dia;
+
 			// Definimos que queremos apresentar 20 produtos por página (no máximo)
 			int pageSize = 20;
 
@@ -55,7 +63,7 @@ namespace Trabalho_Laboratorio.Controllers
 
 			HomePageViewModel viewModel = new HomePageViewModel();
 			viewModel.ListaPratos = await PaginatedListProducts<AgendarPrato>.CreateAsync(
-				pratos.AsNoTracking(), page ?? 1, pageSize);
+				pratos.Where(x => x.DataMarcacao.Date == (dia == 0 ? hoje.Date : amanha.Date)).AsNoTracking(), page ?? 1, pageSize);
 			viewModel.Destaque = await PaginatedListProducts<AgendarPrato>.CreateAsync(pratos.Where(z => z.Destaque == true).AsNoTracking(), 1, 5);
 
 			viewModel.Heroes = informação_destaque;

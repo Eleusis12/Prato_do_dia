@@ -238,6 +238,7 @@ Extra (xl) large devices (large desktops, 1200px and up)
 	width: 64px;
 	height: 64px;
 	object-fit: cover;
+	filter: drop-shadow(4px 4px 5px black);
 }
 
 .spotlight-info {
@@ -254,13 +255,15 @@ Extra (xl) large devices (large desktops, 1200px and up)
 		margin-top: 0.5rem;
 		font-weight: bold;
 		margin-left: 1rem;
-		font-size: 12px;
+		font-size: 16px;
 		margin: 1rem;
+		margin-bottom: 0px;
 	}
 
 	.spotlight-info .spotlight-restaurant {
 		font-size: 12px;
 		margin-left: 1rem;
+		color: grey;
 	}
 
 .add-favorite-list {

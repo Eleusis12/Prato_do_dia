@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Security.Claims;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -39,7 +41,14 @@ namespace Trabalho_Laboratorio.Controllers
 		[Authorize(Roles = "Restaurant")]
 		public async Task<IActionResult> Index()
 		{
-			var applicationDbContext = _context.AgendarPrato.Include(a => a.IdPratoNavigation).Include(a => a.IdRestauranteNavigation);
+			// For ASP.NET Core <= 3.1
+			IdentityUser applicationUser = await _userManager.GetUserAsync(User);
+			string UserName = applicationUser?.UserName; // will give the user's Email
+
+			// ID do Restaurante
+			var utilizador = _context.Utilizador.FirstOrDefault(m => m.Username == UserName);
+
+			var applicationDbContext = _context.AgendarPrato.Include(a => a.IdPratoNavigation).Include(a => a.IdRestauranteNavigation).Where(x => x.IdRestaurante == utilizador.IdUtilizador);
 			return View(await applicationDbContext.ToListAsync());
 		}
 
@@ -115,8 +124,42 @@ namespace Trabalho_Laboratorio.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Adicionar(string Nome, string Tipo_Prato, IFormFile FotoExtra, [Bind("IdAgendamento,DataMarcacao,DataDoAgendamento,IdRestaurante,IdPrato,DescricaoExtra,FotoExtra,Preco,Destaque")] AgendarPrato agendarPrato)
+		public async Task<IActionResult> Adicionar(string Nome, string Tipo_Prato, string preco_string, IFormFile FotoExtra, [Bind("IdAgendamento,DataMarcacao,DataDoAgendamento,IdRestaurante,IdPrato,DescricaoExtra,FotoExtra,Preco,Destaque")] AgendarPrato agendarPrato)
 		{
+			// Regex to extract the number part from the string (supports thousands and decimal separators)
+			// Simple replace of all non numeric and non ',' '.' characters with nothing might suffice as well
+			// Depends on the input you receive
+			var regex = new Regex("^[^\\d-]*(-?(?:\\d|(?<=\\d)\\.(?=\\d{3}))+(?:,\\d+)?|-?(?:\\d|(?<=\\d),(?=\\d{3}))+(?:\\.\\d+)?)[^\\d]*$");
+
+			char decimalChar;
+			char thousandsChar;
+
+			// Get the numeric part from the string
+			var numberPart = regex.Match(preco_string).Groups[1].Value;
+
+			// Try to guess which character is used for decimals and which is used for thousands
+			if (numberPart.LastIndexOf(',') > numberPart.LastIndexOf('.'))
+			{
+				decimalChar = ',';
+				thousandsChar = '.';
+			}
+			else
+			{
+				decimalChar = '.';
+				thousandsChar = ',';
+			}
+
+			// Remove thousands separators as they are not needed for parsing
+			numberPart = numberPart.Replace(thousandsChar.ToString(), string.Empty);
+
+			// Replace decimal separator with the one from InvariantCulture
+			// This makes sure the decimal parses successfully using InvariantCulture
+			numberPart = numberPart.Replace(decimalChar.ToString(),
+				CultureInfo.InvariantCulture.NumberFormat.CurrencyDecimalSeparator);
+
+			// Voilá
+			agendarPrato.Preco = decimal.Parse(numberPart, NumberStyles.AllowDecimalPoint | NumberStyles.Number, CultureInfo.InvariantCulture);
+
 			string destination = Path.Combine(_he.ContentRootPath, "wwwroot/Fotos/", Path.GetFileName(FotoExtra.FileName));
 
 			// Creates a filestream to store the file listing
