@@ -65,8 +65,6 @@ namespace Trabalho_Laboratorio.Areas.Identity.Pages.Account.Manage
 			public string EnderecoLocalidade { get; set; }
 
 			[Display(Name = "Imagem")]
-			[Required(ErrorMessage = "Faz Upload a uma imagem do teu restaurante")]
-			[AllowedExtensions(new string[] { ".jpg", ".jpeg", ".png" })]
 			public IFormFile RestaurantFoto { get; set; }
 		}
 
@@ -124,32 +122,38 @@ namespace Trabalho_Laboratorio.Areas.Identity.Pages.Account.Manage
 
 			RestauranteBD = await _context.Restaurante.Include(r => r.IdRestauranteNavigation).FirstOrDefaultAsync(x => x.IdRestauranteNavigation.Username == user.UserName);
 
-			// Assegura que o restaurante é inicializado como não aprovado
+			// Se o utilizador inseriu uma foto
 
-			string destination = Path.Combine(_he.ContentRootPath, "wwwroot/Fotos/", Path.GetFileName(Input.RestaurantFoto.FileName));
-
-			// Creates a filestream to store the file listing
-			FileStream fs = new FileStream(destination, FileMode.Create);
-
-			try
+			if (Input.RestaurantFoto != null)
 			{
-				Input.RestaurantFoto.CopyTo(fs);
-				fs.Close();
-			}
-			catch (Exception ex)
-			{
-				throw ex;
+				string destination = Path.Combine(_he.ContentRootPath, "wwwroot/Fotos/", Path.GetFileName(Input.RestaurantFoto.FileName));
+
+				// Creates a filestream to store the file listing
+				FileStream fs = new FileStream(destination, FileMode.Create);
+
+				try
+				{
+					Input.RestaurantFoto.CopyTo(fs);
+					fs.Close();
+				}
+				catch (Exception ex)
+				{
+					throw ex;
+				}
+
+				// path para depois guardar na base de dados
+				Input.Foto = "/Fotos/" + Input.RestaurantFoto.FileName.ToString();
+				RestauranteBD.Foto = Input.Foto;
+
 			}
 
-			// path para depois guardar na base de dados
-			Input.Foto = "/Fotos/" + Input.RestaurantFoto.FileName.ToString();
+
 
 			// Fazer update aos dados na base de dados
 			RestauranteBD.NomeRestaurante = Input.NomeRestaurante;
 			RestauranteBD.Telefone = Input.Telefone;
 			RestauranteBD.TipoServico = Input.TipoServico;
 			RestauranteBD.DiaDeDescanso = Input.DiaDeDescanso;
-			RestauranteBD.Foto = Input.Foto;
 			RestauranteBD.IdRestauranteNavigation.EnderecoLocalidade = Input.EnderecoLocalidade;
 			RestauranteBD.IdRestauranteNavigation.EnderecoCodigoPostal = Input.EnderecoCodigoPostal;
 			RestauranteBD.IdRestauranteNavigation.EnderecoMorada = Input.EnderecoMorada;

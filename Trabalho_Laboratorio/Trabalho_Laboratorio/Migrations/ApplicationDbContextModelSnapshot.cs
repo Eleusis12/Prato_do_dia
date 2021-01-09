@@ -231,7 +231,6 @@ namespace Trabalho_Laboratorio.Migrations
                         .HasMaxLength(20);
 
                     b.Property<string>("Foto")
-                        .IsRequired()
                         .HasColumnType("nvarchar(500)")
                         .HasMaxLength(500);
 

@@ -13,40 +13,40 @@
 		<div class="col-md-10 mx-auto login-form">
 			<h2>Registe a sua conta</h2>
 			<hr />
-			<form id="account" method="post">
+			<form id="account" method="post" enctype="multipart/form-data">
 				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
 				<div class="form-group row">
 					<div class="col-sm-6">
-						<label asp-for="Input.Email" class="control-label"></label>
-						<input asp-for="Input.Email" class="form-control" />
-						<span asp-validation-for="Input.Email" class="text-danger"></span>
+						<label asp-for="Input.Utilizador.Email" class="control-label"></label>
+						<input asp-for="Input.Utilizador.Email" class="form-control" />
+						<span asp-validation-for="Input.Utilizador.Email" class="text-danger"></span>
 					</div>
 					<div class="col-sm-6">
 
-						<label asp-for="Input.EnderecoMorada" class="control-label"></label>
-						<input asp-for="Input.EnderecoMorada" class="form-control" />
-						<span asp-validation-for="Input.EnderecoMorada" class="text-danger"></span>
+						<label asp-for="Input.Utilizador.EnderecoMorada" class="control-label"></label>
+						<input asp-for="Input.Utilizador.EnderecoMorada" class="form-control" />
+						<span asp-validation-for="Input.Utilizador.EnderecoMorada" class="text-danger"></span>
 					</div>
 				</div>
 
 				<div class="form-group row">
 					<div class="col-sm-6">
-						<label asp-for="Input.Username" class="control-label"></label>
-						<input asp-for="Input.Username" class="form-control" />
-						<span asp-validation-for="Input.Username" class="text-danger"></span>
+						<label asp-for="Input.Utilizador.Username" class="control-label"></label>
+						<input asp-for="Input.Utilizador.Username" class="form-control" />
+						<span asp-validation-for="Input.Utilizador.Username" class="text-danger"></span>
 					</div>
 					<div class="col-sm-2">
 
-						<label asp-for="Input.EnderecoCodigoPostal" class="control-label"></label>
-						<input asp-for="Input.EnderecoCodigoPostal" id="cep" class="form-control" />
-						<span asp-validation-for="Input.EnderecoCodigoPostal" class="text-danger"></span>
+						<label asp-for="Input.Utilizador.EnderecoCodigoPostal" class="control-label"></label>
+						<input asp-for="Input.Utilizador.EnderecoCodigoPostal" id="cep" class="form-control" />
+						<span asp-validation-for="Input.Utilizador.EnderecoCodigoPostal" class="text-danger"></span>
 					</div>
 					<div class="col-sm-4 ">
 
-						<label asp-for="Input.EnderecoLocalidade" class="control-label"></label>
-						<input asp-for="Input.EnderecoLocalidade" class="form-control" />
-						<span asp-validation-for="Input.EnderecoLocalidade" class="text-danger"></span>
+						<label asp-for="Input.Utilizador.EnderecoLocalidade" class="control-label"></label>
+						<input asp-for="Input.Utilizador.EnderecoLocalidade" class="form-control" />
+						<span asp-validation-for="Input.Utilizador.EnderecoLocalidade" class="text-danger"></span>
 					</div>
 				</div>
 				<div class="form-group row">
@@ -59,15 +59,10 @@
 					<div class="col-sm-6">
 
 						<label asp-for="Input.Role" class=" control-label"></label>
-						<select asp-for="Input.Role" class="form-control" asp-items='new SelectList(ViewBag.roles, "Name", "Name")'>
+						<select id="select-role" asp-for="Input.Role" class="form-control" asp-items='new SelectList(ViewBag.roles, "Name", "Name")'>
 							<option selected=""> --  Seleciona o tipo </option>
 						</select>
 						<span asp-validation-for="Input.Role" class="text-danger"></span>
-
-						@if (ViewData["Tipo_Cliente"] != null)
-						{
-							<span class="text-danger">@ViewData["Tipo_Cliente"]</span>
-						}
 					</div>
 				</div>
 
@@ -79,7 +74,57 @@
 						<span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
 					</div>
 				</div>
+				<div id="client-form">
+					<div class="form-group row">
+						<div class="col-sm-6">
 
+							<label asp-for="Input.Cliente.Nome" class="control-label"></label>
+							<input asp-for="Input.Cliente.Nome" class="form-control" />
+							<span asp-validation-for="Input.Cliente.Nome" class="text-danger"></span>
+						</div>
+						<div class="col-sm-6">
+
+							<label asp-for="Input.Cliente.Apelido" class="control-label"></label>
+							<input asp-for="Input.Cliente.Apelido" class="form-control" />
+							<span asp-validation-for="Input.Cliente.Apelido" class="text-danger"></span>
+						</div>
+					</div>
+				</div>
+
+				<div id="restaurant-form">
+					<div class="form-group row">
+						<div class="col-sm-6">
+
+							<div class="form-group">
+								<label asp-for="Input.Restaurante.NomeRestaurante" class="control-label"></label>
+								<input asp-for="Input.Restaurante.NomeRestaurante" class="form-control" />
+								<span asp-validation-for="Input.Restaurante.NomeRestaurante" class="text-danger"></span>
+							</div>
+							<div class="form-group">
+								<label asp-for="Input.Restaurante.Telefone" class="control-label"></label>
+								<input asp-for="Input.Restaurante.Telefone" class="form-control" />
+								<span asp-validation-for="Input.Restaurante.Telefone" class="text-danger"></span>
+							</div>
+							<div class="form-group">
+								<label asp-for="Input.RestaurantFoto" class="control-label"></label>
+								<input asp-for="Input.RestaurantFoto" type="file" class="form-control" />
+								<span asp-validation-for="Input.RestaurantFoto" class="text-danger"></span>
+							</div>
+
+							<div class="form-group">
+								<label asp-for="Input.Restaurante.TipoServico" class="control-label"></label>
+								<input asp-for="Input.Restaurante.TipoServico" class="form-control" />
+								<span asp-validation-for="Input.Restaurante.TipoServico" class="text-danger"></span>
+							</div>
+
+							<div class="form-group">
+								<label asp-for="Input.Restaurante.DiaDeDescanso" class="control-label"></label>
+								<input asp-for="Input.Restaurante.DiaDeDescanso" class="form-control" />
+								<span asp-validation-for="Input.Restaurante.DiaDeDescanso" class="text-danger"></span>
+							</div>
+						</div>
+					</div>
+				</div>
 				<div class="form-group">
 					<input type="submit" value="Registar" class="btn btn-primary" />
 				</div>
@@ -89,11 +134,37 @@
 </div>
 @section Scripts {
 	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
 
-<script>
-	$(document).ready(function () {
-		var $campo = $("#cep");
-		$campo.mask('0000-000', { reverse: true });
-	});
-</script>
+	<script>
+		$(document).ready(function () {
+
+			// Garantir que ambos os forms estão escondidos
+			$("#restaurant-form").hide();
+			$("#client-form").hide();
+
+			// Queremos assegurar que o código postal é introduzido corretamente
+			//$("#cep").inputmask({ "mask": "'0000-000" });;
+
+			$("#select-role").change(function () {
+				// Queremos apresentar o form adicional do cliente
+				if ($(this).find(":selected").text() === "Client") {
+
+					$("#restaurant-form").hide();
+					$("#client-form").show();
+
+				}
+				// Queremos apresentar o form adicional do Restaurante
+				else if ($(this).find(":selected").text() === "Restaurant") {
+
+					$("#client-form").hide();
+					$("#restaurant-form").show();
+				}
+				else {
+					$("#restaurant-form").hide();
+					$("#client-form").hide();
+				}
+
+			});
+		});
+	</script>
+}

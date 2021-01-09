@@ -1,0 +1,209 @@
+﻿@*
+	For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+	Layout = null;
+}
+
+@model Trabalho_Laboratorio.ViewModel.AdminCreateNewAdminViewModel
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<!-- Tell the browser to be responsive to screen width -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href="~/css/toastr.css" rel="stylesheet">
+
+	<link href="../../dist/css/style.min.css" rel="stylesheet">
+</head>
+
+<body>
+	<!-- ============================================================== -->
+	<!-- Preloader - style you can find in spinners.css -->
+	<!-- ============================================================== -->
+	<div class="preloader">
+		<div class="lds-ripple">
+			<div class="lds-pos"></div>
+			<div class="lds-pos"></div>
+		</div>
+	</div>
+	<!-- ============================================================== -->
+	<!-- Main wrapper - style you can find in pages.scss -->
+	<!-- ============================================================== -->
+	<div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+		 data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+		<!-- ============================================================== -->
+		<!-- Topbar header - style you can find in pages.scss -->
+		<!-- ============================================================== -->
+		@await Html.PartialAsync("_PartialNavbar")
+
+		<!-- ============================================================== -->
+		<!-- End Topbar header -->
+		<!-- ============================================================== -->
+		<!-- ============================================================== -->
+		<!-- Left Sidebar - style you can find in sidebar.scss  -->
+		<!-- ============================================================== -->
+
+		@await Html.PartialAsync("_PartialSidebar", Model.Administrador)
+
+		<!-- ============================================================== -->
+		<!-- End Left Sidebar - style you can find in sidebar.scss  -->
+		<!-- ============================================================== -->
+		<!-- ============================================================== -->
+		<!-- Page wrapper  -->
+		<!-- ============================================================== -->
+		<div class="page-wrapper">
+			<!-- ============================================================== -->
+			<!-- Bread crumb and right sidebar toggle -->
+			<!-- ============================================================== -->
+			<div class="page-breadcrumb">
+				<div class="row align-items-center">
+					<div class="col-5">
+						<h4 class="page-title">Basic Table</h4>
+						<div class="d-flex align-items-center">
+							<nav aria-label="breadcrumb">
+								<ol class="breadcrumb">
+									<li class="breadcrumb-item"><a asp-action="Index">Home</a></li>
+									<li class="breadcrumb-item active" aria-current="page">Gerir Administradores</li>
+								</ol>
+							</nav>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- ============================================================== -->
+			<!-- End Bread crumb and right sidebar toggle -->
+			<!-- ============================================================== -->
+			<!-- ============================================================== -->
+			<!-- Container fluid  -->
+			<!-- ============================================================== -->
+			<div class="container-fluid">
+				<a asp-controller="Administradores" asp-action="ManageAdmins">Voltar atrás</a>
+
+				<div class="container">
+
+					<div class="row">
+
+						<div class="col-md-10 mx-auto login-form">
+							<h2>Registe a sua conta</h2>
+							<hr />
+							<form id="account" method="post">
+								<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+								<div class="form-group row">
+									<div class="col-sm-6">
+										<label asp-for="Utilizador.Email" class="control-label"></label>
+										<input asp-for="Utilizador.Email" class="form-control" />
+										<span asp-validation-for="Utilizador.Email" class="text-danger"></span>
+									</div>
+									<div class="col-sm-6">
+
+										<label asp-for="Utilizador.EnderecoMorada" class="control-label"></label>
+										<input asp-for="Utilizador.EnderecoMorada" class="form-control" />
+										<span asp-validation-for="Utilizador.EnderecoMorada" class="text-danger"></span>
+									</div>
+								</div>
+
+								<div class="form-group row">
+									<div class="col-sm-6">
+										<label asp-for="Utilizador.Username" class="control-label"></label>
+										<input asp-for="Utilizador.Username" class="form-control" />
+										<span asp-validation-for="Utilizador.Username" class="text-danger"></span>
+									</div>
+									<div class="col-sm-2">
+
+										<label asp-for="Utilizador.EnderecoCodigoPostal" class="control-label"></label>
+										<input asp-for="Utilizador.EnderecoCodigoPostal" id="cep" class="form-control" />
+										<span asp-validation-for="Utilizador.EnderecoCodigoPostal" class="text-danger"></span>
+									</div>
+									<div class="col-sm-4 ">
+
+										<label asp-for="Utilizador.EnderecoLocalidade" class="control-label"></label>
+										<input asp-for="Utilizador.EnderecoLocalidade" class="form-control" />
+										<span asp-validation-for="Utilizador.EnderecoLocalidade" class="text-danger"></span>
+									</div>
+								</div>
+								<div class="form-group row">
+									<div class="col-sm-6">
+
+										<label asp-for="Password" class="control-label">Password</label>
+										<input asp-for="Password" type="password" class="form-control" />
+										<span asp-validation-for="Password" class="text-danger"></span>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label asp-for="AdministradorACriar.Nome"></label>
+									<input asp-for="AdministradorACriar.Nome" class="form-control" />
+									<span asp-validation-for="AdministradorACriar.Nome" class="text-danger"></span>
+								</div>
+
+								<div class="form-group">
+									<label asp-for="AdministradorACriar.Apelido"></label>
+									<input asp-for="AdministradorACriar.Apelido" class="form-control" />
+									<span asp-validation-for="AdministradorACriar.Apelido" class="text-danger"></span>
+								</div>
+								<div class="form-group">
+									<label asp-for="AdministradorACriar.Telefone"></label>
+									<input asp-for="AdministradorACriar.Telefone" class="form-control" />
+									<span asp-validation-for="AdministradorACriar.Telefone" class="text-danger"></span>
+								</div>
+
+								<div class="form-group">
+									<input type="submit" value="Registar" class="btn btn-primary" />
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+				<!-- ============================================================== -->
+				<!-- End PAge Content -->
+				<!-- ============================================================== -->
+				<!-- ============================================================== -->
+				<!-- Right sidebar -->
+				<!-- ============================================================== -->
+				<!-- .right-sidebar -->
+				<!-- ============================================================== -->
+				<!-- End Right sidebar -->
+				<!-- ============================================================== -->
+			</div>
+			<!-- ============================================================== -->
+			<!-- End Container fluid  -->
+			<!-- ============================================================== -->
+			<!-- ============================================================== -->
+			<!-- footer -->
+			<!-- ============================================================== -->
+			<!-- ============================================================== -->
+			<!-- End footer -->
+			<!-- ============================================================== -->
+		</div>
+		<!-- ============================================================== -->
+		<!-- End Page wrapper  -->
+		<!-- ============================================================== -->
+	</div>
+	<!-- ============================================================== -->
+	<!-- End Wrapper -->
+	<!-- ============================================================== -->
+	<!-- ============================================================== -->
+	<!-- All Jquery -->
+	<!-- ============================================================== -->
+	<script src="../../assets/libs/jquery/dist/jquery.min.js"></script>
+	<!-- Bootstrap tether Core JavaScript -->
+	<script src="../../assets/libs/popper.js/dist/umd/popper.min.js"></script>
+	<script src="../../assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="../../dist/js/app-style-switcher.js"></script>
+	<!--Wave Effects -->
+	<script src="../../dist/js/waves.js"></script>
+	<!--Menu sidebar -->
+	<script src="../../dist/js/sidebarmenu.js"></script>
+	<!--Custom JavaScript -->
+	<script src="../../dist/js/custom.js"></script>
+
+	<script src="~/lib/jquery-ajax/jquery.unobtrusive-ajax.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/js/toastr.js"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>

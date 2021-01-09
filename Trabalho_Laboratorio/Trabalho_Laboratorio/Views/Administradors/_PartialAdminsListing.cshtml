@@ -24,7 +24,7 @@
 						{
 						<tr>
 							<th scope="row">@(i + 1)</th>
-							<td>@administrador.Nome nbsp; @administrador.Apelido </td>
+							<td>@administrador.Nome &nbsp; @administrador.Apelido </td>
 							<td>
 								<form asp-action="BloquearUtilizador" asp-route-id="@administrador.IdAdmin" data-ajax="true" data-ajax-method="post"
 									  data-ajax-mode="replace" data-ajax-update="#Tabela-Admin" data-ajax-confirm="Tem a certeza?" data-ajax-success="AjaxSucess" data-ajax-failure="AjaxError">

@@ -19,7 +19,6 @@ namespace Trabalho_Laboratorio.Models
 		[StringLength(20)]
 		public string Apelido { get; set; }
 
-		[Required]
 		[StringLength(500)]
 		public string Foto { get; set; }
 

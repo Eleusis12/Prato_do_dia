@@ -33,17 +33,17 @@
 						@{int i = 0; }
 						@foreach (var utilizador in Model)
 						{
-						<tr>
-							<th scope="row">@(i + 1)</th>
-							<td>@utilizador.Username</td>
-							<td>
-								<form asp-action="BloquearUtilizador" asp-route-id="@utilizador.IdUtilizador" data-ajax="true" data-ajax-method="post"
-									  data-ajax-mode="replace" data-ajax-update="#Tabela-Users" data-ajax-confirm="Tem a certeza?" data-ajax-success="AjaxSucess" data-ajax-failure="AjaxError">
-									<img src="/assets/images/rejected.png" alt="Recusar"
-										 class="rounded-circle btn RejectImage" style="width: 64px;" />
-								</form>
-							</td>
-						</tr>
+							<tr>
+								<th scope="row">@(i + 1)</th>
+								<td>@utilizador.Username</td>
+								<td>
+									<form asp-action="BloquearUtilizador" asp-route-id="@utilizador.IdUtilizador" data-ajax="true" data-ajax-method="post"
+										  data-ajax-mode="replace" data-ajax-update="#Tabela-Users" data-ajax-confirm="Tem a certeza?" data-ajax-success="AjaxSucess" data-ajax-failure="AjaxError">
+										<img src="/assets/images/rejected.png" alt="Recusar"
+											 class="rounded-circle btn RejectImage" style="width: 64px;" />
+									</form>
+								</td>
+							</tr>
 							i++;
 						}
 					</tbody>
@@ -68,14 +68,11 @@
 	const rejectBtn = document.querySelectorAll('.RejectImage').forEach(function (item) {
 		item.addEventListener('click', function () {
 
-			console.log("Botão Clicado -1 ");
 			const formulario = item.parentElement;
 
 			const dv = document.createElement('div');
 			dv.classList.add("form-group");
 			dv.classList.add("reason-ban");
-
-			console.log("Botão Clicado -2 ");
 
 			const lbl = document.createElement('label');
 			lbl.innerText = "Motivo do Bloqueio";
@@ -90,20 +87,14 @@
 			btn.classList.add("btn-primary");
 			btn.type = 'submit';
 			btn.innerText = "Bloquear Utilizador";
-			console.log("Botão Clicado -3 ");
 
 			// Tentar fazer aparecer no ecrã
 			dv.appendChild(lbl);
 			dv.appendChild(txtarea);
 			dv.appendChild(btn);
 
-			console.log("Botão Clicado");
-
 			formulario.appendChild(dv);
 
-			console.log("Botão Clicado - 4");
-
-			console.log("Botão Clicado- fim");
 		}
 
 		);

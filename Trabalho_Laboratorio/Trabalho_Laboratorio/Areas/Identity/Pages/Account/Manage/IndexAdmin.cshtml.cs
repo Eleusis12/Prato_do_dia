@@ -65,8 +65,6 @@ namespace Trabalho_Laboratorio.Areas.Identity.Pages.Account.Manage
 			public string EnderecoLocalidade { get; set; }
 
 			[Display(Name = "Imagem")]
-			[Required(ErrorMessage = "Faz Upload a uma imagem do teu restaurante")]
-			[AllowedExtensions(new string[] { ".jpg", ".jpeg", ".png" })]
 			public IFormFile AdminFoto { get; set; }
 		}
 
@@ -85,6 +83,7 @@ namespace Trabalho_Laboratorio.Areas.Identity.Pages.Account.Manage
 				Nome = AdminBD.Nome,
 				Apelido = AdminBD.Apelido,
 				Foto = AdminBD.Foto,
+				Telefone = AdminBD.Telefone,
 				EnderecoCodigoPostal = AdminBD.IdAdminNavigation.EnderecoCodigoPostal,
 				EnderecoMorada = AdminBD.IdAdminNavigation.EnderecoMorada,
 				EnderecoLocalidade = AdminBD.IdAdminNavigation.EnderecoLocalidade,
@@ -105,7 +104,7 @@ namespace Trabalho_Laboratorio.Areas.Identity.Pages.Account.Manage
 			return Page();
 		}
 
-		public async Task<IActionResult> OnPostAsync(Administrador admin)
+		public async Task<IActionResult> OnPostAsync()
 		{
 			var user = await _userManager.GetUserAsync(User);
 			if (user == null)
@@ -130,29 +129,35 @@ namespace Trabalho_Laboratorio.Areas.Identity.Pages.Account.Manage
 			//	}
 			//}
 
-			AdminBD = await _context.Administrador.Include(r => r.IdAdminNavigation).FirstOrDefaultAsync(x => x.IdAdminNavigation.Username == Username);
+			AdminBD = await _context.Administrador.Include(r => r.IdAdminNavigation).FirstOrDefaultAsync(x => x.IdAdminNavigation.Username == user.UserName);
 
-			AdminBD.Nome = admin.Nome;
-			AdminBD.Apelido = admin.Apelido;
+			AdminBD.Nome = Input.Nome;
+			AdminBD.Apelido = Input.Apelido;
+			AdminBD.Telefone = Input.Telefone;
 
-			string destination = Path.Combine(_he.ContentRootPath, "wwwroot/Fotos/", Path.GetFileName(Input.AdminFoto.FileName));
-
-			// Creates a filestream to store the file listing
-			FileStream fs = new FileStream(destination, FileMode.Create);
-
-			try
+			// Se o utilizador submeteu a foto
+			if (Input.AdminFoto != null)
 			{
-				Input.AdminFoto.CopyTo(fs);
-				fs.Close();
-			}
-			catch (Exception ex)
-			{
-				throw ex;
+				string destination = Path.Combine(_he.ContentRootPath, "wwwroot/Fotos/", Path.GetFileName(Input.AdminFoto.FileName));
+
+				// Creates a filestream to store the file listing
+				FileStream fs = new FileStream(destination, FileMode.Create);
+
+				try
+				{
+					Input.AdminFoto.CopyTo(fs);
+					fs.Close();
+				}
+				catch (Exception ex)
+				{
+					throw ex;
+				}
+
+				// path para depois guardar na base de dados
+				Input.Foto = "/Fotos/" + Input.AdminFoto.FileName.ToString();
+				AdminBD.Foto = Input.Foto;
 			}
 
-			// path para depois guardar na base de dados
-			Input.Foto = "/Fotos/" + Input.AdminFoto.FileName.ToString();
-			AdminBD.Foto = Input.Foto;
 			AdminBD.IdAdminNavigation.EnderecoLocalidade = Input.EnderecoLocalidade;
 			AdminBD.IdAdminNavigation.EnderecoCodigoPostal = Input.EnderecoCodigoPostal;
 			AdminBD.IdAdminNavigation.EnderecoMorada = Input.EnderecoMorada;

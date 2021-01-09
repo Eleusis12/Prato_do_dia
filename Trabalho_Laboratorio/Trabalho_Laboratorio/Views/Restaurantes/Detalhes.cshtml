@@ -20,6 +20,7 @@
 				<span>Restaurante</span>
 				<h1>@Html.DisplayFor(model => model.NomeRestaurante)</h1>
 				<p>@Html.DisplayFor(model => model.TipoServico)</p>
+				<p>Dia de descanso: @Html.DisplayFor(model => model.DiaDeDescanso)</p>
 			</div>
 
 			<!-- Product Configuration -->
@@ -45,10 +46,10 @@
 
 		@if (ViewData["Notificacao_Restaurante"] != "true")
 		{
-			<form asp-controller="ClientSettings" asp-action="AddRestauranteToFavorites" data-ajax="true" data-ajax-method="post" data-ajax-success="AjaxSucess" data-ajax-failure="AjaxError">
-				<input hidden type="text" name="id" value="@Model.IdRestaurante" />
-				<button type="submit" class="add-favorite-list">Adicione o restaurante @Model.NomeRestaurante ao seus favoritos.</button>
-			</form>
+		<form asp-controller="ClientSettings" asp-action="AddRestauranteToFavorites" data-ajax="true" data-ajax-method="post" data-ajax-success="AjaxSucess" data-ajax-failure="AjaxError">
+			<input hidden type="text" name="id" value="@Model.IdRestaurante" />
+			<button type="submit" class="add-favorite-list">Adicione o restaurante @Model.NomeRestaurante ao seus favoritos.</button>
+		</form>
 		}
 	</div>
 </div>

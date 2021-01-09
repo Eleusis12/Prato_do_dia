@@ -4,12 +4,17 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Trabalho_Laboratorio.Areas.Identity.Pages.Account;
 using Trabalho_Laboratorio.Data;
 using Trabalho_Laboratorio.Models;
@@ -22,11 +27,13 @@ namespace Trabalho_Laboratorio.Controllers
 	{
 		private readonly ApplicationDbContext _context;
 		private readonly UserManager<IdentityUser> _userManager;
+		private readonly ILogger<RegisterModel> _logger;
 
-		public AdministradorsController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
+		public AdministradorsController(ApplicationDbContext context, UserManager<IdentityUser> userManager, ILogger<RegisterModel> logger)
 		{
 			_context = context;
 			_userManager = userManager;
+			_logger = logger;
 		}
 
 		// GET: Administradors
@@ -205,135 +212,51 @@ namespace Trabalho_Laboratorio.Controllers
 			return RedirectToAction(nameof(Index));
 		}
 
-		// GET: Administradors/Details/5
-		public async Task<IActionResult> Details(int? id)
+		[HttpGet]
+		public async Task<IActionResult> CreateNewAdminAsync()
 		{
-			if (id == null)
-			{
-				return NotFound();
-			}
+			Administrador administrador = await GetLoggedAdmin();
+			AdminCreateNewAdminViewModel viewModel = new AdminCreateNewAdminViewModel();
+			viewModel.Administrador = administrador;
 
-			var administrador = await _context.Administrador
-				.Include(a => a.IdAdminNavigation)
-				.FirstOrDefaultAsync(m => m.IdAdmin == id);
-			if (administrador == null)
-			{
-				return NotFound();
-			}
-
-			return View(administrador);
+			return View(viewModel);
 		}
 
-		// GET: Administradors/Create
-		public IActionResult Create()
-		{
-			ViewData["IdAdmin"] = new SelectList(_context.Utilizador, "IdUtilizador", "Email");
-			return View();
-		}
-
-		// POST: Administradors/Create
-		// To protect from overposting attacks, enable the specific properties you want to bind to, for
-		// more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Create([Bind("IdAdmin,Nome,Apelido")] Administrador administrador)
+		public async Task<IActionResult> CreateNewAdminAsync(AdminCreateNewAdminViewModel admin)
 		{
-			if (ModelState.IsValid)
-			{
-				_context.Add(administrador);
-				await _context.SaveChangesAsync();
-				return RedirectToAction(nameof(IndexAsync));
-			}
-			ViewData["IdAdmin"] = new SelectList(_context.Utilizador, "IdUtilizador", "Email", administrador.IdAdmin);
-			return View(administrador);
-		}
+			Administrador adminLogado = await GetLoggedAdmin();
+			admin.Administrador = adminLogado;
+			admin.Utilizador.Password = "Error";
 
-		// GET: Administradors/Edit/5
-		public async Task<IActionResult> Edit(int? id)
-		{
-			if (id == null)
+			ModelState.Clear();
+			if (TryValidateModel(admin))
 			{
-				return NotFound();
-			}
-
-			var administrador = await _context.Administrador.FindAsync(id);
-			if (administrador == null)
-			{
-				return NotFound();
-			}
-			ViewData["IdAdmin"] = new SelectList(_context.Utilizador, "IdUtilizador", "Email", administrador.IdAdmin);
-			return View(administrador);
-		}
-
-		// POST: Administradors/Edit/5
-		// To protect from overposting attacks, enable the specific properties you want to bind to, for
-		// more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Edit(int id, [Bind("IdAdmin,Nome,Apelido")] Administrador administrador)
-		{
-			if (id != administrador.IdAdmin)
-			{
-				return NotFound();
-			}
-
-			if (ModelState.IsValid)
-			{
-				try
+				var user = new IdentityUser { UserName = admin.Utilizador.Username, Email = admin.Utilizador.Email };
+				var result = await _userManager.CreateAsync(user, admin.Password);
+				if (result.Succeeded)
 				{
-					_context.Update(administrador);
+					_logger.LogInformation("User created a new account with password.");
+
+					await _userManager.AddToRoleAsync(user, "Admin");
+
+					// Criar Utilizador
+					admin.Password = user.PasswordHash;
+					_context.Utilizador.Add(admin.Utilizador);
 					await _context.SaveChangesAsync();
+
+					admin.AdministradorACriar.IdAdmin = admin.Utilizador.IdUtilizador;
+					_context.Administrador.Add(admin.AdministradorACriar);
+
+					await _context.SaveChangesAsync();
+
+					// Sucesso
+					return RedirectToAction(nameof(ManageAdmins));
 				}
-				catch (DbUpdateConcurrencyException)
-				{
-					if (!AdministradorExists(administrador.IdAdmin))
-					{
-						return NotFound();
-					}
-					else
-					{
-						throw;
-					}
-				}
-				return RedirectToAction(nameof(IndexAsync));
-			}
-			ViewData["IdAdmin"] = new SelectList(_context.Utilizador, "IdUtilizador", "Email", administrador.IdAdmin);
-			return View(administrador);
-		}
-
-		// GET: Administradors/Delete/5
-		public async Task<IActionResult> Delete(int? id)
-		{
-			if (id == null)
-			{
-				return NotFound();
 			}
 
-			var administrador = await _context.Administrador
-				.Include(a => a.IdAdminNavigation)
-				.FirstOrDefaultAsync(m => m.IdAdmin == id);
-			if (administrador == null)
-			{
-				return NotFound();
-			}
-
-			return View(administrador);
-		}
-
-		// POST: Administradors/Delete/5
-		[HttpPost, ActionName("Delete")]
-		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> DeleteConfirmed(int id)
-		{
-			var administrador = await _context.Administrador.FindAsync(id);
-			_context.Administrador.Remove(administrador);
-			await _context.SaveChangesAsync();
-			return RedirectToAction(nameof(IndexAsync));
-		}
-
-		private bool AdministradorExists(int id)
-		{
-			return _context.Administrador.Any(e => e.IdAdmin == id);
+			// Erro
+			return View(admin);
 		}
 	}
 }

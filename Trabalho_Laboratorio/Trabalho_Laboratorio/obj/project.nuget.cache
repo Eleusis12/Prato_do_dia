@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "x6SFBEyo3OdZjDOpxy6ahmi5lutw4dO9BEEyOeY7r/XkbF2ReBB0dJQEosxsT45WAVnjRzOvAnfhsrvZBGEEDw==",
+  "dgSpecHash": "i7Nky8+2ri3+WJ6dr5cmCth/vqN54/ouKmsGNxGtznASMlSKx/iFQabSwp9hcm3gyDXpSXr7KMbroWcbj5yHkg==",
   "success": true,
   "projectFilePath": "C:\\Users\\Francisco\\OneDrive\\Utad\\3ºano\\1ºsemestre\\Laboratório de Aplicações Web e Bases de Dados\\Prato_do_Dia\\Trabalho_Laboratorio\\Trabalho_Laboratorio\\Trabalho_Laboratorio.csproj",
   "expectedPackageFiles": [
@@ -11,8 +11,10 @@
     "C:\\Users\\Francisco\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\Francisco\\.nuget\\packages\\microsoft.aspnetcore.identity.entityframeworkcore\\3.1.10\\microsoft.aspnetcore.identity.entityframeworkcore.3.1.10.nupkg.sha512",
     "C:\\Users\\Francisco\\.nuget\\packages\\microsoft.aspnetcore.identity.ui\\3.1.10\\microsoft.aspnetcore.identity.ui.3.1.10.nupkg.sha512",
+    "C:\\Users\\Francisco\\.nuget\\packages\\microsoft.aspnetcore.mvc.razor.extensions\\3.1.10\\microsoft.aspnetcore.mvc.razor.extensions.3.1.10.nupkg.sha512",
+    "C:\\Users\\Francisco\\.nuget\\packages\\microsoft.aspnetcore.mvc.razor.runtimecompilation\\3.1.10\\microsoft.aspnetcore.mvc.razor.runtimecompilation.3.1.10.nupkg.sha512",
     "C:\\Users\\Francisco\\.nuget\\packages\\microsoft.aspnetcore.razor\\2.2.0\\microsoft.aspnetcore.razor.2.2.0.nupkg.sha512",
-    "C:\\Users\\Francisco\\.nuget\\packages\\microsoft.aspnetcore.razor.language\\3.1.0\\microsoft.aspnetcore.razor.language.3.1.0.nupkg.sha512",
+    "C:\\Users\\Francisco\\.nuget\\packages\\microsoft.aspnetcore.razor.language\\3.1.10\\microsoft.aspnetcore.razor.language.3.1.10.nupkg.sha512",
     "C:\\Users\\Francisco\\.nuget\\packages\\microsoft.aspnetcore.razor.runtime\\2.2.0\\microsoft.aspnetcore.razor.runtime.2.2.0.nupkg.sha512",
     "C:\\Users\\Francisco\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "C:\\Users\\Francisco\\.nuget\\packages\\microsoft.bcl.hashcode\\1.1.0\\microsoft.bcl.hashcode.1.1.0.nupkg.sha512",
@@ -20,7 +22,7 @@
     "C:\\Users\\Francisco\\.nuget\\packages\\microsoft.codeanalysis.common\\3.3.1\\microsoft.codeanalysis.common.3.3.1.nupkg.sha512",
     "C:\\Users\\Francisco\\.nuget\\packages\\microsoft.codeanalysis.csharp\\3.3.1\\microsoft.codeanalysis.csharp.3.3.1.nupkg.sha512",
     "C:\\Users\\Francisco\\.nuget\\packages\\microsoft.codeanalysis.csharp.workspaces\\3.3.1\\microsoft.codeanalysis.csharp.workspaces.3.3.1.nupkg.sha512",
-    "C:\\Users\\Francisco\\.nuget\\packages\\microsoft.codeanalysis.razor\\3.1.0\\microsoft.codeanalysis.razor.3.1.0.nupkg.sha512",
+    "C:\\Users\\Francisco\\.nuget\\packages\\microsoft.codeanalysis.razor\\3.1.10\\microsoft.codeanalysis.razor.3.1.10.nupkg.sha512",
     "C:\\Users\\Francisco\\.nuget\\packages\\microsoft.codeanalysis.workspaces.common\\3.3.1\\microsoft.codeanalysis.workspaces.common.3.3.1.nupkg.sha512",
     "C:\\Users\\Francisco\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\Francisco\\.nuget\\packages\\microsoft.data.sqlclient\\1.1.3\\microsoft.data.sqlclient.1.1.3.nupkg.sha512",

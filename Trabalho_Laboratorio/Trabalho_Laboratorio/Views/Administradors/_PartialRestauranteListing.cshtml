@@ -29,7 +29,7 @@
 					<td>@restaurante.Telefone</td>
 					<td>@restaurante.IdRestauranteNavigation.Email</td>
 					<td>
-						<a asp-controller="Restaurantes" asp-action="Detalhes" class="btn btn-success">Detalhes</a>
+						<a asp-controller="Restaurantes" asp-action="Detalhes" asp-route-id="@restaurante.IdRestaurante" class="btn btn-success">Detalhes</a>
 					</td>
 					<td>
 						<form asp-action="AceitarRestaurante" asp-route-id="@restaurante.IdRestaurante" data-ajax="true" data-ajax-method="post"
