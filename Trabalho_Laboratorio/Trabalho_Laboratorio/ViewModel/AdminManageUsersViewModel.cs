@@ -8,7 +8,7 @@ namespace Trabalho_Laboratorio.ViewModel
 {
 	public class AdminManageUsersViewModel
 	{
-		public IQueryable<Utilizador> Utilizadores { get; set; }
+		public IQueryable<Clientes> Clientes { get; set; }
 		public Administrador Administrador { get; set; }
 	}
 }

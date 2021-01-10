@@ -5,7 +5,7 @@
 }
 @model IQueryable<Trabalho_Laboratorio.Models.GuardarClienteRestauranteFavorito>
 
-<table class="table table-bordered table-hover">
+<table id="table" class="table table-bordered table-hover">
 	<thead class="thead-dark">
 		<tr>
 			<th scope="col">#</th>
@@ -14,7 +14,7 @@
 			<th scope="col">Remover</th>
 		</tr>
 	</thead>
-	<tbody id="table">
+	<tbody>
 		@{int i = 1;}
 
 		@foreach (var restaurante in Model)
@@ -35,7 +35,7 @@
 					</form>
 				</td>
 			</tr>
-			@(i++)
+			i++;
 
 		}
 	</tbody>

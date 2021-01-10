@@ -1,6 +1,6 @@
 ﻿@model IQueryable<Trabalho_Laboratorio.Models.PalavrasChave>
 
-<table class="table table-bordered table-hover">
+<table id="table" class="table table-bordered table-hover">
 	<thead class="thead-dark">
 		<tr>
 			<th scope="col">#</th>
@@ -9,31 +9,31 @@
 			<th scope="col">Remover</th>
 		</tr>
 	</thead>
-	<tbody id="table">
+	<tbody>
 		@{int i = 1;}
 
 		@foreach (var palavra in Model)
 		{
-			<tr>
+		<tr>
 
-				<th scope="row">
-					@i
-				</th>
-				<td id="col_name_@palavra.IdPalavrasChave">@palavra.Palavra</td>
-				<td>
-					<a asp-controller="ClientSettings" asp-action="EditarAlerta" asp-route-id="@palavra.IdPalavrasChave" data-ajax="true" data-ajax-method="get"
-					   data-ajax-mode="replace" data-ajax-update="#col_name_@palavra.IdPalavrasChave"><img src="~/Icons/pencil.png" alt="Editar" style="width: 40px;" /></a>
-				</td>
-				<td>
-					<form asp-controller="ClientSettings" asp-action="RemoverAlerta" asp-route-id="@palavra.IdPalavrasChave" data-ajax="true" data-ajax-method="post"
-						  data-ajax-mode="replace" data-ajax-update="#table" data-ajax-confirm="Tem a certeza?" data-ajax-success="AjaxSucess" data-ajax-failure="AjaxError">
-						<img src="/assets/images/rejected.png" alt="Recusar"
-							 class="rounded-circle btn RejectImage" style="width: 64px;" onclick="document.querySelector('#col_@palavra.IdPalavrasChave').click()" />
-						<button id="col_@palavra.IdPalavrasChave" type="submit" class="reject" hidden />
-					</form>
-				</td>
-			</tr>
-			@(i++)
+			<th scope="row">
+				@i
+			</th>
+			<td id="col_name_@palavra.IdPalavrasChave">@palavra.Palavra</td>
+			<td>
+				<a asp-controller="ClientSettings" asp-action="EditarAlerta" asp-route-id="@palavra.IdPalavrasChave" data-ajax="true" data-ajax-method="get"
+				   data-ajax-mode="replace" data-ajax-update="#col_name_@palavra.IdPalavrasChave"><img src="~/Icons/pencil.png" alt="Editar" style="width: 40px;" /></a>
+			</td>
+			<td>
+				<form asp-controller="ClientSettings" asp-action="RemoverAlerta" asp-route-id="@palavra.IdPalavrasChave" data-ajax="true" data-ajax-method="post"
+					  data-ajax-mode="replace" data-ajax-update="#table" data-ajax-confirm="Tem a certeza?" data-ajax-success="AjaxSucess" data-ajax-failure="AjaxError">
+					<img src="/assets/images/rejected.png" alt="Recusar"
+						 class="rounded-circle btn RejectImage" style="width: 64px;" onclick="document.querySelector('#col_@palavra.IdPalavrasChave').click()" />
+					<button id="col_@palavra.IdPalavrasChave" type="submit" class="reject" hidden />
+				</form>
+			</td>
+		</tr>
+		i++;
 
 		}
 	</tbody>

@@ -7,63 +7,121 @@
 <div class="container mt-4">
 	<h4>Agendar Prato</h4>
 	<hr />
-	<div class="row">
-		<div class="col-md-4">
-			<form asp-action="Adicionar" enctype="multipart/form-data">
-				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-				<div class="form-group">
-					<label class="control-label">Prato: </label>
-					<select asp-for="IdPrato" class="form-control" asp-items="ViewBag.IdPrato">
-						<option value="-1">-- Selecione o Prato</option>
-					</select>
-					<span asp-validation-for="IdPratoNavigation.Nome" class="text-danger"></span>
-				</div>
+	<form asp-action="Adicionar" enctype="multipart/form-data">
+		<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-				<span class="text-info">Preencha aqui caso não tenha encontrado na lista o prato que pretende escolher</span>>
-				<div class="form-group">
+		<div class="form-group row">
+			<div class="col-md-4" id="select-meals">
+
+				<label class="control-label">Prato: </label>
+				<select id="select-meals-options" asp-for="IdPrato" class="form-control" asp-items="ViewBag.IdPrato">
+					<option value="-1">-- Selecione o Prato</option>
+				</select>
+				<span asp-validation-for="IdPratoNavigation.Nome" class="text-danger"></span>
+			</div>
+			<div class="col-md-4 mb-0">
+
+				<button id="add-new-meal" type="button" class="btn btn-primary btn-lg btn-block"><strong>Prato que pretende adicionar não está na lista?</strong></button>
+			</div>
+		</div>
+
+		<div id="new-meal">
+			<div class="form-group row">
+				<div class="col-md-4">
+
 					<label asp-for="IdPratoNavigation.Nome" class="control-label"></label>
 					<input name="Nome" class="form-control" />
-					<span asp-validation-for="IdPratoNavigation.Nome" class="text-danger"></span>
+					<span class="text-danger"></span>
 				</div>
+			</div>
 
-				<div class="form-group">
+			<div class="form-group row">
+				<div class="col-md-4">
+
 					<label class="control-label">Tipo de Prato</label>
 					<select name="Tipo_Prato" class="form-control" asp-items="ViewBag.Tipo_Prato">
 						<option>-- Selecione o Tipo de Prato</option>
 					</select>
-					<span asp-validation-for="IdPratoNavigation.TipoPrato" class="text-danger"></span>
-				</div>
-
-				<div class="form-group">
-					<label asp-for="DataMarcacao" class="control-label"></label>
-					<input asp-for="DataMarcacao" type="date" class="form-control" />
-					<span asp-validation-for="DataMarcacao" class="text-danger"></span>
-				</div>
-
-				<div class="form-group">
-					<label asp-for="DescricaoExtra" class="control-label"></label>
-					<textarea asp-for="DescricaoExtra" class="form-control" rows="3"> </textarea>
-					<span asp-validation-for="DescricaoExtra" class="text-danger"></span>
-				</div>
-				<div class="form-group">
-					<label asp-for="FotoExtra" class="control-label"></label>
-					<input asp-for="FotoExtra" type="file" class="form-control" />
-					<span asp-validation-for="FotoExtra" class="text-danger"></span>
-				</div>
-				<div class="form-group">
-					<label asp-for="Preco" class="control-label"></label>
-					<input name="preco_string" class="form-control" />
 					<span class="text-danger"></span>
 				</div>
-				<div class="form-group">
-					<input type="submit" value="Create" class="btn btn-primary" />
-				</div>
-			</form>
+			</div>
 		</div>
-	</div>
+
+		<div class="form-group row">
+			<div class="col-md-4">
+
+				<label asp-for="DataMarcacao" class="control-label"></label>
+				<input asp-for="DataMarcacao" type="date" class="form-control" />
+				<span asp-validation-for="DataMarcacao" class="text-danger"></span>
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<div class="col-md-4">
+
+				<label asp-for="DescricaoExtra" class="control-label"></label>
+				<textarea asp-for="DescricaoExtra" class="form-control" rows="3"> </textarea>
+				<span asp-validation-for="DescricaoExtra" class="text-danger"></span>
+			</div>
+		</div>
+		<div class="form-group row">
+			<div class="col-md-4">
+
+				<label asp-for="FotoExtra" class="control-label"></label>
+				<input asp-for="FotoExtra" type="file" class="form-control" />
+				<span asp-validation-for="FotoExtra" class="text-danger"></span>
+			</div>
+		</div>
+		<div class="form-group row">
+			<div class="col-md-4">
+
+				<label asp-for="Preco" class="control-label"></label>
+				<input name="preco_string" class="form-control" />
+				<span class="text-danger"></span>
+			</div>
+		</div>
+		<div class="form-group row">
+			<div class="col-md-4">
+
+				<input type="submit" value="Submeter" class="btn btn-primary" />
+			</div>
+		</div>
+	</form>
 </div>
 
 @section Scripts {
 	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+	<script>
+		$(document).ready(function () {
+
+			// Garantir que ambos os forms estão escondidos
+			$("#new-meal").hide();
+
+			$("#add-new-meal").click(function () {
+
+				// Se o o elemento está vísivel, pretende-se que este seja escondido
+				if ($('#new-meal:visible').length) {
+
+					$('#select-meals').show("slide", { direction: "right" }, 1000);
+					$('#new-meal').hide("slide", { direction: "right" }, 1000);
+					$(this).text("Prato que pretende adicionar não está na lista?");
+
+				}
+				// Caso o elemento já esteja escondido
+				else {
+					$('#select-meals-options').val('-1');
+
+					$('#select-meals').hide("slide", { direction: "right" }, 1000);
+					$('#new-meal').show("slide", { direction: "right" }, 1000);
+					$(this).text("Escolher a partir da lista");
+
+				}
+			});
+			// Queremos assegurar que o código postal é introduzido corretamente
+			//$("#cep").inputmask({ "mask": "'0000-000" });;
+
+		});
+	</script>
 }

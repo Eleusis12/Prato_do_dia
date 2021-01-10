@@ -2,16 +2,24 @@
 @{
 	ViewData["Title"] = "Home Page";
 }
-<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
 
-	@{int i = 0;}
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+
+	@{int j = 0;}
+	<ol class="carousel-indicators">
+		@for (j = 0; j < Model.Heroes.Count(); j++)
+		{
+			<li data-target="#carouselExampleIndicators" data-slide-to="@j" class="@(j == 0 ? "active" : "")"></li>
+		}
+	</ol>
 
 	<div class="carousel-inner">
+		@{int i = 0;}
 		@foreach (var informacao in Model.Heroes)
 		{
 
 			<div class="carousel-item @(i == 0 ? "active" : "")">
-				<img class="d-block img-fluid" src="@informacao.HeroPhoto" alt="First slide">
+				<img class="d-block img-fluid" src="@informacao.HeroPhoto" alt="...">
 				<div class="carousel-caption d-none d-md-block">
 					<h5>@informacao.Titulo</h5>
 					<p>@informacao.Descricao</p>
@@ -21,12 +29,7 @@
 			i++;
 		}
 	</div>
-	<ol class="carousel-indicators">
-		@for (i = i - 1; i >= 0; i--)
-		{
-			<li data-target="#carouselExampleIndicators" data-slide-to="@i" class="@(i == 0 ? "active" : "")"></li>
-		}
-	</ol>
+
 	<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
 		<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 		<span class="sr-only">Previous</span>
@@ -77,7 +80,7 @@
 							<a asp-action="Detalhes" asp-controller="Restaurantes" asp-route-id="@prato_destaque.IdRestaurante"><p class="spotlight-restaurant">@prato_destaque.IdRestauranteNavigation.NomeRestaurante</p></a>
 						</div>
 					</section>
-					i++;
+
 				}
 			</div>
 		</div>
@@ -92,15 +95,15 @@
 <div class="row justify-content-center mt-3">
 	@*PAGINAÇÃO*@
 	<div>
-		<ul class="pagination" @prevDisabled ">
-			<li class="page-item disabled">
-				<a class="page-link" href="#">&laquo;</a>
+		<ul class="pagination">
+			<li class="page-item  @prevDisabled">
+				<a class="page-link" asp-action="Index" asp-controller="Home" asp-route-page="@(Model.ListaPratos.PageIndex - 1)" asp-route-dia="@TempData["dayFilter"]">&laquo;</a>
 			</li>
 			<li class="page-item active">
-				<a class="page-link" href="#">@Model.ListaPratos.PageIndex</a>
+				<a class="page-link">@Model.ListaPratos.PageIndex</a>
 			</li>
 			<li class="page-item @nextDisabled">
-				<a class="page-link" href="#">&raquo;</a>
+				<a class="page-link" asp-action="Index" asp-controller="Home" asp-route-page="@(Model.ListaPratos.PageIndex + 1 )" asp-route-dia="@TempData["dayFilter"]">&raquo;</a>
 			</li>
 		</ul>
 	</div>

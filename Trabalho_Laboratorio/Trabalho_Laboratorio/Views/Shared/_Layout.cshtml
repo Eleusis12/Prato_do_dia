@@ -43,6 +43,10 @@
 								<a class="nav-link text-light" asp-controller="AgendarPratos" asp-action="Adicionar">Adicionar Prato</a>
 							</li>
 
+							<li class="nav-item">
+								<a class="nav-link text-light" asp-controller="AgendarPratos" asp-action="Index">Lista de Pratos Adicionados</a>
+							</li>
+
 						}
 					</ul>
 					@if (User.IsInRole("Client"))
@@ -169,24 +173,28 @@
 	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="~/js/toastr.js"></script>
 	<script src="~/js/site.js" asp-append-version="true"></script>
-	<script>
-		const searchBar = document.querySelector("#search-bar");
-		searchBar.addEventListener("keyup", function () {
-			// Number 13 is the "Enter" key on the keyboard
-			if (event.keyCode === 13) {
-				// Cancel the default action, if needed
-				event.preventDefault();
-				// Trigger the button element with a click
-				document.getElementById("submit-search").click();
+
+	@if (User.IsInRole("Client"))
+	{
+		<script>
+			const searchBar = document.querySelector("#search-bar");
+			searchBar.addEventListener("keyup", function () {
+				// Number 13 is the "Enter" key on the keyboard
+				if (event.keyCode === 13) {
+					// Cancel the default action, if needed
+					event.preventDefault();
+					// Trigger the button element with a click
+					document.getElementById("submit-search").click();
+				}
 			}
-		}
-		);
-	</script>
-	<script>
-		$("#search-bar").autocomplete({
-			source: '/api/Application/Search'
-		});
-	</script>
+			);
+		</script>
+		<script>
+			$("#search-bar").autocomplete({
+				source: '/api/Application/Search'
+			});
+		</script>
+	}
 
 	@RenderSection("Scripts", required: false)
 </body>

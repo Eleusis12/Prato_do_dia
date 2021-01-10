@@ -53,7 +53,7 @@ namespace Trabalho_Laboratorio.Controllers
 			TempData["dayFilter"] = dia;
 
 			// Definimos que queremos apresentar 20 produtos por página (no máximo)
-			int pageSize = 20;
+			int pageSize = 5;
 
 			// Obtém todos os produtos disponíveis na base de dados
 			var pratos = _context.AgendarPrato.Include(x => x.IdPratoNavigation).Include(x => x.IdRestauranteNavigation).Select(x => x);

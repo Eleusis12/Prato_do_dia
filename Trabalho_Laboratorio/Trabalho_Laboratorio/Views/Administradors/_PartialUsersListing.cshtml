@@ -1,4 +1,4 @@
-﻿@model IQueryable<Trabalho_Laboratorio.Models.Utilizador>
+﻿@model IQueryable<Trabalho_Laboratorio.Models.Clientes>
 
 <style>
 	.reason-ban {
@@ -26,6 +26,7 @@
 						<tr>
 							<th scope="col"></th>
 							<th scope="col">Username</th>
+							<th scope="col">Detalhes</th>
 							<th scope="col">Bloquear</th>
 						</tr>
 					</thead>
@@ -35,9 +36,12 @@
 						{
 							<tr>
 								<th scope="row">@(i + 1)</th>
-								<td>@utilizador.Username</td>
+								<td>@utilizador.IdClienteNavigation.Username</td>
 								<td>
-									<form asp-action="BloquearUtilizador" asp-route-id="@utilizador.IdUtilizador" data-ajax="true" data-ajax-method="post"
+									<a asp-controller="Clientes" asp-action="Detalhes" asp-route-id="@utilizador.IdCliente" class="btn btn-success">Detalhes</a>
+								</td>
+								<td>
+									<form asp-action="BloquearUtilizador" asp-route-id="@utilizador.IdCliente" data-ajax="true" data-ajax-method="post"
 										  data-ajax-mode="replace" data-ajax-update="#Tabela-Users" data-ajax-confirm="Tem a certeza?" data-ajax-success="AjaxSucess" data-ajax-failure="AjaxError">
 										<img src="/assets/images/rejected.png" alt="Recusar"
 											 class="rounded-circle btn RejectImage" style="width: 64px;" />

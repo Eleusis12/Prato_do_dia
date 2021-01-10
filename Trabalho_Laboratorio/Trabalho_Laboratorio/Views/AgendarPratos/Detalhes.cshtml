@@ -46,15 +46,32 @@
 	</div>
 </div>
 
-<div class="row">
+<div class="row" id="row-notification">
 	<div class="col-md-6 col-sm-12 offset-md-4">
 
-		@if ((string)ViewData["Notificacao_Prato"] != "true")
+		@if (User.IsInRole("Client"))
 		{
-			<form asp-controller="ClientSettings" asp-action="AddDishToFavorites" data-ajax="true" data-ajax-method="post" data-ajax-success="AjaxSucess" data-ajax-failure="AjaxError">
-				<input hidden type="text" name="id" value="@Model.IdPrato" />
-				<button type="submit" class="add-favorite-list">Adicione o prato @Model.IdPratoNavigation.Nome ao seus favoritos</button>
-			</form>
+			@if ((string)ViewData["Notificacao_Prato"] != "true")
+			{
+				<form asp-controller="ClientSettings" asp-action="AddDishToFavorites" data-ajax="true" data-ajax-method="post" data-ajax-success="sucesso" data-ajax-failure="AjaxError">
+					<input hidden type="text" name="id" value="@Model.IdPrato" />
+					<button type="submit" class="add-favorite-list">Adicione o prato @Model.IdPratoNavigation.Nome ao seus favoritos</button>
+				</form>
+			}
 		}
 	</div>
 </div>
+
+@section Scripts{
+	<script>
+		function sucesso() {
+			AjaxSucess();
+
+			// Esconder o Botao
+			const btnNoti = document.querySelector("#row-notification");
+			btnNoti.style.display = "none";
+
+		}
+	</script>
+
+}

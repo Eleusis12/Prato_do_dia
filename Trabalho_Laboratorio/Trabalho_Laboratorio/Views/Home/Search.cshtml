@@ -69,17 +69,20 @@
 
 	@if (Model.Pratos.Count != 0)
 	{
-		@if ((string)ViewData["Notificacao_Query"] != "true")
+		@if (User.IsInRole("Client"))
 		{
-			<div class="row">
-				<div class="col-md-6 col-sm-12 offset-md-4">
+			@if ((string)ViewData["Notificacao_Query"] != "true")
+			{
+				<div class="row" id="row-notification">
+					<div class="col-md-6 col-sm-12 offset-md-4">
 
-					<form asp-controller="ClientSettings" asp-action="AddQueryToFavorites" data-ajax="true" data-ajax-method="post" data-ajax-success="AjaxSucess" data-ajax-failure="AjaxError">
-						<input hidden type="text" name="query" value="@Model.Query" />
-						<button type="submit" class="add-favorite-list">Recebe notificações sobre @Model.Query</button>
-					</form>
+						<form asp-controller="ClientSettings" asp-action="AddQueryToFavorites" data-ajax="true" data-ajax-method="post" data-ajax-success="sucesso" data-ajax-failure="AjaxError">
+							<input hidden type="text" name="query" value="@Model.Query" />
+							<button type="submit" class="add-favorite-list">Recebe notificações sobre @Model.Query</button>
+						</form>
+					</div>
 				</div>
-			</div>
+			}
 		}
 
 		<div class="row">
@@ -99,3 +102,17 @@
 		</div>
 	}
 </div>
+
+@section Scripts{
+	<script>
+		function sucesso() {
+			AjaxSucess();
+
+			// Esconder o Botao
+			const btnNoti = document.querySelector("#row-notification");
+			btnNoti.style.display = "none";
+
+		}
+	</script>
+
+}

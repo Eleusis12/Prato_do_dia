@@ -59,6 +59,24 @@ namespace Trabalho_Laboratorio.Controllers
 			return View(adminIndexViewModel);
 		}
 
+		public async Task<IActionResult> Detalhes(int? id)
+		{
+			if (id == null)
+			{
+				return NotFound();
+			}
+
+			var administrador = await _context.Administrador
+				.Include(a => a.IdAdminNavigation)
+				.FirstOrDefaultAsync(m => m.IdAdmin == id);
+			if (administrador == null)
+			{
+				return NotFound();
+			}
+
+			return View(administrador);
+		}
+
 		public async Task<IActionResult> Profile()
 		{
 			Administrador administrador = await GetLoggedAdmin();
@@ -72,7 +90,13 @@ namespace Trabalho_Laboratorio.Controllers
 		{
 			Administrador administrador = await GetLoggedAdmin();
 			AdminManageUsersViewModel viewModel = new AdminManageUsersViewModel();
-			viewModel.Utilizadores = _context.Utilizador;
+
+			// Apresentar apenas os cliente que ainda não formam banidos
+			var clientes = _context.Clientes.Include(m => m.IdClienteNavigation).Include(m => m.IdClienteNavigation.Bloqueio);
+
+			// Atualmente como os bans são definidos como permabans, logo bloqueio count ==0
+			// Para reformular TODO: permitir bans temporárrios
+			viewModel.Clientes = clientes.Where(x => x.IdClienteNavigation.Bloqueio.Count == 0);
 			viewModel.Administrador = administrador;
 
 			return View(viewModel);
@@ -114,12 +138,6 @@ namespace Trabalho_Laboratorio.Controllers
 			// ID do Restaurante
 			var administrador = _context.Administrador.Include(m => m.IdAdminNavigation).FirstOrDefault(m => m.IdAdminNavigation.Username == UserName);
 			return administrador;
-		}
-
-		[HttpPost]
-		public async Task<IActionResult> RegistarAdministrador()
-		{
-			return View();
 		}
 
 		[HttpPost]
@@ -186,29 +204,28 @@ namespace Trabalho_Laboratorio.Controllers
 
 			// Guardar temporariamente o valor do username para que possamos apagar os respetivos dados tb nas outras tableas não apenas na tabela restaurante
 			string username = restaurante.IdRestauranteNavigation.Username;
+			IdentityUser user = await _userManager.FindByNameAsync(username);
 
-			// Apaga na tabela restaurante
-			_context.Restaurante.Remove(restaurante);
-
-			// Apaga na tabela utilizador
-			_context.Utilizador.Remove(_context.Utilizador.First(x => x.Username == username));
-
-			IdentityUser user = await _userManager.GetUserAsync(User);
 			if (user != null)
 			{
-				using (ApplicationDbContext dbcontext = new ApplicationDbContext())
-				{
-					dbcontext.UserLogins.RemoveRange(dbcontext.UserLogins.Where(ul => ul.UserId == user.Id));
+				// Apaga na tabela restaurante
+				_context.Restaurante.Remove(restaurante);
 
-					dbcontext.UserRoles.RemoveRange(dbcontext.UserRoles.Where(ur => ur.UserId == user.Id));
+				// Apaga na tabela utilizador
+				_context.Utilizador.Remove(_context.Utilizador.First(x => x.Username == username));
 
-					dbcontext.Users.Remove(dbcontext.Users.Where(usr => usr.Id == user.Id).Single());
+				// Apaga das tabelas Identity
+				_context.UserLogins.RemoveRange(_context.UserLogins.Where(ul => ul.UserId == user.Id));
 
-					dbcontext.SaveChanges();
-				}
+				_context.UserRoles.RemoveRange(_context.UserRoles.Where(ur => ur.UserId == user.Id));
+
+				_context.Users.Remove(_context.Users.Where(usr => usr.Id == user.Id).Single());
+
+				_context.SaveChanges();
+
 				return PartialView("_PartialRestauranteListing", _context.Restaurante.Include(m => m.IdRestauranteNavigation).Where(x => x.StatusRestaurante == false));
 			}
-
+			_context.SaveChanges();
 			return RedirectToAction(nameof(Index));
 		}
 

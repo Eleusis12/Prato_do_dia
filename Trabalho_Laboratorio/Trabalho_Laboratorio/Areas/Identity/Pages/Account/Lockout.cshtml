@@ -5,21 +5,22 @@
 	ViewData["Title"] = "Locked out";
 }
 
-
 <div class="container">
-	<div>
-		<h1 class="text-danger">@ViewData["Title"]</h1>
-		<p class="text-danger">@Model.Input.Username, a sua conta foi permanentemente desativada, contacte o administrador para verificar a sua situação.</p>
-	</div>
-
-	@if (@Model.Input.MotivoBloqueio != null)
-	{
-		<div class="row rounded bg-light">
-			<div class="col-md-6">
-
-				<p class="text-body">Motivo de Bloqueio: @Model.Input.MotivoBloqueio</p>
-			</div>
+	<div class="row">
+		<div>
+			<h1 class="text-danger">@ViewData["Title"]</h1>
+			<p class="text-danger">@Model.Input.Username, a sua conta foi permanentemente desativada, contacte o administrador para verificar a sua situação.</p>
 		</div>
 
-	}
+		@if (@Model.Input.MotivoBloqueio != null)
+		{
+			<div class="row rounded bg-light">
+				<div class="col-md-6">
+
+					<p class="text-body">Motivo de Bloqueio: @Model.Input.MotivoBloqueio</p>
+				</div>
+			</div>
+
+		}
+	</div>
 </div>

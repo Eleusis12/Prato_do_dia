@@ -44,6 +44,21 @@ namespace Trabalho_Laboratorio.Areas.Identity.Pages.Account.Manage
 
 		public class InputModel : Clientes
 		{
+			[Required]
+			[StringLength(50)]
+			[Display(Name = "Morada")]
+			public string EnderecoMorada { get; set; }
+
+			[Required]
+			[StringLength(8)]
+			[Display(Name = "Código Postal")]
+			[RegularExpression(@"^\d{4}(-\d{3})$", ErrorMessage = "Must be a valid Postal Code")]
+			public string EnderecoCodigoPostal { get; set; }
+
+			[Required]
+			[StringLength(30)]
+			[Display(Name = "Localidade")]
+			public string EnderecoLocalidade { get; set; }
 		}
 
 		private async Task LoadAsync(IdentityUser user)
@@ -59,6 +74,9 @@ namespace Trabalho_Laboratorio.Areas.Identity.Pages.Account.Manage
 			{
 				Nome = ClientBD.Nome,
 				Apelido = ClientBD.Apelido,
+				EnderecoCodigoPostal = ClientBD.IdClienteNavigation.EnderecoCodigoPostal,
+				EnderecoMorada = ClientBD.IdClienteNavigation.EnderecoMorada,
+				EnderecoLocalidade = ClientBD.IdClienteNavigation.EnderecoLocalidade,
 			};
 		}
 
@@ -74,7 +92,7 @@ namespace Trabalho_Laboratorio.Areas.Identity.Pages.Account.Manage
 			return Page();
 		}
 
-		public async Task<IActionResult> OnPostAsync(Clientes cliente)
+		public async Task<IActionResult> OnPostAsync()
 		{
 			var user = await _userManager.GetUserAsync(User);
 			if (user == null)
@@ -101,8 +119,11 @@ namespace Trabalho_Laboratorio.Areas.Identity.Pages.Account.Manage
 
 			ClientBD = await _context.Clientes.Include(r => r.IdClienteNavigation).FirstOrDefaultAsync(x => x.IdClienteNavigation.Username == user.UserName);
 
-			ClientBD.Nome = cliente.Nome;
-			ClientBD.Apelido = cliente.Apelido;
+			ClientBD.Nome = Input.Nome;
+			ClientBD.Apelido = Input.Apelido;
+			ClientBD.IdClienteNavigation.EnderecoLocalidade = Input.EnderecoLocalidade;
+			ClientBD.IdClienteNavigation.EnderecoCodigoPostal = Input.EnderecoCodigoPostal;
+			ClientBD.IdClienteNavigation.EnderecoMorada = Input.EnderecoMorada;
 
 			ModelState.Clear();
 

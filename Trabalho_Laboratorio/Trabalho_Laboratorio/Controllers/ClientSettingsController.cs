@@ -148,9 +148,9 @@ namespace Trabalho_Laboratorio.Controllers
 				_context.GuardarClientePratoFavorito.Remove(PratoFavorito);
 				_context.SaveChanges();
 			}
-			return Ok();
 			// Retorna Sucesso
-			//return PartialView("~/Areas/Identity/Pages/Account/Manage/_PartialFavoritesDishes", _context.GuardarClientePratoFavorito.Include(m => m.IdPratoNavigation).Include(m => m.IdClienteNavigation).Select(x => x));
+			var ListaPratosFavoritos = _context.GuardarClientePratoFavorito.Include(x => x.IdClienteNavigation).Include(x => x.IdPratoNavigation).Include(x => x.IdClienteNavigation.IdClienteNavigation).Where(x => x.IdCliente == PratoFavorito.IdCliente);
+			return PartialView("~/Areas/Identity/Pages/Account/Manage/_PartialFavoritesDishes.cshtml", ListaPratosFavoritos);
 		}
 
 		[HttpPost]
@@ -178,10 +178,9 @@ namespace Trabalho_Laboratorio.Controllers
 				_context.SaveChanges();
 			}
 
-			return Ok();
-
 			// Retorna Sucesso
-			//return PartialView("~/Areas/Identity/Pages/Account/Manage/_PartialFavoritesRestaurants", _context.GuardarClienteRestauranteFavorito.Include(m => m.IdClienteNavigation).Include(m => m.IdRestauranteNavigation).Select(x => x));
+			var ListaRestaurantesFavoritos = _context.GuardarClienteRestauranteFavorito.Include(x => x.IdClienteNavigation).Include(x => x.IdRestauranteNavigation).Include(x => x.IdClienteNavigation.IdClienteNavigation).Where(x => x.IdClienteRestauranteFavorito == RestauranteFavorito.IdClienteRestauranteFavorito);
+			return PartialView("~/Areas/Identity/Pages/Account/Manage/_PartialFavoritesRestaurants.cshtml", ListaRestaurantesFavoritos);
 		}
 
 		[HttpPost]
@@ -210,10 +209,9 @@ namespace Trabalho_Laboratorio.Controllers
 				_context.SaveChanges();
 			}
 
-			return Ok();
-
 			// Retorna Sucesso
-			//return PartialView("~/Areas/Identity/Pages/Account/Manage/_PartialAlerts", _context.GuardarClienteRestauranteFavorito.Include(m => m.IdClienteNavigation).Include(m => m.IdRestauranteNavigation).Select(x => x));
+			var ListaPalavrasChave = _context.PalavrasChave.Include(x => x.IdUtilizadorNavigation).Where(x => x.IdUtilizador == palavraChave.IdUtilizador);
+			return PartialView("~/Areas/Identity/Pages/Account/Manage/_PartialAlerts.cshtml", ListaPalavrasChave);
 		}
 
 		// GET

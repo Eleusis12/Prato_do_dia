@@ -60,7 +60,11 @@ namespace Trabalho_Laboratorio.Controllers
 			if (_signInManager.IsSignedIn(User))
 			{
 				Utilizador utilizador = await GetUtilizador();
-				var prato_favorito = _context.GuardarClientePratoFavorito.FirstOrDefault(x => x.IdCliente == utilizador.IdUtilizador && x.IdPrato == id);
+
+				// Relembrar que o id que recebemos é reference ao id de agendamento, mas nós queremos o id de de prato
+				int idPrato = _context.AgendarPrato.FirstOrDefault(x => x.IdAgendamento == id).IdPrato;
+
+				var prato_favorito = _context.GuardarClientePratoFavorito.FirstOrDefault(x => x.IdCliente == utilizador.IdUtilizador && x.IdPrato == idPrato);
 				if (prato_favorito != null)
 				{
 					ViewData["Notificacao_Prato"] = "true";
@@ -208,15 +212,18 @@ namespace Trabalho_Laboratorio.Controllers
 				await _context.SaveChangesAsync();
 
 				// O prato foi introduzido na base de dados, agora temos que notificar os utilizadores que pretendem ser notificados
-				var utilizadoresANotificar = _context.GuardarClientePratoFavorito.Include(x => x.IdClienteNavigation).Include(x => x.IdClienteNavigation.IdClienteNavigation).Where(x => x.IdPrato == agendarPrato.IdPrato);
+				var utilizadoresANotificar = _context.GuardarClientePratoFavorito.Include(x => x.IdPratoNavigation).Include(x => x.IdClienteNavigation).Include(x => x.IdClienteNavigation.IdClienteNavigation).Where(x => x.IdPrato == agendarPrato.IdPrato);
 
 				// Há utilizadores para notificar
 				if (utilizadoresANotificar != null)
 				{
 					foreach (var user in utilizadoresANotificar)
 					{
-						await _emailSender.SendEmailAsync(user.IdClienteNavigation.IdClienteNavigation.Email, $"RestaurantesDeluxe:'{agendarPrato.IdPratoNavigation.Nome} adicionado '",
-						$"Venha provar o novo prato, confecionado pelo {agendarPrato.IdRestauranteNavigation.NomeRestaurante}");
+						string email = user.IdClienteNavigation.IdClienteNavigation.Email;
+						string nomePrato = user.IdPratoNavigation.Nome;
+
+						await _emailSender.SendEmailAsync(email, $"RestaurantesDeluxe:'{nomePrato} adicionado á base de dados'",
+						$"Venha provar o novo prato");
 					}
 				}
 
@@ -224,12 +231,15 @@ namespace Trabalho_Laboratorio.Controllers
 
 				// Há utilizadores para notificar
 
-				if (utilizadoresANotificar != null)
+				if (utilizadoresANotificar2 != null)
 				{
-					foreach (var user in utilizadoresANotificar)
+					foreach (var user in utilizadoresANotificar2)
 					{
-						await _emailSender.SendEmailAsync(user.IdClienteNavigation.IdClienteNavigation.Email, $"RestaurantesDeluxe:'{agendarPrato.IdPratoNavigation.Nome} adicionado '",
-						$"Venha provar o novo prato, confecionado pelo {agendarPrato.IdRestauranteNavigation.NomeRestaurante}");
+						string email = user.IdUtilizadorNavigation.Email;
+						string query = user.Palavra;
+
+						await _emailSender.SendEmailAsync(email, $"RestaurantesDeluxe:'Foi notificado porque foi introduzido um prato com o nome {query} '",
+						$"Visite-nos");
 					}
 				}
 				return RedirectToAction(nameof(Index));
@@ -294,6 +304,49 @@ namespace Trabalho_Laboratorio.Controllers
 			ViewData["IdPrato"] = new SelectList(_context.Prato, "IdPrato", "DescricaoDefault", agendarPrato.IdPrato);
 			ViewData["IdRestaurante"] = new SelectList(_context.Restaurante, "IdRestaurante", "DiaDeDescanso", agendarPrato.IdRestaurante);
 			return View(agendarPrato);
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> ReAdd(int? id)
+		{
+			if (id == null)
+			{
+				return NotFound();
+			}
+
+			var agendarPrato = _context.AgendarPrato
+				.AsNoTracking()
+				.Include(a => a.IdPratoNavigation)
+				.Include(a => a.IdRestauranteNavigation)
+				.Single(m => m.IdAgendamento == id);
+			if (agendarPrato == null)
+			{
+				return NotFound();
+			}
+
+			AgendarPrato prato_amanha = new AgendarPrato()
+			{
+				DataDoAgendamento = DateTime.Now,
+				DataMarcacao = new DateTime(2020, 12, 31, 0, 0, 0),
+				DescricaoExtra = agendarPrato.DescricaoExtra,
+				Destaque = false,
+				FotoExtra = agendarPrato.FotoExtra,
+				IdPrato = agendarPrato.IdPrato,
+				IdRestaurante = agendarPrato.IdRestaurante,
+				Preco = agendarPrato.Preco,
+			};
+
+			//// Cópia de objetos, (AsNoTracking)
+			//agendarPrato.IdAgendamento = 0;
+			//agendarPrato.Destaque = false;
+			//agendarPrato.DataDoAgendamento =
+			////agendarPrato.DataMarcacao = );
+
+			_context.AgendarPrato.Add(prato_amanha);
+			await _context.SaveChangesAsync();
+
+			return Ok();
 		}
 
 		// GET: AgendarPratos/Delete/5

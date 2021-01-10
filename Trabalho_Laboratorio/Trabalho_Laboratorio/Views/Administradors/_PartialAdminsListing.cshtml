@@ -15,6 +15,7 @@
 						<tr>
 							<th scope="col"></th>
 							<th scope="col">Nome</th>
+							<th scope="col">Detalhes</th>
 							<th scope="col">Bloquear</th>
 						</tr>
 					</thead>
@@ -25,6 +26,9 @@
 						<tr>
 							<th scope="row">@(i + 1)</th>
 							<td>@administrador.Nome &nbsp; @administrador.Apelido </td>
+							<td>
+								<a asp-controller="Administradors" asp-action="Detalhes" asp-route-id="@administrador.IdAdmin" class="btn btn-success">Detalhes</a>
+							</td>
 							<td>
 								<form asp-action="BloquearUtilizador" asp-route-id="@administrador.IdAdmin" data-ajax="true" data-ajax-method="post"
 									  data-ajax-mode="replace" data-ajax-update="#Tabela-Admin" data-ajax-confirm="Tem a certeza?" data-ajax-success="AjaxSucess" data-ajax-failure="AjaxError">
