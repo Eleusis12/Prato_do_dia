@@ -20,6 +20,8 @@
 				<span>Restaurante</span>
 				<h1>@Html.DisplayFor(model => model.NomeRestaurante)</h1>
 				<p>@Html.DisplayFor(model => model.TipoServico)</p>
+				<p>@Html.DisplayFor(model => model.IdRestauranteNavigation.EnderecoCodigoPostal),@Html.DisplayFor(model => model.IdRestauranteNavigation.EnderecoLocalidade)&nbsp;&nbsp;@Html.DisplayFor(model => model.IdRestauranteNavigation.EnderecoMorada)</p>
+
 				<p>Dia de descanso: @Html.DisplayFor(model => model.DiaDeDescanso)</p>
 			</div>
 

@@ -1,9 +1,8 @@
-﻿@model IEnumerable<Trabalho_Laboratorio.Models.AgendarPrato>
+﻿@model IEnumerable<Trabalho_Laboratorio.ViewModel.AgendarPratosIndexViewModel>
 
 @{
 	ViewData["Title"] = "Index";
 }
-
 
 <table class="table">
 	<thead>
@@ -22,6 +21,9 @@
 			</th>
 			<th>
 				@Html.DisplayNameFor(model => model.IdPratoNavigation)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Contagem)
 			</th>
 
 			<th></th>
@@ -46,9 +48,14 @@
 				<td>
 					@Html.DisplayFor(modelItem => item.IdPratoNavigation.DescricaoDefault)
 				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Contagem)
+				</td>
 
 				<td>
-					@Html.ActionLink("Detalhes", "Detalhes", new { id = item.IdAgendamento }) |
+
+					<button class="btn btn-outline-secondary">@Html.ActionLink("Detalhes", "Detalhes", new { id = item.IdAgendamento })</button>
+					|
 					<form asp-controller="AgendarPratos" asp-action="ReAdd" asp-route-id="@item.IdAgendamento" data-ajax="true" data-ajax-method="post" data-ajax-success="sucesso" data-ajax-failure="AjaxError">
 						<button type="submit" class="btn btn-success">Adicionar este prato para Amanhã </button>
 					</form>

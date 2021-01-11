@@ -27,41 +27,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\assets\images\custom-select.png" />
-    <None Include="wwwroot\assets\images\favicon.png" />
-    <None Include="wwwroot\assets\images\logo-icon.png" />
-    <None Include="wwwroot\assets\images\logo-light-icon.png" />
-    <None Include="wwwroot\assets\images\logo-light-text.png" />
-    <None Include="wwwroot\assets\images\logo-text.png" />
-    <None Include="wwwroot\assets\images\users\1-old.jpg" />
-    <None Include="wwwroot\assets\images\users\1.jpg" />
-    <None Include="wwwroot\assets\images\users\1.png" />
-    <None Include="wwwroot\assets\images\users\2.jpg" />
-    <None Include="wwwroot\assets\images\users\2.png" />
-    <None Include="wwwroot\assets\images\users\3.jpg" />
-    <None Include="wwwroot\assets\images\users\3.png" />
-    <None Include="wwwroot\assets\images\users\4.jpg" />
-    <None Include="wwwroot\assets\images\users\5.jpg" />
-    <None Include="wwwroot\assets\images\users\6.jpg" />
-    <None Include="wwwroot\assets\images\users\7.jpg" />
-    <None Include="wwwroot\assets\images\users\8.jpg" />
-    <None Include="wwwroot\assets\images\users\agent.jpg" />
-    <None Include="wwwroot\assets\images\users\agent2.jpg" />
-    <None Include="wwwroot\assets\images\users\d1.jpg" />
-    <None Include="wwwroot\assets\images\users\d2.jpg" />
-    <None Include="wwwroot\assets\images\users\d3.jpg" />
-    <None Include="wwwroot\assets\images\users\d4.jpg" />
-    <None Include="wwwroot\assets\images\users\d5.jpg" />
-    <None Include="wwwroot\assets\images\users\profile.png" />
     <None Include="wwwroot\assets\libs\bootstrap\dist\css\bootstrap-grid.min.css" />
     <None Include="wwwroot\assets\libs\bootstrap\dist\css\bootstrap-reboot.min.css" />
     <None Include="wwwroot\assets\libs\bootstrap\dist\css\bootstrap.min.css" />
     <None Include="wwwroot\assets\libs\bootstrap\dist\js\bootstrap.bundle.min.js" />
     <None Include="wwwroot\assets\libs\bootstrap\dist\js\bootstrap.min.js" />
-    <None Include="wwwroot\assets\libs\chartist-plugin-tooltips\dist\chartist-plugin-tooltip.css" />
-    <None Include="wwwroot\assets\libs\chartist-plugin-tooltips\dist\chartist-plugin-tooltip.min.js" />
-    <None Include="wwwroot\assets\libs\chartist\dist\chartist.min.css" />
-    <None Include="wwwroot\assets\libs\chartist\dist\chartist.min.js" />
     <None Include="wwwroot\assets\libs\jquery\dist\core.js" />
     <None Include="wwwroot\assets\libs\jquery\dist\jquery.min.js" />
     <None Include="wwwroot\assets\libs\jquery\dist\jquery.slim.min.js" />

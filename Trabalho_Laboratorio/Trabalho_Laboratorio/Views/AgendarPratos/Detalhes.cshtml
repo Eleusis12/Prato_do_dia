@@ -1,7 +1,7 @@
 ﻿@model Trabalho_Laboratorio.Models.AgendarPrato
 
 @{
-	ViewData["Title"] = "Details";
+	ViewData["Title"] = "Detalhes";
 }
 
 <div class="container container-product-detail mt-4">
@@ -30,7 +30,7 @@
 					<span>Restaurante</span>
 
 					<div class="cable-choose">
-						<button>@Html.DisplayFor(model => model.IdRestauranteNavigation.NomeRestaurante)</button>
+						<a class="btn btn-outline-secondary" asp-controller="Restaurantes" asp-action="Detalhes" asp-route-id="@Model.IdRestaurante">@Html.DisplayFor(model => model.IdRestauranteNavigation.NomeRestaurante)</a>
 					</div>
 
 					<a href="#">Quer contactar restaurante?</a>
