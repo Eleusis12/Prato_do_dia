@@ -691,3 +691,4 @@ C:\Users\Francisco\OneDrive\Utad\3ºano\1ºsemestre\Laboratório de Aplicações
 C:\Users\Francisco\OneDrive\Utad\3ºano\1ºsemestre\Laboratório de Aplicações Web e Bases de Dados\Prato_do_Dia\Trabalho_Laboratorio\Trabalho_Laboratorio\obj\Debug\netcoreapp3.1\Razor\Views\Administradors\htmltemplate.cshtml.g.cs
 C:\Users\Francisco\OneDrive\Utad\3ºano\1ºsemestre\Laboratório de Aplicações Web e Bases de Dados\Prato_do_Dia\Trabalho_Laboratorio\Trabalho_Laboratorio\obj\Debug\netcoreapp3.1\Razor\Views\Clientes\Detalhes.cshtml.g.cs
 C:\Users\Francisco\OneDrive\Utad\3ºano\1ºsemestre\Laboratório de Aplicações Web e Bases de Dados\Prato_do_Dia\Trabalho_Laboratorio\Trabalho_Laboratorio\obj\Debug\netcoreapp3.1\Razor\Views\Administradors\Detalhes.cshtml.g.cs
+C:\Users\Francisco\OneDrive\Utad\3ºano\1ºsemestre\Laboratório de Aplicações Web e Bases de Dados\Prato_do_Dia\Trabalho_Laboratorio\Trabalho_Laboratorio\obj\Debug\netcoreapp3.1\Trabalho_Laboratorio.csprojAssemblyReference.cache

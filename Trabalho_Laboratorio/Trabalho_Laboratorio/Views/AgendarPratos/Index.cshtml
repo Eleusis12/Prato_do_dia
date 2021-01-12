@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Trabalho_Laboratorio.ViewModel.AgendarPratosIndexViewModel>
+﻿@model IEnumerable<Trabalho_Laboratorio.Models.AgendarPrato>
 
 @{
 	ViewData["Title"] = "Index";
@@ -22,9 +22,6 @@
 			<th>
 				@Html.DisplayNameFor(model => model.IdPratoNavigation)
 			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.Contagem)
-			</th>
 
 			<th></th>
 		</tr>
@@ -47,9 +44,6 @@
 				</td>
 				<td>
 					@Html.DisplayFor(modelItem => item.IdPratoNavigation.DescricaoDefault)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.Contagem)
 				</td>
 
 				<td>
