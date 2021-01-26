@@ -13,3 +13,6 @@ De preferência efetua esse restore da base de dados no localdb. (dessa forma n�
 
 
 Passwords das contas de utilizadores são usualmente : "abc123", caso não funcione use "restaurante"
+
+**Print da aplicação em funcionamento com a base de dados aplicada:**
+![Imagem Resultado](./How to Restore Database/firefox_EsaEo5vJR0.jpg)
