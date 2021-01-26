@@ -114,7 +114,8 @@ namespace Trabalho_Laboratorio.Controllers
 			if (utilizador.StatusRestaurante == false)
 			{
 				// Se o restaurante ainda não está aprovado, retorna a a seguinte mensagem
-				return View("Acesso Negado: Aguarde que o administrador aprove o seu pedido de registo");
+				return Forbid();
+				//return View("Acesso Negado: Aguarde que o administrador aprove o seu pedido de registo");
 			}
 
 			ViewData["IdPrato"] = new SelectList(_context.Prato, "IdPrato", "Nome");
